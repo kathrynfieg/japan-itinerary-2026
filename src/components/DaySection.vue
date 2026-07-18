@@ -57,7 +57,18 @@ function monthLabel(date: string) {
             </a>
             <p v-else class="day__activity-title">{{ activity.title }}</p>
             <p v-if="activity.place" class="day__place">{{ activity.place }}</p>
-            <p v-if="activity.note" class="day__note">{{ activity.note }}</p>
+            <ul
+              v-if="activity.notes?.length"
+              class="day__notes"
+            >
+              <li
+                v-for="(note, noteIndex) in activity.notes"
+                :key="noteIndex"
+                class="day__note"
+              >
+                {{ note }}
+              </li>
+            </ul>
           </div>
         </li>
       </ul>

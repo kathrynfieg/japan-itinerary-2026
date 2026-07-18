@@ -7,8 +7,8 @@ export type Activity = {
   title: string
   /** Neighbourhood, station, or venue name if useful */
   place?: string
-  /** Short extra context */
-  note?: string
+  /** Extra bits — seats, inclusions, tips, etc. */
+  notes?: string[]
   /** One URL — Maps, booking, menu, etc. */
   link?: string
 }
@@ -49,13 +49,20 @@ export const days: Day[] = [
         time: '9:50 AM',
         title: 'Adelaide → Kuala Lumpur',
         place: 'Malaysia Airlines MH138',
-        note: 'Arrives 4:00 PM · Seats Kat 5K, Zac 5H, Jess 5G · Ref DURC5W',
+        notes: [
+          'Arrives 4:00 PM',
+          'Seats Kat 5K, Zac 5H, Jess 5G',
+          'Ref DURC5W',
+        ],
       },
       {
         time: '10:25 PM',
         title: 'Kuala Lumpur → Osaka',
         place: 'Malaysia Airlines MH52',
-        note: 'Arrives 5:45 AM next day · Seats Kat 5H, Zac 5G, Jess 5K',
+        notes: [
+          'Arrives 5:45 AM next day',
+          'Seats Kat 5H, Zac 5G, Jess 5K',
+        ],
       },
     ],
   },
@@ -71,31 +78,31 @@ export const days: Day[] = [
         time: '5:45 AM',
         title: 'Arrive Osaka (KIX)',
         place: 'Kansai International · Terminal 1',
-        note: 'MH52 from Kuala Lumpur',
+        notes: ['MH52 from Kuala Lumpur'],
       },
       {
         time: '6:00 AM',
         title: 'Immigration & luggage',
         place: 'KIX',
-        note: 'Allow about an hour after landing',
+        notes: ['Allow about an hour after landing'],
       },
       {
         time: '7:30 AM',
         title: 'HARUKA to Shin-Osaka',
         place: 'KIX → Shin-Osaka',
-        note: 'Limited express · about 50 min',
+        notes: ['Limited express · about 50 min'],
       },
       {
         time: '9:00 AM',
         title: 'Nozomi to Tokyo',
         place: 'Shin-Osaka → Tokyo Station',
-        note: 'Shinkansen · about 2 hr 30 min',
+        notes: ['Shinkansen · about 2 hr 30 min'],
       },
       {
         time: '12:00 PM',
         title: 'To the accommodation',
         place: 'Ōkubo / Shin-Ōkubo',
-        note: 'From Tokyo Station · about 20 min by train',
+        notes: ['From Tokyo Station · about 20 min by train'],
       },
       {
         time: '4:50 PM',
@@ -115,9 +122,17 @@ export const days: Day[] = [
     id: 'jul-23',
     date: '2026-07-23',
     weekday: 'Thursday',
-    title: 'Day 3',
-    summary: 'Open — add plans when ready.',
-    activities: [],
+    title: 'teamLab Borderless',
+    summary: 'Afternoon at Borderless, Azabudai Hills.',
+    activities: [
+      {
+        time: '1:30 PM',
+        title: 'teamLab Borderless',
+        place: 'Azabudai Hills',
+        notes: ['Includes free gelato at En Tea Teahouse'],
+        link: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
+      },
+    ],
   },
   {
     id: 'jul-24',
@@ -186,13 +201,20 @@ export const days: Day[] = [
         time: '9:55 AM',
         title: 'Osaka → Kuala Lumpur',
         place: 'Malaysia Airlines MH53',
-        note: 'Arrives 3:45 PM · Seats Kat 5H, Zac 5K, Jess 6K · Ref DURC5W',
+        notes: [
+          'Arrives 3:45 PM',
+          'Seats Kat 5H, Zac 5K, Jess 6K',
+          'Ref DURC5W',
+        ],
       },
       {
         time: '10:25 PM',
         title: 'Kuala Lumpur → Adelaide',
         place: 'Malaysia Airlines MH139',
-        note: 'Arrives 7:00 AM Sat 1 Aug · Seats Kat 7K, Zac 6K, Jess 7H',
+        notes: [
+          'Arrives 7:00 AM Sat 1 Aug',
+          'Seats Kat 7K, Zac 6K, Jess 7H',
+        ],
       },
     ],
   },
