@@ -15,11 +15,6 @@ export type Day = {
   activities: Activity[]
 }
 
-export type Occasion = {
-  who: string
-  what: string
-}
-
 export const trip = {
   name: 'Japan',
   year: '2026',
@@ -33,20 +28,6 @@ export const trip = {
   heroAlt: 'Traditional street in Kyoto at dusk',
   groupPhoto,
   groupPhotoAlt: 'Zac, Jess, and Kat',
-  occasions: [
-    {
-      who: 'Jess',
-      what: 'Uni graduation and exams — done.',
-    },
-    {
-      who: 'Zac',
-      what: 'Turning thirty. Properly.',
-    },
-    {
-      who: 'Kat',
-      what: 'Final interviews for a role at Canva.',
-    },
-  ] satisfies Occasion[],
 }
 
 export const days: Day[] = [

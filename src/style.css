@@ -226,60 +226,6 @@ body {
   transform: translateY(1px);
 }
 
-/* —— Why —— */
-.why {
-  max-width: 44rem;
-  margin: 0 auto;
-  padding: 4.5rem 1.35rem 1rem;
-}
-
-.why__heading {
-  margin: 0 0 0.6rem;
-  font-family: var(--serif);
-  font-size: clamp(2.25rem, 6vw, 3.25rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.why__sub {
-  margin: 0 0 2.5rem;
-  max-width: 28rem;
-  color: var(--ink-soft);
-  line-height: 1.55;
-}
-
-.why__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0;
-  border-top: 1px solid var(--line);
-}
-
-.why__item {
-  display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  gap: 1rem;
-  padding: 1.35rem 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.why__who {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  letter-spacing: -0.01em;
-}
-
-.why__what {
-  margin: 0;
-  color: var(--ink-soft);
-  line-height: 1.5;
-  padding-top: 0.2rem;
-}
-
 /* —— Days —— */
 .days {
   max-width: 44rem;
@@ -491,16 +437,6 @@ body {
   .hero__portrait {
     width: 7.5rem;
     height: 7.5rem;
-  }
-
-  .why {
-    padding: 5.5rem 2rem 1.5rem;
-  }
-
-  .why__item {
-    grid-template-columns: 7rem 1fr;
-    gap: 1.5rem;
-    padding: 1.6rem 0;
   }
 
   .days {

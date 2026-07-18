@@ -81,19 +81,6 @@ function dayNumber(date: string) {
       </div>
     </section>
 
-    <section class="why" aria-labelledby="why-heading">
-      <h2 id="why-heading" class="why__heading">Why we’re going</h2>
-      <p class="why__sub">
-        First time in Japan — marking three milestones on the same calendar.
-      </p>
-      <ul class="why__list">
-        <li v-for="occasion in trip.occasions" :key="occasion.who" class="why__item">
-          <p class="why__who">{{ occasion.who }}</p>
-          <p class="why__what">{{ occasion.what }}</p>
-        </li>
-      </ul>
-    </section>
-
     <main id="days" class="days">
       <header class="days__header">
         <h2 class="days__heading">The days</h2>
