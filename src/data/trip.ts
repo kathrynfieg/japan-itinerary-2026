@@ -42,17 +42,37 @@ export const days: Day[] = [
     id: 'jul-21',
     date: '2026-07-21',
     weekday: 'Tuesday',
-    title: 'Arrival',
-    summary: 'Landing day — details to follow.',
-    activities: [],
+    title: 'Outbound',
+    summary: 'Adelaide → Kuala Lumpur → Osaka. Overnight to Kansai.',
+    activities: [
+      {
+        time: '9:50 AM',
+        title: 'Adelaide → Kuala Lumpur',
+        place: 'Malaysia Airlines MH138',
+        note: 'Arrives 4:00 PM · Seats Kat 5K, Zac 5H, Jess 5G · Ref DURC5W',
+      },
+      {
+        time: '10:25 PM',
+        title: 'Kuala Lumpur → Osaka',
+        place: 'Malaysia Airlines MH52',
+        note: 'Arrives 5:45 AM next day · Seats Kat 5H, Zac 5G, Jess 5K',
+      },
+    ],
   },
   {
     id: 'jul-22',
     date: '2026-07-22',
     weekday: 'Wednesday',
-    title: 'Day 2',
-    summary: 'Open — add plans when ready.',
-    activities: [],
+    title: 'Land in Osaka',
+    summary: 'Touch down at Kansai, then the trip begins.',
+    activities: [
+      {
+        time: '5:45 AM',
+        title: 'Arrive Osaka (KIX)',
+        place: 'Kansai International · Terminal 1',
+        note: 'MH52 from Kuala Lumpur',
+      },
+    ],
   },
   {
     id: 'jul-23',
@@ -122,8 +142,21 @@ export const days: Day[] = [
     id: 'jul-31',
     date: '2026-07-31',
     weekday: 'Friday',
-    title: 'Departure',
-    summary: 'Heading home — details to follow.',
-    activities: [],
+    title: 'Homeward',
+    summary: 'Osaka → Kuala Lumpur → Adelaide. Arrive Saturday morning.',
+    activities: [
+      {
+        time: '9:55 AM',
+        title: 'Osaka → Kuala Lumpur',
+        place: 'Malaysia Airlines MH53',
+        note: 'Arrives 3:45 PM · Seats Kat 5H, Zac 5K, Jess 6K · Ref DURC5W',
+      },
+      {
+        time: '10:25 PM',
+        title: 'Kuala Lumpur → Adelaide',
+        place: 'Malaysia Airlines MH139',
+        note: 'Arrives 7:00 AM Sat 1 Aug · Seats Kat 7K, Zac 6K, Jess 7H',
+      },
+    ],
   },
 ]
