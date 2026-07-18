@@ -350,9 +350,12 @@ body {
 
 .day__item {
   display: grid;
-  grid-template-columns: 4.5rem 1fr;
   gap: 0.75rem;
   align-items: start;
+}
+
+.day__item--timed {
+  grid-template-columns: 4.5rem 1fr;
 }
 
 .day__time {
@@ -363,13 +366,33 @@ body {
   padding-top: 0.15rem;
 }
 
-.day__place {
+.day__activity-title {
   margin: 0;
   font-weight: 600;
   line-height: 1.35;
 }
 
-.day__detail {
+.day__activity-title--link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgb(181 69 27 / 0.45);
+  transition: text-decoration-color 0.2s var(--ease);
+}
+
+.day__activity-title--link:hover {
+  text-decoration-color: var(--accent);
+}
+
+.day__place {
+  margin: 0.25rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.day__note {
   margin: 0.25rem 0 0;
   color: var(--ink-soft);
   font-size: 0.95rem;

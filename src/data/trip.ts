@@ -1,9 +1,16 @@
 import groupPhoto from '../assets/group-photo.jpg'
 
 export type Activity = {
+  /** e.g. "10:00" or "Morning" */
   time?: string
-  place: string
-  detail?: string
+  /** What you're doing — the only required field */
+  title: string
+  /** Neighbourhood, station, or venue name if useful */
+  place?: string
+  /** Short extra context */
+  note?: string
+  /** One URL — Maps, booking, menu, etc. */
+  link?: string
 }
 
 export type Day = {

@@ -42,11 +42,22 @@ function monthLabel(date: string) {
           v-for="(activity, i) in day.activities"
           :key="`${day.id}-${i}`"
           class="day__item"
+          :class="{ 'day__item--timed': activity.time }"
         >
           <time v-if="activity.time" class="day__time">{{ activity.time }}</time>
-          <div class="day__place-wrap">
-            <p class="day__place">{{ activity.place }}</p>
-            <p v-if="activity.detail" class="day__detail">{{ activity.detail }}</p>
+          <div class="day__info">
+            <a
+              v-if="activity.link"
+              class="day__activity-title day__activity-title--link"
+              :href="activity.link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ activity.title }}
+            </a>
+            <p v-else class="day__activity-title">{{ activity.title }}</p>
+            <p v-if="activity.place" class="day__place">{{ activity.place }}</p>
+            <p v-if="activity.note" class="day__note">{{ activity.note }}</p>
           </div>
         </li>
       </ul>
