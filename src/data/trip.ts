@@ -97,6 +97,18 @@ export const days: Day[] = [
         place: 'Ōkubo / Shin-Ōkubo',
         note: 'From Tokyo Station · about 20 min by train',
       },
+      {
+        time: '4:50 PM',
+        title: 'Shibuya Sky Roof Bar Entry',
+        place: 'Shibuya Sky',
+        link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+      },
+      {
+        time: '5:40 PM',
+        title: 'Shibuya Sky Sunset Access',
+        place: 'Shibuya Sky',
+        link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+      },
     ],
   },
   {
