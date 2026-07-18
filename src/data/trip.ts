@@ -63,14 +63,39 @@ export const days: Day[] = [
     id: 'jul-22',
     date: '2026-07-22',
     weekday: 'Wednesday',
-    title: 'Land in Osaka',
-    summary: 'Touch down at Kansai, then the trip begins.',
+    title: 'KIX → Tokyo',
+    summary:
+      'Land at Kansai, Shinkansen up to Tokyo, then settle near Shin-Ōkubo.',
     activities: [
       {
         time: '5:45 AM',
         title: 'Arrive Osaka (KIX)',
         place: 'Kansai International · Terminal 1',
         note: 'MH52 from Kuala Lumpur',
+      },
+      {
+        time: '6:00 AM',
+        title: 'Immigration & luggage',
+        place: 'KIX',
+        note: 'Allow about an hour after landing',
+      },
+      {
+        time: '7:30 AM',
+        title: 'HARUKA to Shin-Osaka',
+        place: 'KIX → Shin-Osaka',
+        note: 'Limited express · about 50 min',
+      },
+      {
+        time: '9:00 AM',
+        title: 'Nozomi to Tokyo',
+        place: 'Shin-Osaka → Tokyo Station',
+        note: 'Shinkansen · about 2 hr 30 min',
+      },
+      {
+        time: '12:00 PM',
+        title: 'To the accommodation',
+        place: 'Ōkubo / Shin-Ōkubo',
+        note: 'From Tokyo Station · about 20 min by train',
       },
     ],
   },
