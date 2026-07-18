@@ -20,6 +20,16 @@ function onScroll() {
 }
 
 onMounted(() => {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual'
+  }
+
+  // Refresh should start at the hero, not a leftover day hash / scroll position
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search)
+  }
+  window.scrollTo(0, 0)
+
   window.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
 })
