@@ -67,7 +67,7 @@ export const days: Day[] = [
         title: 'Adelaide → Kuala Lumpur',
         place: 'Malaysia Airlines MH138',
         type: 'flight',
-        notes: ['Arrives 4:00 PM'],
+        notes: ['Arrives 4:00 PM', '6 hr 25 min layover in Kuala Lumpur'],
       },
       {
         time: '10:25 PM',
@@ -222,7 +222,7 @@ export const days: Day[] = [
         title: 'Osaka → Kuala Lumpur',
         place: 'Malaysia Airlines MH53',
         type: 'flight',
-        notes: ['Arrives 3:45 PM'],
+        notes: ['Arrives 3:45 PM', '6 hr 40 min layover in Kuala Lumpur'],
       },
       {
         time: '10:25 PM',
