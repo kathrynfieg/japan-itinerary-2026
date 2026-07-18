@@ -1,3 +1,5 @@
+import groupPhoto from '../assets/group-photo.jpg'
+
 export type Activity = {
   time?: string
   place: string
@@ -13,16 +15,38 @@ export type Day = {
   activities: Activity[]
 }
 
+export type Occasion = {
+  who: string
+  what: string
+}
+
 export const trip = {
   name: 'Japan',
   year: '2026',
   start: '2026-07-21',
   end: '2026-07-31',
   rangeLabel: '21 – 31 July',
-  tagline: 'Our shared plan for ten days on the ground.',
+  travelers: ['Zac', 'Jess', 'Kat'] as const,
+  tagline: 'Zac, Jess & Kat — first time in Japan, and plenty to celebrate.',
   heroImage:
     'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80',
   heroAlt: 'Traditional street in Kyoto at dusk',
+  groupPhoto,
+  groupPhotoAlt: 'Zac, Jess, and Kat',
+  occasions: [
+    {
+      who: 'Jess',
+      what: 'Uni graduation and exams — done.',
+    },
+    {
+      who: 'Zac',
+      what: 'Turning thirty. Properly.',
+    },
+    {
+      who: 'Kat',
+      what: 'Final interviews for a role at Canva.',
+    },
+  ] satisfies Occasion[],
 }
 
 export const days: Day[] = [

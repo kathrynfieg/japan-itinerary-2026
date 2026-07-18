@@ -64,6 +64,14 @@ function dayNumber(date: string) {
       />
       <div class="hero__veil" />
       <div class="hero__content">
+        <div class="hero__portrait">
+          <img
+            :src="trip.groupPhoto"
+            :alt="trip.groupPhotoAlt"
+            width="320"
+            height="320"
+          />
+        </div>
         <p class="hero__brand">{{ trip.name }} {{ trip.year }}</p>
         <h1 class="hero__title">{{ trip.rangeLabel }}</h1>
         <p class="hero__lede">{{ trip.tagline }}</p>
@@ -71,6 +79,19 @@ function dayNumber(date: string) {
           View days
         </button>
       </div>
+    </section>
+
+    <section class="why" aria-labelledby="why-heading">
+      <h2 id="why-heading" class="why__heading">Why we’re going</h2>
+      <p class="why__sub">
+        First time in Japan — marking three milestones on the same calendar.
+      </p>
+      <ul class="why__list">
+        <li v-for="occasion in trip.occasions" :key="occasion.who" class="why__item">
+          <p class="why__who">{{ occasion.who }}</p>
+          <p class="why__what">{{ occasion.what }}</p>
+        </li>
+      </ul>
     </section>
 
     <main id="days" class="days">
@@ -91,7 +112,9 @@ function dayNumber(date: string) {
 
     <footer class="footer">
       <p class="footer__brand">{{ trip.name }} {{ trip.year }}</p>
-      <p class="footer__meta">{{ trip.rangeLabel }} · for the group</p>
+      <p class="footer__meta">
+        {{ trip.travelers.join(' · ') }} · {{ trip.rangeLabel }}
+      </p>
     </footer>
   </div>
 </template>
