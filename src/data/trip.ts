@@ -1,5 +1,20 @@
 import groupPhoto from '../assets/group-photo.jpg'
 
+/** One type per activity — drives chips / icons */
+export type ActivityType = 'flight' | 'airport' | 'train' | 'stay' | 'sight' | 'food'
+
+export const activityTypes: Record<
+  ActivityType,
+  { label: string; emoji: string }
+> = {
+  flight: { label: 'Flight', emoji: '✈️' },
+  airport: { label: 'Airport', emoji: '🛂' },
+  train: { label: 'Train', emoji: '🚅' },
+  stay: { label: 'Stay', emoji: '🏨' },
+  sight: { label: 'Sight', emoji: '🎟️' },
+  food: { label: 'Food', emoji: '🍜' },
+}
+
 export type Activity = {
   /** e.g. "10:00" or "Morning" */
   time?: string
@@ -11,6 +26,8 @@ export type Activity = {
   notes?: string[]
   /** One URL — Maps, booking, menu, etc. */
   link?: string
+  /** Optional type for chips / icons */
+  type?: ActivityType
 }
 
 export type Day = {
@@ -49,12 +66,14 @@ export const days: Day[] = [
         time: '9:50 AM',
         title: 'Adelaide → Kuala Lumpur',
         place: 'Malaysia Airlines MH138',
+        type: 'flight',
         notes: ['Arrives 4:00 PM'],
       },
       {
         time: '10:25 PM',
         title: 'Kuala Lumpur → Osaka',
         place: 'Malaysia Airlines MH52',
+        type: 'flight',
         notes: ['Arrives 5:45 AM next day'],
       },
     ],
@@ -71,42 +90,49 @@ export const days: Day[] = [
         time: '5:45 AM',
         title: 'Arrive Osaka (KIX)',
         place: 'Kansai International · Terminal 1',
+        type: 'flight',
         notes: ['MH52 from Kuala Lumpur'],
       },
       {
         time: '6:00 AM',
         title: 'Immigration & luggage',
         place: 'KIX',
+        type: 'airport',
         notes: ['Allow about an hour after landing'],
       },
       {
         time: '7:30 AM',
         title: 'HARUKA to Shin-Osaka',
         place: 'KIX → Shin-Osaka',
+        type: 'train',
         notes: ['Limited express · about 50 min'],
       },
       {
         time: '9:00 AM',
         title: 'Nozomi to Tokyo',
         place: 'Shin-Osaka → Tokyo Station',
+        type: 'train',
         notes: ['Shinkansen · about 2 hr 30 min'],
       },
       {
         time: '12:00 PM',
         title: 'To the accommodation',
         place: 'Ōkubo / Shin-Ōkubo',
+        type: 'stay',
         notes: ['From Tokyo Station · about 20 min by train'],
       },
       {
         time: '4:50 PM',
         title: 'Shibuya Sky Roof Bar Entry',
         place: 'Shibuya Sky',
+        type: 'sight',
         link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
       },
       {
         time: '5:40 PM',
         title: 'Shibuya Sky Sunset Access',
         place: 'Shibuya Sky',
+        type: 'sight',
         link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
       },
     ],
@@ -122,6 +148,7 @@ export const days: Day[] = [
         time: '1:30 PM',
         title: 'teamLab Borderless',
         place: 'Azabudai Hills',
+        type: 'sight',
         notes: ['Includes free gelato at En Tea Teahouse'],
         link: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
       },
@@ -194,12 +221,14 @@ export const days: Day[] = [
         time: '9:55 AM',
         title: 'Osaka → Kuala Lumpur',
         place: 'Malaysia Airlines MH53',
+        type: 'flight',
         notes: ['Arrives 3:45 PM'],
       },
       {
         time: '10:25 PM',
         title: 'Kuala Lumpur → Adelaide',
         place: 'Malaysia Airlines MH139',
+        type: 'flight',
         notes: ['Arrives 7:00 AM Sat 1 Aug'],
       },
     ],

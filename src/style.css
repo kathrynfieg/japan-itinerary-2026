@@ -372,6 +372,43 @@ body {
   line-height: 1.35;
 }
 
+.day__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.55rem;
+}
+
+.day__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: rgb(197 207 198 / 0.35);
+  line-height: 1.2;
+}
+
+.day__chip[data-type='flight'] {
+  background: rgb(181 69 27 / 0.1);
+  color: var(--accent-deep);
+}
+
+.day__chip[data-type='train'] {
+  background: rgb(45 90 74 / 0.1);
+  color: #2d5a4a;
+}
+
+.day__chip[data-type='sight'] {
+  background: rgb(21 32 24 / 0.08);
+  color: var(--ink);
+}
+
 .day__activity-title--link {
   color: inherit;
   text-decoration: underline;

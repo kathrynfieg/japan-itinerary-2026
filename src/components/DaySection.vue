@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Day } from '../data/trip'
+import { activityTypes, type Day } from '../data/trip'
 
 defineProps<{
   day: Day
@@ -46,21 +46,28 @@ function monthLabel(date: string) {
         >
           <time v-if="activity.time" class="day__time">{{ activity.time }}</time>
           <div class="day__info">
-            <a
-              v-if="activity.link"
-              class="day__activity-title day__activity-title--link"
-              :href="activity.link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {{ activity.title }}
-            </a>
-            <p v-else class="day__activity-title">{{ activity.title }}</p>
+            <div class="day__title-row">
+              <a
+                v-if="activity.link"
+                class="day__activity-title day__activity-title--link"
+                :href="activity.link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ activity.title }}
+              </a>
+              <p v-else class="day__activity-title">{{ activity.title }}</p>
+              <span
+                v-if="activity.type"
+                class="day__chip"
+                :data-type="activity.type"
+              >
+                <span aria-hidden="true">{{ activityTypes[activity.type].emoji }}</span>
+                {{ activityTypes[activity.type].label }}
+              </span>
+            </div>
             <p v-if="activity.place" class="day__place">{{ activity.place }}</p>
-            <ul
-              v-if="activity.notes?.length"
-              class="day__notes"
-            >
+            <ul v-if="activity.notes?.length" class="day__notes">
               <li
                 v-for="(note, noteIndex) in activity.notes"
                 :key="noteIndex"
