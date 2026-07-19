@@ -67,7 +67,17 @@ function monthLabel(date: string) {
                 {{ activityTypes[activity.type].label }}
               </span>
             </div>
-            <p v-if="activity.place" class="day__place">
+            <a
+              v-if="activity.place && activity.maps"
+              class="day__place day__place--link"
+              :href="activity.maps"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MapPin class="day__place-icon" :size="13" :stroke-width="2" aria-hidden="true" />
+              <span>{{ activity.place }}</span>
+            </a>
+            <p v-else-if="activity.place" class="day__place">
               <MapPin class="day__place-icon" :size="13" :stroke-width="2" aria-hidden="true" />
               <span>{{ activity.place }}</span>
             </p>

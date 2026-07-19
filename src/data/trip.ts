@@ -32,9 +32,11 @@ export type Activity = {
   title: string;
   /** Neighbourhood, station, or venue name if useful */
   place?: string;
+  /** Google Maps (or similar) URL — makes the place line clickable */
+  maps?: string;
   /** Extra bits — seats, inclusions, tips, etc. */
   notes?: string[];
-  /** One URL — Maps, booking, menu, etc. */
+  /** One URL — booking, menu, tickets, Drive, etc. */
   link?: string;
   /** One type for chips / icons */
   type?: ActivityType;
@@ -101,6 +103,7 @@ export const days: Day[] = [
         time: '5:45 AM',
         title: 'Arrive Osaka',
         place: 'Kansai International Airport · Terminal 1',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Kansai+International+Airport+Terminal+1',
         type: 'flight',
         notes: ['MH52 from Kuala Lumpur'],
       },
@@ -108,6 +111,7 @@ export const days: Day[] = [
         time: '6:00 AM',
         title: 'Immigration and luggage',
         place: 'Kansai International Airport',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Kansai+International+Airport',
         type: 'airport',
         notes: [
           'Allow approximately one hour after landing',
@@ -140,6 +144,7 @@ export const days: Day[] = [
         time: '12:00 PM',
         title: 'Travel to the accommodation',
         place: 'Ōkubo / Shin-Ōkubo',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Shin-Okubo+Station+Tokyo',
         type: 'stay',
         notes: [
           'Approximately 20–30 minutes from Tokyo Station',
@@ -183,6 +188,7 @@ export const days: Day[] = [
         time: '4:05 PM',
         title: 'Hachikō and Shibuya Crossing',
         place: 'Hachikō Square',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hachiko+Square+Shibuya',
         type: 'sight',
         notes: [
           'See the Hachikō statue outside Shibuya Station',
@@ -195,6 +201,7 @@ export const days: Day[] = [
         time: '4:50 PM',
         title: 'Shibuya Sky Roof Bar Entry',
         place: 'Shibuya Sky',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Shibuya+Sky',
         type: 'sight',
         notes: [
           'Arrive early because entry is tied to the booked time',
@@ -206,6 +213,7 @@ export const days: Day[] = [
         time: '5:40 PM',
         title: 'Shibuya Sky Sunset Access',
         place: 'Shibuya Sky',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Shibuya+Sky',
         type: 'sight',
         notes: [
           'Stay through sunset and the early evening city lights',
@@ -218,6 +226,7 @@ export const days: Day[] = [
         time: '7:15 PM',
         title: 'Shibuya PARCO',
         place: 'Shibuya PARCO · 6F',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Shibuya+PARCO',
         type: 'suggestion',
         notes: [
           'Visit Nintendo TOKYO and Pokémon Center Shibuya',
@@ -230,6 +239,7 @@ export const days: Day[] = [
         time: '8:30 PM',
         title: 'Dinner in Shibuya',
         place: 'Dōgenzaka',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Uobei+Shibuya+Dogenzaka',
         type: 'food',
         notes: [
           'Recommended easy option: Uobei for affordable made-to-order sushi',
@@ -240,6 +250,7 @@ export const days: Day[] = [
         time: '9:30 PM',
         title: 'MEGA Don Quijote',
         place: 'Shibuya',
+        maps: 'https://www.google.com/maps/search/?api=1&query=MEGA+Don+Quijote+Shibuya',
         type: 'suggestion',
         notes: [
           'Browse Japanese snacks, beauty products, souvenirs and travel essentials',
@@ -251,6 +262,7 @@ export const days: Day[] = [
         time: '10:15 PM',
         title: 'Shibuya Crossing at night',
         place: 'Shibuya Scramble Crossing',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Shibuya+Scramble+Crossing',
         type: 'sight',
         notes: [
           'Walk across again once the billboards and surrounding streets are illuminated',
@@ -271,6 +283,7 @@ export const days: Day[] = [
         time: '8:00 AM',
         title: 'Meiji Jingu',
         place: 'Harajuku',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Meiji+Jingu',
         type: 'suggestion',
         notes: [
           'A peaceful Shinto shrine surrounded by a large forest in the middle of Tokyo.',
@@ -284,6 +297,7 @@ export const days: Day[] = [
         time: '10:00 AM',
         title: 'Explore Harajuku',
         place: 'Takeshita Street',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Takeshita+Street+Harajuku',
         type: 'suggestion',
         notes: [
           'Harajuku is one of Tokyo’s best-known neighbourhoods for colourful fashion, character shops, street food and youth culture.',
@@ -297,6 +311,7 @@ export const days: Day[] = [
         time: '11:15 AM',
         title: 'Walk through Omotesando',
         place: 'Harajuku → Omotesando',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Omotesando+Hills',
         type: 'suggestion',
         notes: [
           'Omotesando is a stylish tree-lined avenue known for impressive architecture, designer stores and polished cafés.',
@@ -322,6 +337,7 @@ export const days: Day[] = [
         time: '1:30 PM',
         title: 'teamLab Borderless',
         place: 'Azabudai Hills',
+        maps: 'https://www.google.com/maps/search/?api=1&query=teamLab+Borderless+Azabudai+Hills',
         type: 'sight',
         notes: [
           'An immersive digital-art museum where projections, light, sound and interactive artworks flow between interconnected rooms.',
@@ -337,6 +353,7 @@ export const days: Day[] = [
         time: '4:30 PM',
         title: 'Explore Azabudai Hills',
         place: 'Azabudai Hills',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Azabudai+Hills',
         type: 'suggestion',
         notes: [
           'A newly developed neighbourhood combining unusual architecture, gardens, shops, cafés and city views.',
@@ -350,6 +367,7 @@ export const days: Day[] = [
         time: '5:30 PM',
         title: 'Tokyo Tower and Zōjō-ji',
         place: 'Minato City',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Zojoji+Temple+Tokyo+Tower',
         type: 'suggestion',
         notes: [
           'Tokyo Tower is one of the city’s most recognisable landmarks, inspired by the Eiffel Tower and painted bright orange and white.',
@@ -363,6 +381,7 @@ export const days: Day[] = [
         time: 'Evening',
         title: 'Dinner in Shinjuku',
         place: 'Shinjuku',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Omoide+Yokocho+Shinjuku',
         type: 'food',
         notes: [
           'Shinjuku is one of Tokyo’s busiest entertainment districts, filled with restaurants, neon streets, department stores and late-night activity.',
@@ -387,6 +406,7 @@ export const days: Day[] = [
         time: '7:00 AM',
         title: 'Sensō-ji',
         place: 'Asakusa',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Senso-ji+Asakusa',
         type: 'suggestion',
         notes: [
           'Tokyo’s oldest temple and one of the city’s most recognisable traditional landmarks.',
@@ -401,6 +421,7 @@ export const days: Day[] = [
         time: '8:30 AM',
         title: 'Breakfast in Asakusa',
         place: 'Asakusa',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Asakusa+Tokyo',
         type: 'food',
         notes: [
           'A relaxed breakfast stop before the surrounding shopping streets become busier.',
@@ -413,6 +434,7 @@ export const days: Day[] = [
         time: '9:30 AM',
         title: 'Nakamise Street and old Asakusa',
         place: 'Nakamise-dōri',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Nakamise-dori+Asakusa',
         type: 'suggestion',
         notes: [
           'A traditional shopping street leading directly towards Sensō-ji, lined with snacks, crafts and souvenirs.',
@@ -438,6 +460,7 @@ export const days: Day[] = [
         time: '11:15 AM',
         title: 'Explore Ameyoko',
         place: 'Ueno and Okachimachi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Ameyoko+Market+Ueno',
         type: 'suggestion',
         notes: [
           'A lively market street running beneath and alongside the railway tracks between Ueno and Okachimachi.',
@@ -452,6 +475,7 @@ export const days: Day[] = [
         time: '12:30 PM',
         title: 'Lunch around Ameyoko',
         place: 'Ueno / Okachimachi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Ameyoko+Market+Ueno',
         type: 'food',
         notes: [
           'Ameyoko is a good place for an informal lunch surrounded by market energy.',
@@ -476,6 +500,7 @@ export const days: Day[] = [
         time: '2:00 PM',
         title: 'Akihabara Radio Kaikan',
         place: 'Akihabara Station · Electric Town Exit',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Akihabara+Radio+Kaikan',
         type: 'suggestion',
         notes: [
           'A multi-store hobby building packed with figures, trading cards, collectibles, model kits and character merchandise.',
@@ -490,6 +515,7 @@ export const days: Day[] = [
         time: '3:15 PM',
         title: 'Animate Akihabara',
         place: 'Akihabara',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Animate+Akihabara',
         type: 'suggestion',
         notes: [
           'A large specialist store dedicated to anime, manga, games and Japanese character merchandise.',
@@ -504,6 +530,7 @@ export const days: Day[] = [
         time: '4:15 PM',
         title: 'Super Potato',
         place: 'Akihabara',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Super+Potato+Akihabara',
         type: 'suggestion',
         notes: [
           'A compact retro-gaming store filled with older Japanese consoles, cartridges, accessories and gaming memorabilia.',
@@ -518,6 +545,7 @@ export const days: Day[] = [
         time: '5:00 PM',
         title: 'GiGO arcade',
         place: 'Akihabara',
+        maps: 'https://www.google.com/maps/search/?api=1&query=GiGO+Akihabara',
         type: 'suggestion',
         notes: [
           'A multi-floor Japanese game centre with crane machines, rhythm games, racing games and arcade cabinets.',
@@ -532,6 +560,7 @@ export const days: Day[] = [
         time: '6:15 PM',
         title: 'Yodobashi Akiba',
         place: 'Akihabara Station',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Yodobashi+Camera+Akiba',
         type: 'suggestion',
         notes: [
           'A huge electronics department store covering cameras, computers, gaming, appliances, toys and everyday technology.',
@@ -546,6 +575,7 @@ export const days: Day[] = [
         time: '7:30 PM',
         title: 'Dinner in Akihabara',
         place: 'Akihabara',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Akihabara+Tokyo',
         type: 'food',
         notes: [
           'A relaxed dinner after an afternoon of shopping and arcade games.',
@@ -627,6 +657,7 @@ export const days: Day[] = [
         time: '10:15 AM',
         title: 'Mountain Ripper check-in',
         place: 'Hakone Visitor Center',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hakone+Visitor+Center+Shirayuridai',
         type: 'suggestion',
         notes: [
           'Meet the guide, receive the mountain bikes and complete the safety briefing.',
@@ -639,6 +670,7 @@ export const days: Day[] = [
         time: '10:30 AM',
         title: 'Deep Forest cycling tour',
         place: 'Sengokuhara',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Sengokuhara+Hakone',
         type: 'suggestion',
         notes: [
           'A guided 16 km ride through the forests and quieter landscapes of Hakone.',
@@ -652,6 +684,7 @@ export const days: Day[] = [
         time: '1:45 PM',
         title: 'Lunch near Tōgendai',
         place: 'Tōgendai',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Togendai+Hakone',
         type: 'food',
         notes: [
           'Have a proper lunch and cool down after cycling.',
@@ -663,6 +696,7 @@ export const days: Day[] = [
         time: '3:00 PM',
         title: 'Lake Ashi sightseeing cruise',
         place: 'Tōgendai → Hakone-machi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hakone+Sightseeing+Cruise+Togendai',
         type: 'suggestion',
         notes: [
           'A scenic pirate-ship-style cruise across Lake Ashi.',
@@ -674,6 +708,7 @@ export const days: Day[] = [
         time: '4:00 PM',
         title: 'Explore Hakone-machi',
         place: 'Lake Ashi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hakone-machi+Port',
         type: 'suggestion',
         notes: [
           'A quiet lakeside area with views across Lake Ashi and the surrounding mountains.',
@@ -685,6 +720,7 @@ export const days: Day[] = [
         time: '4:45 PM',
         title: 'Check in to the Hakone accommodation',
         place: '571-30 Hakone, Hakone-machi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=571-30+Hakone+Hakone-machi',
         type: 'stay',
         notes: [
           'Take a short local bus or taxi from Hakone-machi.',
@@ -696,6 +732,7 @@ export const days: Day[] = [
         time: 'Evening',
         title: 'Dinner and quiet Hakone evening',
         place: 'Hakone-machi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hakone-machi',
         type: 'food',
         notes: [
           'Relax after the morning travel and afternoon cycling.',
@@ -717,6 +754,7 @@ export const days: Day[] = [
         time: '7:30 AM',
         title: 'Birthday breakfast by Lake Ashi',
         place: 'Hakone-machi / Moto-Hakone',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Moto-Hakone',
         type: 'food',
         notes: [
           'Begin Zac’s birthday with a relaxed breakfast beside the mountains and Lake Ashi.',
@@ -728,6 +766,7 @@ export const days: Day[] = [
         time: '8:30 AM',
         title: 'Hakone Shrine',
         place: 'Moto-Hakone',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hakone+Shrine',
         type: 'suggestion',
         notes: [
           'A historic forest shrine known for its red torii gate beside Lake Ashi.',
@@ -792,6 +831,7 @@ export const days: Day[] = [
         time: '5:00 PM',
         title: 'Queue for Menya Inoichi',
         place: 'Downtown Kyoto',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Menya+Inoichi+Kyoto',
         type: 'suggestion',
         notes: [
           'A tiny and highly regarded ramen restaurant known for elegant dashi-based broth.',
@@ -804,6 +844,7 @@ export const days: Day[] = [
         time: '5:30 PM',
         title: 'Zac’s birthday ramen',
         place: 'Menya Inoichi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Menya+Inoichi+Kyoto',
         type: 'food',
         notes: [
           'Celebrate with one of Kyoto’s most acclaimed bowls of ramen.',
@@ -828,6 +869,7 @@ export const days: Day[] = [
         time: '7:00 PM',
         title: 'Gion Corner traditional arts show',
         place: 'Gion Kobu',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Gion+Corner+Kyoto',
         type: 'experience',
         notes: [
           'A compact introduction to several traditional Japanese performing arts.',
@@ -840,6 +882,7 @@ export const days: Day[] = [
         time: 'Evening · TBC',
         title: 'Alternative: Kyoto ghost tour',
         place: 'Arashiyama',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Arashiyama+Bamboo+Grove',
         type: 'suggestion',
         notes: [
           'A small-group night walk exploring Kyoto’s darker history, ghost stories and urban legends.',
@@ -854,6 +897,7 @@ export const days: Day[] = [
         time: '8:00 PM',
         title: 'Gion night walk',
         place: 'Hanamikoji and Yasaka Shrine',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Hanamikoji+Street+Gion+Kyoto',
         type: 'suggestion',
         notes: [
           'See Gion’s stone lanes and traditional wooden buildings illuminated by lanterns.',
@@ -865,6 +909,7 @@ export const days: Day[] = [
         time: '9:15 PM',
         title: '30th birthday drinks at K36',
         place: 'The Hotel Seiryu Kyoto Kiyomizu',
+        maps: 'https://www.google.com/maps/search/?api=1&query=The+Hotel+Seiryu+Kyoto+Kiyomizu',
         type: 'suggestion',
         notes: [
           'A stylish rooftop bar with panoramic views over Kyoto and Higashiyama.',
@@ -898,6 +943,7 @@ export const days: Day[] = [
         time: '6:30 AM',
         title: 'Fushimi Inari Taisha',
         place: 'Fushimi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Fushimi+Inari+Taisha',
         type: 'suggestion',
         notes: [
           'Start early before the heat and crowds',
@@ -919,6 +965,7 @@ export const days: Day[] = [
         time: '10:30 AM',
         title: 'Kiyomizu-dera',
         place: 'Higashiyama',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Kiyomizu-dera',
         type: 'suggestion',
         notes: [
           'Explore the temple and its hillside views',
@@ -929,6 +976,7 @@ export const days: Day[] = [
         time: '12:00 PM',
         title: 'Sannenzaka and Ninenzaka',
         place: 'Higashiyama',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Sannenzaka+Ninenzaka+Kyoto',
         type: 'suggestion',
         notes: [
           'Walk through the preserved historic streets',
@@ -950,6 +998,7 @@ export const days: Day[] = [
         time: 'Evening',
         title: 'Pontocho and Kawaramachi',
         place: 'Central Kyoto',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Pontocho+Alley+Kyoto',
         type: 'suggestion',
         notes: [
           'Explore the narrow Pontocho alley after sunset',
@@ -980,6 +1029,7 @@ export const days: Day[] = [
         time: '9:00 AM',
         title: 'Nara Park',
         place: 'Nara Park',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Nara+Park',
         type: 'suggestion',
         notes: [
           'Walk through the park and see the free-roaming deer',
@@ -991,6 +1041,7 @@ export const days: Day[] = [
         time: '10:00 AM',
         title: 'Tōdai-ji',
         place: 'Nara Park',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Todai-ji+Nara',
         type: 'suggestion',
         notes: [
           'Visit the Great Buddha Hall and its enormous bronze Buddha',
@@ -1002,6 +1053,7 @@ export const days: Day[] = [
         time: '11:30 AM',
         title: 'Nigatsu-dō',
         place: 'Tōdai-ji complex',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Nigatsu-do+Nara',
         type: 'suggestion',
         notes: [
           'Walk uphill for a quieter temple area and views across Nara',
@@ -1012,6 +1064,7 @@ export const days: Day[] = [
         time: '12:30 PM',
         title: 'Lunch in Nara',
         place: 'Nara Park or Higashimuki',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Higashimuki+Shopping+Street+Nara',
         type: 'food',
         notes: [
           'Try kakinoha-zushi, udon or another local specialty',
@@ -1022,6 +1075,7 @@ export const days: Day[] = [
         time: '2:00 PM',
         title: 'Kasuga Taisha',
         place: 'Nara Park',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Kasuga+Taisha+Nara',
         type: 'suggestion',
         notes: [
           'Walk through the lantern-lined forest paths',
@@ -1033,6 +1087,7 @@ export const days: Day[] = [
         time: '3:30 PM',
         title: 'Explore Naramachi',
         place: 'Naramachi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Naramachi+Nara',
         type: 'suggestion',
         notes: [
           'Browse preserved merchant streets, cafés and small shops',
@@ -1085,6 +1140,7 @@ export const days: Day[] = [
         time: 'Afternoon',
         title: 'Explore Osaka',
         place: 'Namba, Umeda or Osaka Castle',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Osaka+Castle',
         type: 'suggestion',
         notes: [
           'Choose an area based on the daruma experience location',
@@ -1096,6 +1152,7 @@ export const days: Day[] = [
         time: 'Evening',
         title: 'Dotonbori at night',
         place: 'Dotonbori and Namba',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Dotonbori+Osaka',
         type: 'sight',
         notes: [
           'See the illuminated canal and Glico running-man sign',
@@ -1118,6 +1175,7 @@ export const days: Day[] = [
         time: '7:00 AM',
         title: 'Arrive at Universal Studios Japan',
         place: 'Universal City',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Universal+Studios+Japan',
         type: 'suggestion',
         notes: [
           'Arrive well before the official opening time',
@@ -1129,6 +1187,7 @@ export const days: Day[] = [
         time: 'All day',
         title: 'Universal Studios Japan',
         place: 'Universal City',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Universal+Studios+Japan',
         type: 'suggestion',
         notes: [
           'A Studio Pass is required for park admission',

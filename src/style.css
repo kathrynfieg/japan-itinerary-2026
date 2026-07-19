@@ -434,6 +434,23 @@ body {
   line-height: 1.35;
 }
 
+.day__place--link {
+  width: fit-content;
+  max-width: 100%;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgb(181 69 27 / 0.35);
+  transition:
+    color 0.2s var(--ease),
+    text-decoration-color 0.2s var(--ease);
+}
+
+.day__place--link:hover {
+  color: var(--ink);
+  text-decoration-color: var(--accent);
+}
+
 .day__place-icon {
   flex-shrink: 0;
   margin-top: 0.12rem;
