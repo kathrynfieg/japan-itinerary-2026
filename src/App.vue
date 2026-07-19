@@ -112,10 +112,13 @@ function dayNumber(date: string) {
     <KeyLinks />
 
     <footer class="footer">
-      <p class="footer__brand">{{ trip.name }} {{ trip.year }}</p>
-      <p class="footer__meta">
-        {{ trip.travelers.join(' · ') }} · {{ trip.rangeLabel }}
-      </p>
+      <div class="footer__inner">
+        <p class="footer__brand">{{ trip.name }}</p>
+        <p class="footer__year">{{ trip.year }}</p>
+        <p class="footer__travelers">{{ trip.travelers.join(' · ') }}</p>
+        <p class="footer__dates">{{ trip.rangeLabel }}</p>
+        <a class="footer__top" href="#top">Back to top</a>
+      </div>
     </footer>
   </div>
 </template>
