@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MapPin } from '@lucide/vue'
+import { Cake, MapPin, PartyPopper } from '@lucide/vue'
 import { activityTypes, type Day } from '../data/trip'
 
 defineProps<{
@@ -19,9 +19,20 @@ function monthLabel(date: string) {
 </script>
 
 <template>
-  <article :id="day.id" class="day" :style="{ '--i': index }">
+  <article
+    :id="day.id"
+    class="day"
+    :class="{ 'day--birthday': day.theme === 'birthday' }"
+    :style="{ '--i': index }"
+  >
     <div class="day__rail" aria-hidden="true">
-      <span class="day__dot" />
+      <Cake
+        v-if="day.theme === 'birthday'"
+        class="day__cake"
+        :size="14"
+        :stroke-width="2"
+      />
+      <span v-else class="day__dot" />
     </div>
 
     <div class="day__body">
@@ -31,6 +42,14 @@ function monthLabel(date: string) {
           {{ monthLabel(day.date) }}
           <span class="day__sep">·</span>
           {{ day.weekday }}
+        </span>
+        <span
+          v-if="day.theme === 'birthday'"
+          class="day__birthday-mark"
+          aria-label="Zac’s 30th birthday"
+        >
+          <PartyPopper :size="14" :stroke-width="2.25" aria-hidden="true" />
+          <span>Zac’s 30th</span>
         </span>
       </p>
 

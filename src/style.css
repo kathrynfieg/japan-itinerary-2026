@@ -407,6 +407,14 @@ body {
   box-shadow: 0 0 0 3px var(--paper);
 }
 
+.day__cake {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  color: var(--accent-deep);
+  background: var(--paper);
+}
+
 .day__header {
   margin-bottom: 0.7rem;
 }
@@ -631,6 +639,39 @@ body {
   opacity: 0.85;
 }
 
+.day__birthday-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 0.35rem;
+  padding: 0.32rem 0.7rem 0.32rem 0.55rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    105deg,
+    #e23d6f 0%,
+    #f06a3d 28%,
+    #f0b429 55%,
+    #3db88a 78%,
+    #5b7cfa 100%
+  );
+  color: #fffef9;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  line-height: 1;
+  align-self: center;
+  text-shadow: 0 1px 1px rgb(21 32 24 / 0.28);
+  box-shadow: 0 1px 0 rgb(21 32 24 / 0.12);
+}
+
+.day__birthday-mark svg {
+  color: #fffef9;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 1px rgb(21 32 24 / 0.2));
+}
+
 /* —— Footer —— */
 .footer {
   position: relative;
@@ -841,6 +882,11 @@ body {
     width: 0.55rem;
     height: 0.55rem;
     box-shadow: 0 0 0 4px var(--paper);
+  }
+
+  .day--birthday .day__cake {
+    width: 16px;
+    height: 16px;
   }
 
   .day__header {

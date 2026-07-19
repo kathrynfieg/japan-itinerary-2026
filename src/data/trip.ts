@@ -50,6 +50,8 @@ export type Day = {
   weekday: string;
   title: string;
   summary: string;
+  /** Optional visual theme for the day section */
+  theme?: 'birthday';
   activities: Activity[];
 };
 
@@ -819,6 +821,7 @@ export const days: Day[] = [
     date: '2026-07-26',
     weekday: 'Sunday',
     title: 'Day 5',
+    theme: 'birthday',
     summary:
       'Celebrate Zac’s 30th birthday with a Lake Ashi morning, a journey to Kyoto, exceptional ramen and a memorable night in Gion.',
     activities: [
