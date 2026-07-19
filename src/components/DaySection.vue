@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { MapPin } from '@lucide/vue'
 import { activityTypes, type Day } from '../data/trip'
 
 defineProps<{
@@ -66,7 +67,10 @@ function monthLabel(date: string) {
                 {{ activityTypes[activity.type].label }}
               </span>
             </div>
-            <p v-if="activity.place" class="day__place">{{ activity.place }}</p>
+            <p v-if="activity.place" class="day__place">
+              <MapPin class="day__place-icon" :size="13" :stroke-width="2" aria-hidden="true" />
+              <span>{{ activity.place }}</span>
+            </p>
             <ul v-if="activity.notes?.length" class="day__notes">
               <li
                 v-for="(note, noteIndex) in activity.notes"

@@ -423,10 +423,20 @@ body {
 }
 
 .day__place {
-  margin: 0.1rem 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+  margin: 0.2rem 0 0;
   color: var(--ink-soft);
   font-size: 0.82rem;
   line-height: 1.35;
+}
+
+.day__place-icon {
+  flex-shrink: 0;
+  margin-top: 0.12rem;
+  color: var(--accent-deep);
+  opacity: 0.85;
 }
 
 .day__note {
