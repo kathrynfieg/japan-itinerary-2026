@@ -836,6 +836,20 @@ export const days: Day[] = [
         link: 'https://www.kyoto-gioncorner.com/global/en.html',
       },
       {
+        time: 'Evening · TBC',
+        title: 'Alternative: Kyoto ghost tour',
+        place: 'Arashiyama',
+        type: 'suggestion',
+        notes: [
+          'A small-group night walk exploring Kyoto’s darker history, ghost stories and urban legends.',
+          'The tour passes through atmospheric parts of Arashiyama, including the bamboo forest after dark.',
+          'Lasts approximately two-and-a-half hours and requires advance booking.',
+          'Choose this instead of Gion Corner; allow around 40–50 minutes to travel from central Kyoto.',
+          'The later finish may mean skipping or shortening the K36 rooftop drinks.',
+        ],
+        link: 'https://www.getyourguide.com/kyoto-l96826/kyoto-ghost-tour-legends-dark-tales-bamboo-forest-night-t507045/',
+      },
+      {
         time: '8:00 PM',
         title: 'Gion night walk',
         place: 'Hanamikoji and Yasaka Shrine',
