@@ -111,6 +111,11 @@ export const keyLinks: TripLink[] = [
     note: '26 July · Drive folder',
   },
   {
+    label: 'Kyoto ghost tour',
+    href: 'https://drive.google.com/drive/folders/1IJG17in0tftnb79nvIt-y5KHgce0VJiu?usp=drive_link',
+    note: '26 July · Free cancellation until 25 July',
+  },
+  {
     label: 'K36 rooftop bar',
     href: 'https://www.princehotels.com/seiryu-kiyomizu/restaurant/k36-the-bar-rooftoppartner-restaurant/',
     note: '26 July · Birthday drinks',
@@ -667,7 +672,8 @@ export const days: Day[] = [
       {
         time: '9:30 PM',
         title: 'Forward large luggage to Kyoto',
-        place: 'Tokyo accommodation',
+        place: 'Yamato Transport – Shinjuku Hyakunincho Office',
+        maps: 'https://www.google.com/maps/place/%E3%83%A4%E3%83%9E%E3%83%88%E9%81%8B%E8%BC%B8+%E6%96%B0%E5%AE%BF%E7%99%BE%E4%BA%BA%E7%94%BA%E5%96%B6%E6%A5%AD%E6%89%80%EF%BC%88%E7%99%BE%E4%BA%BA%E7%94%BA%EF%BC%91%E4%B8%81%E7%9B%AE%EF%BC%89/@35.7012274,139.6957877,17z/data=!3m1!4b1!4m6!3m5!1s0x60188d5fa5c4d0f9:0xfb3520b89fca5010!8m2!3d35.7012274!4d139.6957877!16s%2Fg%2F11c58kls80!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D',
         type: 'suggestion',
         notes: [
           'Japan’s luggage-delivery services can send the large suitcases directly to the Kyoto accommodation.',
@@ -961,8 +967,9 @@ export const days: Day[] = [
           'Lasts approximately two-and-a-half hours and requires advance booking.',
           'Choose this instead of Gion Corner; allow around 40–50 minutes to travel from central Kyoto.',
           'The later finish may mean skipping or shortening the K36 rooftop drinks.',
+          'Booked via GetYourGuide — free cancellation until 25 July.',
         ],
-        link: 'https://www.getyourguide.com/kyoto-l96826/kyoto-ghost-tour-legends-dark-tales-bamboo-forest-night-t507045/',
+        link: 'https://drive.google.com/drive/folders/1IJG17in0tftnb79nvIt-y5KHgce0VJiu?usp=drive_link',
       },
       {
         time: '8:00 PM',
@@ -1217,6 +1224,7 @@ export const days: Day[] = [
           'Paint and personalise a traditional Japanese daruma',
           '日本橋2丁目10−9, Chuo-ku, Osaka 542-0073',
           'Near Namba — short walk or one stop from the accommodation',
+          'Free cancellation until 28 July',
         ],
         link: 'https://drive.google.com/drive/folders/1rlxskWuPg-PgZKyx54rMJl18X-xbnaRf',
       },
