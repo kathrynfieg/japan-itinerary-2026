@@ -411,6 +411,11 @@ body {
   color: var(--ink);
 }
 
+.day__chip[data-type='booking'] {
+  background: rgb(181 69 27 / 0.12);
+  color: var(--accent-deep);
+}
+
 .day__activity-title--link {
   color: inherit;
   text-decoration: underline;

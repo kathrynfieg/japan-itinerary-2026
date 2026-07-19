@@ -9,6 +9,7 @@ export type ActivityType =
   | 'sight'
   | 'food'
   | 'experience'
+  | 'booking'
   | 'suggestion';
 
 export const activityTypes: Record<
@@ -22,6 +23,7 @@ export const activityTypes: Record<
   sight: { label: 'Sight', emoji: '🎟️' },
   food: { label: 'Food', emoji: '🍜' },
   experience: { label: 'Experience', emoji: '🎨' },
+  booking: { label: 'Booked', emoji: '📅' },
   suggestion: { label: 'Suggestion', emoji: '💡' },
 };
 
@@ -202,7 +204,7 @@ export const days: Day[] = [
         title: 'Shibuya Sky Roof Bar Entry',
         place: 'Shibuya Sky',
         maps: 'https://www.google.com/maps/search/?api=1&query=Shibuya+Sky',
-        type: 'sight',
+        type: 'booking',
         notes: [
           'Arrive early because entry is tied to the booked time',
           'Explore the indoor gallery and outdoor observation areas',
@@ -214,7 +216,7 @@ export const days: Day[] = [
         title: 'Shibuya Sky Sunset Access',
         place: 'Shibuya Sky',
         maps: 'https://www.google.com/maps/search/?api=1&query=Shibuya+Sky',
-        type: 'sight',
+        type: 'booking',
         notes: [
           'Stay through sunset and the early evening city lights',
           'Look for Tokyo Tower, Tokyo Skytree and Mount Fuji if visibility is good',
@@ -338,7 +340,7 @@ export const days: Day[] = [
         title: 'teamLab Borderless',
         place: 'Azabudai Hills',
         maps: 'https://www.google.com/maps/search/?api=1&query=teamLab+Borderless+Azabudai+Hills',
-        type: 'sight',
+        type: 'booking',
         notes: [
           'An immersive digital-art museum where projections, light, sound and interactive artworks flow between interconnected rooms.',
           'There is no fixed route, which makes exploring and discovering hidden installations part of the experience.',
