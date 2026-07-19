@@ -84,6 +84,11 @@ export const keyLinks: TripLink[] = [
     note: '21 & 31 July · Drive folder',
   },
   {
+    label: 'Tokyo accommodation',
+    href: 'https://drive.google.com/drive/folders/1c8aMCdnIIhdH_d_AGqAQDU-tL12qTQSY?usp=drive_link',
+    note: '22 July · Drive folder',
+  },
+  {
     label: 'Shibuya Sky tickets',
     href: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
     note: '22 July · Drive folder',
@@ -99,6 +104,16 @@ export const keyLinks: TripLink[] = [
     note: '25 July · Hakone cycling tour',
   },
   {
+    label: 'Hakone accommodation',
+    href: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
+    note: '25 July · Drive folder',
+  },
+  {
+    label: 'Kyoto accommodation',
+    href: 'https://drive.google.com/drive/folders/1K8RI5p9EKy_tkFTGLrWT9K28EaGprvNY?usp=drive_link',
+    note: '26 July · Drive folder',
+  },
+  {
     label: 'Gion Corner',
     href: 'https://www.kyoto-gioncorner.com/global/en.html',
     note: '26 July · Traditional arts show',
@@ -112,6 +127,11 @@ export const keyLinks: TripLink[] = [
     label: 'Menya Inoichi',
     href: 'https://www.the-kansai-guide.com/en/directory/item/22116/',
     note: '26 July · Birthday ramen · queue tips',
+  },
+  {
+    label: 'Osaka accommodation',
+    href: 'https://drive.google.com/drive/folders/1lLXQALDkWclZIcDAyqPr4yGV23LFm4lZ?usp=drive_link',
+    note: '29 July · Drive folder',
   },
 ];
 
@@ -200,6 +220,7 @@ export const days: Day[] = [
           'Approximately 20–30 minutes from Tokyo Station',
           'Drop off luggage before heading out again',
         ],
+        link: 'https://drive.google.com/drive/folders/1c8aMCdnIIhdH_d_AGqAQDU-tL12qTQSY?usp=drive_link',
       },
       {
         time: '12:45 PM',
@@ -777,6 +798,7 @@ export const days: Day[] = [
           'Settle in and enjoy the slower atmosphere after Tokyo.',
           'Confirm the exact check-in process with the Airbnb host.',
         ],
+        link: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
       },
       {
         time: 'Evening',
@@ -866,6 +888,7 @@ export const days: Day[] = [
           'Collect the luggage forwarded from Tokyo.',
           'Shower, change and rest before Zac’s birthday evening.',
         ],
+        link: 'https://drive.google.com/drive/folders/1K8RI5p9EKy_tkFTGLrWT9K28EaGprvNY?usp=drive_link',
       },
       {
         time: '4:30 PM',
@@ -1174,6 +1197,17 @@ export const days: Day[] = [
           'Drop luggage at the Osaka accommodation before sightseeing',
           'Exact train route depends on both accommodation locations',
         ],
+      },
+      {
+        time: 'Morning',
+        title: 'Check-in Hotel',
+        place: 'Apartment Hotel 11 Namba',
+        maps: 'https://www.google.com/maps/search/?api=1&query=Apartment+Hotel+11+Namba',
+        type: 'stay',
+        notes: [
+          'Hotel notified of check-in on the 29th rather than the 28th — can check in as soon as we arrive in the morning',
+        ],
+        link: 'https://drive.google.com/drive/folders/1lLXQALDkWclZIcDAyqPr4yGV23LFm4lZ?usp=drive_link',
       },
       {
         time: 'TBC',
