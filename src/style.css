@@ -227,6 +227,38 @@ body {
   transform: translateY(1px);
 }
 
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.25rem;
+}
+
+.hero__link {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgb(244 246 242 / 0.78);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: rgb(244 246 242 / 0.35);
+  transition:
+    color 0.2s var(--ease),
+    text-decoration-color 0.2s var(--ease);
+}
+
+.hero__link:hover {
+  color: #f4f6f2;
+  text-decoration-color: rgb(244 246 242 / 0.75);
+}
+
 /* —— Key links —— */
 .links {
   max-width: 44rem;
@@ -633,25 +665,43 @@ body {
   color: #f4f6f2;
 }
 
-.footer__top {
-  display: inline-block;
-  margin-top: 1.75rem;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: rgb(244 246 242 / 0.55);
-  border-bottom: 1px solid rgb(232 160 122 / 0.4);
-  padding-bottom: 0.12rem;
+/* —— Floating back to top —— */
+.to-top {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: #111611;
+  color: #f4f6f2;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgb(21 32 24 / 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.5rem);
   transition:
-    color 0.2s var(--ease),
-    border-color 0.2s var(--ease);
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    background 0.2s var(--ease);
 }
 
-.footer__top:hover {
-  color: #f4f6f2;
-  border-color: #e8a07a;
+.to-top--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.to-top:hover {
+  background: var(--accent-deep);
+}
+
+.to-top:active {
+  transform: translateY(1px);
 }
 
 @keyframes hero-drift {
@@ -690,6 +740,13 @@ body {
   .hero__portrait {
     width: 7.5rem;
     height: 7.5rem;
+  }
+
+  .to-top {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 3rem;
+    height: 3rem;
   }
 
   .days {
@@ -859,8 +916,13 @@ body {
   .hero__content,
   .links,
   .days__header,
-  .day {
+  .day,
+  .to-top {
     animation: none;
+  }
+
+  .to-top {
+    transition: none;
   }
 
   .hero__image {
