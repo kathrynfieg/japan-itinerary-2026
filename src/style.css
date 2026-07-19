@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 2.75rem;
+  scroll-padding-top: 4rem;
 }
 
 body {
@@ -264,6 +264,7 @@ body {
   max-width: 44rem;
   margin: 0 auto;
   padding: 0 1.1rem 2.5rem;
+  scroll-margin-top: 4rem;
   animation: rise 0.9s var(--ease) 0.05s both;
 }
 
@@ -372,7 +373,7 @@ body {
   grid-template-columns: 0.9rem 1fr;
   gap: 0.75rem;
   padding: 1.15rem 0;
-  scroll-margin-top: 2.75rem;
+  scroll-margin-top: 4rem;
   animation: rise 0.8s var(--ease) both;
   animation-delay: calc(0.04s * var(--i));
 }
@@ -668,8 +669,8 @@ body {
 /* —— Floating back to top —— */
 .to-top {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+  right: max(1.25rem, env(safe-area-inset-right, 0px));
+  bottom: max(1.75rem, calc(env(safe-area-inset-bottom, 0px) + 1.25rem));
   z-index: 45;
   display: grid;
   place-items: center;
@@ -726,7 +727,7 @@ body {
 
 @media (min-width: 768px) {
   html {
-    scroll-padding-top: 3rem;
+    scroll-padding-top: 4.5rem;
   }
 
   .topbar {
@@ -755,6 +756,7 @@ body {
 
   .links {
     padding: 0 2rem 4rem;
+    scroll-margin-top: 4.5rem;
   }
 
   .links__header {
@@ -795,7 +797,7 @@ body {
     grid-template-columns: 1.5rem 1fr;
     gap: 1.75rem;
     padding: 2.35rem 0;
-    scroll-margin-top: 3rem;
+    scroll-margin-top: 4.5rem;
     border-top: 1px solid var(--line);
   }
 

@@ -57,13 +57,22 @@ onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
 })
 
+function scrollToId(id: string) {
+  const el = document.getElementById(id)
+  if (!el) return
+
+  const topbar = document.querySelector('.topbar')
+  const offset = (topbar?.getBoundingClientRect().height ?? 64) + 12
+  const top = el.getBoundingClientRect().top + window.scrollY - offset
+  window.scrollTo({ top, behavior: 'smooth' })
+}
+
 function scrollToToday() {
-  const el = document.getElementById(todayDayId.value)
-  el?.scrollIntoView({ behavior: 'smooth' })
+  scrollToId(todayDayId.value)
 }
 
 function scrollToLinks() {
-  document.getElementById('links')?.scrollIntoView({ behavior: 'smooth' })
+  scrollToId('links')
 }
 
 function scrollToTop() {
