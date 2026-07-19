@@ -79,6 +79,11 @@ export const trip = {
 /** Tickets, bookings, and other links worth finding quickly */
 export const keyLinks: TripLink[] = [
   {
+    label: 'Flight Itinerary',
+    href: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
+    note: '21 & 31 July · Drive folder',
+  },
+  {
     label: 'Shibuya Sky tickets',
     href: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
     note: '22 July · Drive folder',
@@ -124,6 +129,7 @@ export const days: Day[] = [
         place: 'Malaysia Airlines MH138',
         type: 'flight',
         notes: ['Arrives 4:00 PM', '6 hr 25 min layover in Kuala Lumpur'],
+        link: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
       },
       {
         time: '10:25 PM',
@@ -131,6 +137,7 @@ export const days: Day[] = [
         place: 'Malaysia Airlines MH52',
         type: 'flight',
         notes: ['Arrives 5:45 AM next day'],
+        link: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
       },
     ],
   },
@@ -1276,6 +1283,7 @@ export const days: Day[] = [
         place: 'Malaysia Airlines MH53',
         type: 'flight',
         notes: ['Arrives 3:45 PM', '6 hr 40 min layover in Kuala Lumpur'],
+        link: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
       },
       {
         time: '10:25 PM',
@@ -1283,6 +1291,7 @@ export const days: Day[] = [
         place: 'Malaysia Airlines MH139',
         type: 'flight',
         notes: ['Arrives 7:00 AM Sat 1 Aug'],
+        link: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
       },
     ],
   },
