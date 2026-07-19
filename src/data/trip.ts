@@ -101,11 +101,6 @@ export const keyLinks: TripLink[] = [
     note: '23 July · Drive folder',
   },
   {
-    label: 'Mountain Ripper',
-    href: 'https://mountainripper.com/en/',
-    note: '25 July · Hakone cycling tour',
-  },
-  {
     label: 'Hakone accommodation',
     href: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
     note: '25 July · Drive folder',
@@ -114,11 +109,6 @@ export const keyLinks: TripLink[] = [
     label: 'Kyoto accommodation',
     href: 'https://drive.google.com/drive/folders/1K8RI5p9EKy_tkFTGLrWT9K28EaGprvNY?usp=drive_link',
     note: '26 July · Drive folder',
-  },
-  {
-    label: 'Gion Corner',
-    href: 'https://www.kyoto-gioncorner.com/global/en.html',
-    note: '26 July · Traditional arts show',
   },
   {
     label: 'K36 rooftop bar',
