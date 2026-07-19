@@ -25,15 +25,16 @@ function monthLabel(date: string) {
     </div>
 
     <div class="day__body">
+      <p class="day__date">
+        <span class="day__num">{{ dayNumber(day.date) }}</span>
+        <span class="day__meta">
+          {{ monthLabel(day.date) }}
+          <span class="day__sep">·</span>
+          {{ day.weekday }}
+        </span>
+      </p>
+
       <header class="day__header">
-        <p class="day__date">
-          <span class="day__num">{{ dayNumber(day.date) }}</span>
-          <span class="day__meta">
-            {{ monthLabel(day.date) }}
-            <span class="day__sep">·</span>
-            {{ day.weekday }}
-          </span>
-        </p>
         <h3 class="day__title">{{ day.title }}</h3>
         <p class="day__summary">{{ day.summary }}</p>
       </header>
