@@ -53,6 +53,13 @@ export type Day = {
   activities: Activity[];
 };
 
+export type TripLink = {
+  label: string;
+  href: string;
+  /** Short context — date, what it is, etc. */
+  note?: string;
+};
+
 export const trip = {
   name: 'Japan',
   year: '2026',
@@ -68,6 +75,40 @@ export const trip = {
   groupPhoto,
   groupPhotoAlt: 'Zac, Jess, and Kat',
 };
+
+/** Tickets, bookings, and other links worth finding quickly */
+export const keyLinks: TripLink[] = [
+  {
+    label: 'Shibuya Sky tickets',
+    href: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+    note: '22 July · Drive folder',
+  },
+  {
+    label: 'teamLab Borderless tickets',
+    href: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
+    note: '23 July · Drive folder',
+  },
+  {
+    label: 'Mountain Ripper',
+    href: 'https://mountainripper.com/en/',
+    note: '25 July · Hakone cycling tour',
+  },
+  {
+    label: 'Gion Corner',
+    href: 'https://www.kyoto-gioncorner.com/global/en.html',
+    note: '26 July · Traditional arts show',
+  },
+  {
+    label: 'K36 rooftop bar',
+    href: 'https://www.princehotels.com/seiryu-kiyomizu/restaurant/k36-the-bar-rooftoppartner-restaurant/',
+    note: '26 July · Birthday drinks',
+  },
+  {
+    label: 'Menya Inoichi',
+    href: 'https://www.the-kansai-guide.com/en/directory/item/22116/',
+    note: '26 July · Birthday ramen · queue tips',
+  },
+];
 
 export const days: Day[] = [
   {

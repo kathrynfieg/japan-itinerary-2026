@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { days, trip } from './data/trip'
 import DaySection from './components/DaySection.vue'
+import KeyLinks from './components/KeyLinks.vue'
 
 const scrolled = ref(false)
 const activeDay = ref(days[0]?.id ?? '')
@@ -107,6 +108,8 @@ function dayNumber(date: string) {
         :index="index"
       />
     </main>
+
+    <KeyLinks />
 
     <footer class="footer">
       <p class="footer__brand">{{ trip.name }} {{ trip.year }}</p>
