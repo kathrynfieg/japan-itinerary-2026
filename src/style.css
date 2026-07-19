@@ -27,6 +27,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 2.75rem;
 }
 
 body {
@@ -260,6 +261,7 @@ body {
   grid-template-columns: 0.9rem 1fr;
   gap: 0.75rem;
   padding: 1.15rem 0;
+  scroll-margin-top: 2.75rem;
   animation: rise 0.8s var(--ease) both;
   animation-delay: calc(0.04s * var(--i));
 }
@@ -521,6 +523,10 @@ body {
 }
 
 @media (min-width: 768px) {
+  html {
+    scroll-padding-top: 3rem;
+  }
+
   .topbar {
     padding: 1rem 2rem;
   }
@@ -555,6 +561,7 @@ body {
     grid-template-columns: 1.5rem 1fr;
     gap: 1.75rem;
     padding: 2.35rem 0;
+    scroll-margin-top: 3rem;
     border-top: 1px solid var(--line);
   }
 
