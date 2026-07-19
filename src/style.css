@@ -369,13 +369,17 @@ body {
 }
 
 .day {
-  display: grid;
-  grid-template-columns: 0.9rem 1fr;
-  gap: 0.75rem;
   padding: 1.15rem 0;
   scroll-margin-top: 4rem;
   animation: rise 0.8s var(--ease) both;
   animation-delay: calc(0.04s * var(--i));
+}
+
+.day__main {
+  display: grid;
+  grid-template-columns: 0.9rem 1fr;
+  gap: 0.75rem;
+  min-width: 0;
 }
 
 .day__rail {
@@ -383,13 +387,13 @@ body {
   display: flex;
   justify-content: center;
   align-self: stretch;
-  padding-top: 0.35rem;
+  padding-top: 0.4rem;
 }
 
 .day__rail::before {
   content: '';
   position: absolute;
-  top: 0.95rem;
+  top: 0.62rem;
   bottom: 0;
   width: 1px;
   background: var(--line);
@@ -400,6 +404,8 @@ body {
 }
 
 .day__dot {
+  position: relative;
+  z-index: 1;
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
@@ -415,6 +421,10 @@ body {
   background: var(--paper);
 }
 
+.day__body {
+  min-width: 0;
+}
+
 .day__header {
   margin-bottom: 0.7rem;
 }
@@ -426,7 +436,7 @@ body {
   display: flex;
   align-items: baseline;
   gap: 0.45rem;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.55rem;
   padding: 0.35rem 0 0.45rem;
   background: rgb(244 246 242 / 0.96);
   backdrop-filter: blur(8px);
@@ -851,8 +861,6 @@ body {
   }
 
   .day {
-    grid-template-columns: 1.5rem 1fr;
-    gap: 1.75rem;
     padding: 2.35rem 0;
     scroll-margin-top: 4.5rem;
     border-top: 1px solid var(--line);
@@ -860,6 +868,11 @@ body {
 
   .day:last-child {
     border-bottom: 1px solid var(--line);
+  }
+
+  .day__main {
+    grid-template-columns: 1.5rem 1fr;
+    gap: 1.75rem;
   }
 
   .day:last-child .day__rail::before {
@@ -871,11 +884,11 @@ body {
   }
 
   .day__rail {
-    padding-top: 0.45rem;
+    padding-top: 0.55rem;
   }
 
   .day__rail::before {
-    top: 1.1rem;
+    top: 0.78rem;
   }
 
   .day__dot {
@@ -896,7 +909,7 @@ body {
   .day__date {
     top: 3.85rem;
     gap: 0.65rem;
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.75rem;
     padding: 0.45rem 0 0.55rem;
   }
 
