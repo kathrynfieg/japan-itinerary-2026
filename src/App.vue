@@ -93,9 +93,10 @@ function dayNumber(date: string) {
 
     <main id="days" class="days">
       <header class="days__header">
-        <h2 class="days__heading">The days</h2>
+        <h2 class="days__heading">The Days</h2>
         <p class="days__sub">
-          Eleven days sketched in. Fill each one as plans firm up.
+          Eleven days across Japan! Here’s everything we’ve planned so far,
+          including our confirmed bookings and flexible ideas for each day.
         </p>
       </header>
 
