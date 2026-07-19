@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { ArrowUp } from '@lucide/vue'
+import { ArrowUp, Cake } from '@lucide/vue'
 import { days, trip } from './data/trip'
 import DaySection from './components/DaySection.vue'
 import KeyLinks from './components/KeyLinks.vue'
@@ -94,9 +94,24 @@ function dayNumber(date: string) {
           :key="day.id"
           :href="`#${day.id}`"
           class="topbar__day"
-          :class="{ 'topbar__day--active': activeDay === day.id }"
+          :class="{
+            'topbar__day--active': activeDay === day.id,
+            'topbar__day--birthday': day.theme === 'birthday',
+          }"
+          :aria-label="
+            day.theme === 'birthday'
+              ? `${dayNumber(day.date)} July · Zac’s 30th birthday`
+              : undefined
+          "
         >
-          {{ dayNumber(day.date) }}
+          <span>{{ dayNumber(day.date) }}</span>
+          <Cake
+            v-if="day.theme === 'birthday'"
+            class="topbar__day-cake"
+            :size="10"
+            :stroke-width="2.25"
+            aria-hidden="true"
+          />
         </a>
       </nav>
     </header>

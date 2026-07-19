@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 4rem;
+  scroll-padding-top: 3.5rem;
 }
 
 body {
@@ -104,8 +104,10 @@ body {
   flex: 0 0 auto;
   min-width: 1.85rem;
   height: 1.85rem;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.12rem;
   font-size: 0.75rem;
   font-weight: 500;
   text-decoration: none;
@@ -115,6 +117,16 @@ body {
   transition:
     opacity 0.25s var(--ease),
     border-color 0.25s var(--ease);
+}
+
+.topbar__day--birthday {
+  min-width: 2.35rem;
+  padding-inline: 0.15rem;
+}
+
+.topbar__day-cake {
+  flex-shrink: 0;
+  opacity: 0.9;
 }
 
 .topbar__day--active {
@@ -264,7 +276,7 @@ body {
   max-width: 44rem;
   margin: 0 auto;
   padding: 0 1.1rem 2.5rem;
-  scroll-margin-top: 4rem;
+  scroll-margin-top: 0;
   animation: rise 0.9s var(--ease) 0.05s both;
 }
 
@@ -370,7 +382,7 @@ body {
 
 .day {
   padding: 1.15rem 0;
-  scroll-margin-top: 4rem;
+  scroll-margin-top: 0;
   animation: rise 0.8s var(--ease) both;
   animation-delay: calc(0.04s * var(--i));
 }
@@ -794,7 +806,7 @@ body {
 
 @media (min-width: 768px) {
   html {
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 3.75rem;
   }
 
   .topbar {
@@ -823,7 +835,7 @@ body {
 
   .links {
     padding: 0 2rem 4rem;
-    scroll-margin-top: 4.5rem;
+    scroll-margin-top: 0;
   }
 
   .links__header {
@@ -862,7 +874,7 @@ body {
 
   .day {
     padding: 2.35rem 0;
-    scroll-margin-top: 4.5rem;
+    scroll-margin-top: 0;
     border-top: 1px solid var(--line);
   }
 
