@@ -92,9 +92,9 @@ export const days: Day[] = [
     id: 'jul-22',
     date: '2026-07-22',
     weekday: 'Wednesday',
-    title: 'Arrival & Shibuya',
+    title: 'Day 1',
     summary:
-      'Land at Kansai, travel to Tokyo and finish the day above Shibuya at sunset.',
+      'Land at Kansai, travel to Tokyo and spend the evening exploring Shibuya.',
     activities: [
       {
         time: '5:45 AM',
@@ -119,7 +119,7 @@ export const days: Day[] = [
         place: 'KIX → Shin-Osaka',
         type: 'train',
         notes: [
-          'Limited express',
+          'Limited-express airport train',
           'Journey takes approximately 50 minutes',
           'Allow additional time to find the Shinkansen platforms',
         ],
@@ -131,7 +131,8 @@ export const days: Day[] = [
         type: 'train',
         notes: [
           'Shinkansen journey takes approximately 2 hr 30 min',
-          'Reserve oversized-luggage seats if any suitcase exceeds the size limit',
+          'Reserve oversized-luggage seats if required',
+          'Pick up an ekiben, snacks or drinks before boarding',
         ],
       },
       {
@@ -141,7 +142,52 @@ export const days: Day[] = [
         type: 'stay',
         notes: [
           'Approximately 20–30 minutes from Tokyo Station',
-          'Drop bags, have lunch and rest before travelling to Shibuya',
+          'Drop off luggage before heading out again',
+        ],
+      },
+      {
+        time: '12:45 PM',
+        title: 'First Japanese 7-Eleven stop',
+        place: 'Near the accommodation',
+        type: 'food',
+        notes: [
+          'Pick up cold drinks, snacks and breakfast supplies',
+          'Try an onigiri, egg sandwich, fried chicken or convenience-store dessert',
+          'Use the ATM or withdraw cash if required',
+          'Keep this quick so there is still time to rest before Shibuya',
+        ],
+      },
+      {
+        time: '1:15 PM',
+        title: 'Rest and reset',
+        place: 'Accommodation',
+        type: 'stay',
+        notes: [
+          'Have lunch, shower and rest after the overnight journey',
+          'Charge phones and portable batteries',
+          'Aim to leave for Shibuya at approximately 3:30 PM',
+        ],
+      },
+      {
+        time: '3:30 PM',
+        title: 'Train to Shibuya',
+        place: 'Shin-Ōkubo → Shibuya',
+        type: 'train',
+        notes: [
+          'Allow extra time to navigate Shibuya Station',
+          'Head towards the Hachikō exit',
+        ],
+      },
+      {
+        time: '4:05 PM',
+        title: 'Hachikō and Shibuya Crossing',
+        place: 'Hachikō Square',
+        type: 'sight',
+        notes: [
+          'See the Hachikō statue outside Shibuya Station',
+          'Walk across the famous Shibuya Scramble Crossing',
+          'Keep this visit brief so the Shibuya Sky booking is not rushed',
+          'You can return after dark for the full neon-lit experience',
         ],
       },
       {
@@ -151,7 +197,7 @@ export const days: Day[] = [
         type: 'sight',
         notes: [
           'Arrive early because entry is tied to the booked time',
-          'Allow time for queues and the lifts to the observation deck',
+          'Explore the indoor gallery and outdoor observation areas',
         ],
         link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
       },
@@ -162,18 +208,52 @@ export const days: Day[] = [
         type: 'sight',
         notes: [
           'Stay through sunset and the early evening city lights',
-          'Explore Shibuya Crossing and Hachikō afterwards',
+          'Look for Tokyo Tower, Tokyo Skytree and Mount Fuji if visibility is good',
+          'Allow the departure time to remain flexible',
         ],
         link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
       },
       {
-        time: 'Evening',
+        time: '7:15 PM',
+        title: 'Shibuya PARCO',
+        place: 'Shibuya PARCO · 6F',
+        type: 'suggestion',
+        notes: [
+          'Visit Nintendo TOKYO and Pokémon Center Shibuya',
+          'The floor also has several other gaming and character stores',
+          'Aim to arrive before 8:00 PM because the shops close at 9:00 PM',
+          'Swap this for Shibuya 109 if fashion is a higher priority',
+        ],
+      },
+      {
+        time: '8:30 PM',
         title: 'Dinner in Shibuya',
+        place: 'Dōgenzaka',
+        type: 'food',
+        notes: [
+          'Recommended easy option: Uobei for affordable made-to-order sushi',
+          'Alternative: Gyukatsu Motomura for beef cutlet if the queue is reasonable',
+        ],
+      },
+      {
+        time: '9:30 PM',
+        title: 'MEGA Don Quijote',
         place: 'Shibuya',
         type: 'suggestion',
         notes: [
-          'Keep dinner flexible after the long travel day',
-          'Choose somewhere close to Shibuya Station for an easy trip home',
+          'Browse Japanese snacks, beauty products, souvenirs and travel essentials',
+          'The store is open late, so there is no need to rush here before dinner',
+          'Avoid buying too much on the first night because everything must travel with you',
+        ],
+      },
+      {
+        time: '10:15 PM',
+        title: 'Shibuya Crossing at night',
+        place: 'Shibuya Scramble Crossing',
+        type: 'sight',
+        notes: [
+          'Walk across again once the billboards and surrounding streets are illuminated',
+          'Head back to the accommodation whenever the group begins feeling tired',
         ],
       },
     ],
