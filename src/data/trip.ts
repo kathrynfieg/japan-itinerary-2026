@@ -135,6 +135,11 @@ export const keyLinks: TripLink[] = [
     href: 'https://drive.google.com/drive/folders/1lLXQALDkWclZIcDAyqPr4yGV23LFm4lZ?usp=drive_link',
     note: '29 July · Drive folder',
   },
+  {
+    label: 'Daruma painting experience',
+    href: 'https://drive.google.com/drive/folders/1rlxskWuPg-PgZKyx54rMJl18X-xbnaRf',
+    note: '29 July · 10:00 AM · DARUMA CLUB, Nipponbashi',
+  },
 ];
 
 export const days: Day[] = [
@@ -1196,7 +1201,7 @@ export const days: Day[] = [
         place: 'Kyoto → Osaka',
         type: 'train',
         notes: [
-          'Check out and travel after the morning rush where possible',
+          'Travel early enough to reach Osaka before the 10:00 AM daruma experience',
           'Drop luggage at the Osaka accommodation before sightseeing',
           'Exact train route depends on both accommodation locations',
         ],
@@ -1213,15 +1218,17 @@ export const days: Day[] = [
         link: 'https://drive.google.com/drive/folders/1lLXQALDkWclZIcDAyqPr4yGV23LFm4lZ?usp=drive_link',
       },
       {
-        time: 'TBC',
+        time: '10:00 AM',
         title: 'Daruma painting experience',
-        place: 'Osaka · venue TBC',
-        type: 'experience',
+        place: 'DARUMA CLUB · Nipponbashi',
+        maps: 'https://www.google.com/maps/search/?api=1&query=DARUMA+CLUB+日本橋2丁目10-9+大阪',
+        type: 'booking',
         notes: [
           'Paint and personalise a traditional Japanese daruma',
-          'Add the confirmed venue, booking time and link once available',
-          'Allow travel time from the Osaka accommodation',
+          '日本橋2丁目10−9, Chuo-ku, Osaka 542-0073',
+          'Near Namba — short walk or one stop from the accommodation',
         ],
+        link: 'https://drive.google.com/drive/folders/1rlxskWuPg-PgZKyx54rMJl18X-xbnaRf',
       },
       {
         time: 'Afternoon',
@@ -1230,7 +1237,7 @@ export const days: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Osaka+Castle',
         type: 'suggestion',
         notes: [
-          'Choose an area based on the daruma experience location',
+          'Daruma Club is in Nipponbashi, close to Namba',
           'Do not cross the city unnecessarily during the hottest part of the day',
           'Return to the accommodation for a break before Dotonbori',
         ],
