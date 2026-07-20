@@ -70,7 +70,7 @@ export const trip = {
   rangeLabel: '21 – 31 July',
   travelers: ['Zac', 'Jess', 'Kat'] as const,
   tagline:
-    'Tokyo, Hakone, Kyoto & Osaka. Our first Japan adventure, celebrating big milestones and new beginnings along the way.',
+    'Japan with the three of us — eleven days, four cities and a lot to look forward to 🇯🇵',
   heroImage:
     'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80',
   heroAlt: 'Traditional street in Kyoto at dusk',
