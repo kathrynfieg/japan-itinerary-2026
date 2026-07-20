@@ -2,7 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { ArrowUp, Cake } from '@lucide/vue'
 import { days, trip } from './data/trip'
-import BirthdaySurprise from './components/BirthdaySurprise.vue'
+import DayNotice from './components/DayNotice.vue'
 import DaySection from './components/DaySection.vue'
 import KeyLinks from './components/KeyLinks.vue'
 
@@ -72,8 +72,8 @@ function scrollToToday() {
   scrollToId(todayDayId.value)
 }
 
-function scrollToBirthday() {
-  scrollToId('jul-26')
+function scrollToDay(id: string) {
+  scrollToId(id)
 }
 
 function scrollToLinks() {
@@ -91,7 +91,7 @@ function dayNumber(date: string) {
 
 <template>
   <div class="page">
-    <BirthdaySurprise @open-day="scrollToBirthday" />
+    <DayNotice @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
       <a class="topbar__brand" href="#top">{{ trip.name }}</a>
