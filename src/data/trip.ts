@@ -116,16 +116,6 @@ export const keyLinks: TripLink[] = [
     note: '26 July · 7:30 PM · Free cancellation until 25 July',
   },
   {
-    label: 'K36 rooftop bar',
-    href: 'https://www.princehotels.com/seiryu-kiyomizu/restaurant/k36-the-bar-rooftoppartner-restaurant/',
-    note: '26 July · Birthday drinks',
-  },
-  {
-    label: 'Menya Inoichi',
-    href: 'https://www.the-kansai-guide.com/en/directory/item/22116/',
-    note: '26 July · Birthday ramen · queue tips',
-  },
-  {
     label: 'Osaka accommodation',
     href: 'https://drive.google.com/drive/folders/1lLXQALDkWclZIcDAyqPr4yGV23LFm4lZ?usp=drive_link',
     note: '29 July · Drive folder',
