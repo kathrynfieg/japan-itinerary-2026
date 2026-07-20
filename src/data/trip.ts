@@ -88,7 +88,7 @@ export const keyLinks: TripLink[] = [
   {
     label: 'Tokyo accommodation',
     href: 'https://drive.google.com/drive/folders/1c8aMCdnIIhdH_d_AGqAQDU-tL12qTQSY?usp=drive_link',
-    note: '22 July · Drive folder',
+    note: '22 July · Early check-in from 11:00 AM · Drive folder',
   },
   {
     label: 'Shibuya Sky tickets',
@@ -113,7 +113,7 @@ export const keyLinks: TripLink[] = [
   {
     label: 'Kyoto ghost tour',
     href: 'https://drive.google.com/drive/folders/1IJG17in0tftnb79nvIt-y5KHgce0VJiu?usp=drive_link',
-    note: '26 July · Free cancellation until 25 July',
+    note: '26 July · 7:30 PM · Free cancellation until 25 July',
   },
   {
     label: 'K36 rooftop bar',
@@ -219,6 +219,7 @@ export const days: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Shin-Okubo+Station+Tokyo',
         type: 'stay',
         notes: [
+          'Early check-in available from 11:00 AM',
           'Approximately 20–30 minutes from Tokyo Station',
           'Drop off luggage before heading out again',
         ],
@@ -824,7 +825,7 @@ export const days: Day[] = [
     title: 'Day 5',
     theme: 'birthday',
     summary:
-      'Celebrate Zac’s 30th birthday with a Lake Ashi morning, a journey to Kyoto, exceptional ramen and a memorable night in Gion.',
+      'Celebrate Zac’s 30th birthday with a Lake Ashi morning, a journey to Kyoto, exceptional ramen and a Kyoto ghost tour.',
     activities: [
       {
         time: '7:30 AM',
@@ -933,39 +934,39 @@ export const days: Day[] = [
       },
       {
         time: '6:30 PM',
-        title: 'Walk to Gion',
-        place: 'Kawaramachi → Gion',
-        type: 'suggestion',
+        title: 'Travel to Arashiyama',
+        place: 'Kawaramachi → Arashiyama',
+        type: 'train',
         notes: [
-          'Cross the Kamo River into Kyoto’s best-known traditional entertainment district.',
-          'Gion is recognised for wooden townhouses, teahouses, geiko and maiko culture.',
-          'Arrive at the theatre at least 15 minutes before the performance.',
+          'Head west after ramen for the booked ghost tour.',
+          'Allow around 40–50 minutes from central Kyoto.',
+          'Confirm the exact meeting point in the GetYourGuide booking.',
         ],
       },
       {
         time: '7:00 PM',
-        title: 'Gion Corner traditional arts show',
+        title: 'Alternative: Gion Corner traditional arts show',
         place: 'Gion Kobu',
         maps: 'https://www.google.com/maps/search/?api=1&query=Gion+Corner+Kyoto',
-        type: 'experience',
+        type: 'suggestion',
         notes: [
           'A compact introduction to several traditional Japanese performing arts.',
           'The show includes maiko dance, tea ceremony, koto music and classical theatre.',
-          'Book premium seats or seats with tea and sweets to make the birthday feel more special.',
+          'Backup option if the ghost tour is cancelled; book premium seats or seats with tea and sweets.',
         ],
         link: 'https://www.kyoto-gioncorner.com/global/en.html',
       },
       {
-        time: 'Evening · TBC',
-        title: 'Alternative: Kyoto ghost tour',
+        time: '7:30 PM',
+        title: 'Kyoto ghost tour',
         place: 'Arashiyama',
         maps: 'https://www.google.com/maps/search/?api=1&query=Arashiyama+Bamboo+Grove',
-        type: 'suggestion',
+        type: 'booking',
         notes: [
           'A small-group night walk exploring Kyoto’s darker history, ghost stories and urban legends.',
           'The tour passes through atmospheric parts of Arashiyama, including the bamboo forest after dark.',
-          'Lasts approximately two-and-a-half hours and requires advance booking.',
-          'Choose this instead of Gion Corner; allow around 40–50 minutes to travel from central Kyoto.',
+          'Lasts approximately two-and-a-half hours.',
+          'Allow around 40–50 minutes to travel from central Kyoto after ramen.',
           'The later finish may mean skipping or shortening the K36 rooftop drinks.',
           'Booked via GetYourGuide — free cancellation until 25 July.',
         ],
