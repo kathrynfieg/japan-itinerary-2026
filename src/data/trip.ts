@@ -103,7 +103,7 @@ export const keyLinks: TripLink[] = [
   {
     label: 'Hakone accommodation',
     href: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
-    note: '25 July · Drive folder',
+    note: '25 July · Check-in from 3:00 PM · Early check-in possible on request · Drive folder',
   },
   {
     label: 'Kyoto accommodation',
@@ -133,7 +133,7 @@ export const keyLinks: TripLink[] = [
   {
     label: 'Daruma painting experience',
     href: 'https://drive.google.com/drive/folders/1rlxskWuPg-PgZKyx54rMJl18X-xbnaRf',
-    note: '29 July · 10:00 AM · DARUMA CLUB, Nipponbashi',
+    note: '29 July · 10:00 AM · DARUMA CLUB, Nipponbashi · Free cancellation until 28 July',
   },
 ];
 
@@ -798,6 +798,7 @@ export const days: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=571-30+Hakone+Hakone-machi',
         type: 'stay',
         notes: [
+          'Check-in from 3:00 PM — ask the host about early check-in if arriving sooner',
           'Take a short local bus or taxi from Hakone-machi.',
           'Settle in and enjoy the slower atmosphere after Tokyo.',
           'Confirm the exact check-in process with the Airbnb host.',
