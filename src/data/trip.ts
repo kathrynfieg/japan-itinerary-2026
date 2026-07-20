@@ -157,7 +157,7 @@ export const days: Day[] = [
     id: 'jul-22',
     date: '2026-07-22',
     weekday: 'Wednesday',
-    title: 'Day 1',
+    title: 'Day 1: Arrival in Tokyo',
     summary:
       'Land at Kansai, travel to Tokyo and spend the evening exploring Shibuya.',
     activities: [
@@ -339,7 +339,7 @@ export const days: Day[] = [
     id: 'jul-23',
     date: '2026-07-23',
     weekday: 'Thursday',
-    title: 'Day 2',
+    title: 'Day 2: Harajuku & teamLab',
     summary:
       'Explore Meiji Jingu, Harajuku and Omotesando before an immersive afternoon at teamLab Borderless.',
     activities: [
@@ -462,7 +462,7 @@ export const days: Day[] = [
     id: 'jul-24',
     date: '2026-07-24',
     weekday: 'Friday',
-    title: 'Day 3',
+    title: 'Day 3: Old Tokyo & Akihabara',
     summary:
       'Discover old Tokyo in Asakusa, explore the markets of Ueno and finish among the games, anime and electronics of Akihabara.',
     activities: [
@@ -681,7 +681,7 @@ export const days: Day[] = [
     id: 'jul-25',
     date: '2026-07-25',
     weekday: 'Saturday',
-    title: 'Day 4',
+    title: 'Day 4: Tokyo → Hakone',
     summary:
       'Leave Tokyo for Hakone, cycle through its forests and finish beside Lake Ashi.',
     activities: [
@@ -813,7 +813,7 @@ export const days: Day[] = [
     id: 'jul-26',
     date: '2026-07-26',
     weekday: 'Sunday',
-    title: 'Day 5',
+    title: 'Day 5: Zac’s 30th in Kyoto',
     theme: 'birthday',
     summary:
       'Celebrate Zac’s 30th with a peaceful Hakone morning, birthday ramen in Arashiyama and a ghost tour through the bamboo forest after dark.',
@@ -961,7 +961,7 @@ export const days: Day[] = [
     id: 'jul-27',
     date: '2026-07-27',
     weekday: 'Monday',
-    title: 'Day 6',
+    title: 'Day 6: Historic Kyoto',
     summary:
       'Walk beneath Fushimi Inari’s torii gates, explore historic Higashiyama and finish with the food and lantern-lit streets of Gion and Pontocho.',
     activities: [
@@ -1075,7 +1075,7 @@ export const days: Day[] = [
     id: 'jul-28',
     date: '2026-07-28',
     weekday: 'Tuesday',
-    title: 'Day 7',
+    title: 'Day 7: Nara Day Trip',
     summary:
       'Meet Nara’s deer, see the Great Buddha, follow forest paths to Kasuga Taisha and finish among the shops and historic streets of Naramachi.',
     activities: [
@@ -1237,7 +1237,7 @@ export const days: Day[] = [
     id: 'jul-29',
     date: '2026-07-29',
     weekday: 'Wednesday',
-    title: 'Kyoto to Osaka',
+    title: 'Day 8: Kyoto → Osaka',
     summary:
       'Travel to Osaka, paint a personalised daruma and explore the markets, shops, food and neon streets around Namba.',
     activities: [
@@ -1398,7 +1398,7 @@ export const days: Day[] = [
     id: 'jul-30',
     date: '2026-07-30',
     weekday: 'Thursday',
-    title: 'Universal Studios',
+    title: 'Day 9: Universal Studios Japan',
     summary:
       'A possible full day at Universal Studios Japan before the flight home.',
     activities: [
