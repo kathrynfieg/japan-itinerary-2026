@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import {
-  ChevronDown,
-  ChevronUp,
   FileText,
   GripVertical,
   Image as ImageIcon,
@@ -172,18 +170,6 @@ function removeActivity(id: string) {
 function expandedDayClear() {
   expandedId.value = null
   moveTarget.value = ''
-}
-
-function moveActivity(id: string, direction: -1 | 1) {
-  if (!selectedDay.value) return
-  const list = selectedDay.value.activities
-  const index = list.findIndex((a) => a._id === id)
-  const next = index + direction
-  if (index < 0 || next < 0 || next >= list.length) return
-  const copy = [...list]
-  const [item] = copy.splice(index, 1)
-  copy.splice(next, 0, item)
-  selectedDay.value.activities = copy
 }
 
 function moveToDay(activityId: string, targetDayId: string) {
@@ -423,7 +409,7 @@ function finish() {
 
         <ul class="edit__list">
           <li
-            v-for="(activity, index) in selectedDay.activities"
+            v-for="activity in selectedDay.activities"
             :key="activity._id"
             class="edit__row"
             :class="{ 'edit__row--open': expandedId === activity._id }"
@@ -450,24 +436,6 @@ function finish() {
               />
 
               <div class="edit__row-actions">
-                <button
-                  type="button"
-                  class="edit__icon-btn"
-                  :disabled="index === 0"
-                  aria-label="Move up"
-                  @click="moveActivity(activity._id, -1)"
-                >
-                  <ChevronUp :size="16" :stroke-width="2" />
-                </button>
-                <button
-                  type="button"
-                  class="edit__icon-btn"
-                  :disabled="index === selectedDay.activities.length - 1"
-                  aria-label="Move down"
-                  @click="moveActivity(activity._id, 1)"
-                >
-                  <ChevronDown :size="16" :stroke-width="2" />
-                </button>
                 <button
                   type="button"
                   class="edit__icon-btn edit__icon-btn--more"
