@@ -2107,7 +2107,7 @@ body {
 .edit__details {
   display: grid;
   gap: 0.7rem;
-  padding: 0 0.85rem 0.9rem;
+  padding: 0.85rem 0.85rem 0.9rem;
   border-top: 1px solid var(--mist);
 }
 

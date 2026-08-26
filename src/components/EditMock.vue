@@ -85,15 +85,23 @@ function cloneLinks(source: TripLink[]): EditableLink[] {
 function stripDayIds(days: EditableDay[]): Day[] {
   return days.map(({ activities, ...day }) => ({
     ...day,
-    activities: activities.map(({ _id: _unused, ...activity }) => ({
-      ...activity,
-      links: activity.links
+    activities: activities.map(({ _id: _unused, ...activity }) => {
+      const notes = activity.notes
+        ?.map((line) => line.trim())
+        .filter(Boolean)
+      const links = activity.links
         ?.map((link) => ({
           label: link.label.trim(),
           href: link.href.trim(),
         }))
-        .filter((link) => link.label && link.href),
-    })),
+        .filter((link) => link.label && link.href)
+
+      return {
+        ...activity,
+        notes: notes?.length ? notes : undefined,
+        links: links?.length ? links : undefined,
+      }
+    }),
   }))
 }
 
@@ -193,11 +201,8 @@ function notesText(activity: EditableActivity) {
 }
 
 function setNotes(activity: EditableActivity, value: string) {
-  const lines = value
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean)
-  activity.notes = lines.length ? lines : undefined
+  // Keep empty lines while typing so Enter works; trim on save
+  activity.notes = value.length ? value.split('\n') : undefined
 }
 
 function setType(activity: EditableActivity, value: string) {
@@ -468,6 +473,45 @@ function finish() {
                 />
               </label>
 
+              <label class="edit__field">
+                <span class="edit__label">Type</span>
+                <select
+                  class="edit__select"
+                  :value="activity.type ?? ''"
+                  @change="
+                    setType(
+                      activity,
+                      ($event.target as HTMLSelectElement).value,
+                    )
+                  "
+                >
+                  <option value="">None</option>
+                  <option
+                    v-for="[value, meta] in typeOptions"
+                    :key="value"
+                    :value="value"
+                  >
+                    {{ meta.label }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="edit__field">
+                <span class="edit__label">Notes · one per line</span>
+                <textarea
+                  class="edit__textarea"
+                  rows="3"
+                  :value="notesText(activity)"
+                  placeholder="Tips, seats, inclusions…"
+                  @input="
+                    setNotes(
+                      activity,
+                      ($event.target as HTMLTextAreaElement).value,
+                    )
+                  "
+                />
+              </label>
+
               <div class="edit__field">
                 <span class="edit__label">Links</span>
                 <ul
@@ -513,45 +557,6 @@ function finish() {
                   Add link
                 </button>
               </div>
-
-              <label class="edit__field">
-                <span class="edit__label">Type</span>
-                <select
-                  class="edit__select"
-                  :value="activity.type ?? ''"
-                  @change="
-                    setType(
-                      activity,
-                      ($event.target as HTMLSelectElement).value,
-                    )
-                  "
-                >
-                  <option value="">None</option>
-                  <option
-                    v-for="[value, meta] in typeOptions"
-                    :key="value"
-                    :value="value"
-                  >
-                    {{ meta.label }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="edit__field">
-                <span class="edit__label">Notes · one per line</span>
-                <textarea
-                  class="edit__textarea"
-                  rows="3"
-                  :value="notesText(activity)"
-                  placeholder="Tips, seats, inclusions…"
-                  @input="
-                    setNotes(
-                      activity,
-                      ($event.target as HTMLTextAreaElement).value,
-                    )
-                  "
-                />
-              </label>
 
               <div class="edit__field">
                 <span class="edit__label">Attachments</span>
