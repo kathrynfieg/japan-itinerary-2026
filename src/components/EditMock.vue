@@ -3,7 +3,10 @@ import { computed, ref } from 'vue'
 import {
   ChevronDown,
   ChevronUp,
+  FileText,
   GripVertical,
+  Image as ImageIcon,
+  Paperclip,
   Plus,
   Trash2,
   X,
@@ -57,6 +60,7 @@ function cloneDays(source: Day[]): EditableDay[] {
     activities: day.activities.map((activity) => ({
       ...activity,
       notes: activity.notes ? [...activity.notes] : undefined,
+      files: activity.files ? activity.files.map((file) => ({ ...file })) : undefined,
       _id: nextId(),
     })),
   }))
@@ -508,6 +512,54 @@ function finish() {
                   "
                 />
               </label>
+
+              <div class="edit__field">
+                <span class="edit__label">Attachments</span>
+                <ul
+                  v-if="activity.files?.length"
+                  class="edit__file-list"
+                  aria-label="Attached files"
+                >
+                  <li
+                    v-for="file in activity.files"
+                    :key="file.name"
+                    class="edit__file"
+                  >
+                    <span class="edit__file-thumb" aria-hidden="true">
+                      <img
+                        v-if="file.kind === 'image' && file.thumb"
+                        :src="file.thumb"
+                        alt=""
+                      />
+                      <FileText
+                        v-else-if="file.kind === 'pdf'"
+                        :size="16"
+                        :stroke-width="2"
+                      />
+                      <ImageIcon v-else :size="16" :stroke-width="2" />
+                    </span>
+                    <span class="edit__file-name">{{ file.name }}</span>
+                    <button
+                      type="button"
+                      class="edit__icon-btn"
+                      disabled
+                      aria-label="Remove file (coming soon)"
+                    >
+                      <X :size="14" :stroke-width="2" aria-hidden="true" />
+                    </button>
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  class="edit__add-file"
+                  disabled
+                  aria-disabled="true"
+                >
+                  <Paperclip :size="14" :stroke-width="2" aria-hidden="true" />
+                  Add file
+                </button>
+                <p class="edit__hint">Photos or PDFs · coming soon</p>
+              </div>
 
               <div class="edit__detail-foot">
                 <label class="edit__move">

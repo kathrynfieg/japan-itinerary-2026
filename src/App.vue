@@ -27,6 +27,7 @@ function cloneJapanDays(): Day[] {
     activities: day.activities.map((activity) => ({
       ...activity,
       notes: activity.notes ? [...activity.notes] : undefined,
+      files: activity.files ? activity.files.map((file) => ({ ...file })) : undefined,
     })),
   }))
 }

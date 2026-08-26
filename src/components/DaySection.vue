@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cake, MapPin, PartyPopper } from '@lucide/vue'
+import { Cake, FileText, MapPin, PartyPopper } from '@lucide/vue'
 import { activityTypes, type Day } from '../data/trip'
 
 defineProps<{
@@ -129,6 +129,35 @@ function monthLabel(date: string) {
               class="day__note"
             >
               {{ note }}
+            </li>
+          </ul>
+          <ul
+            v-if="activity.files?.length"
+            class="day__files"
+            aria-label="Attachments"
+          >
+            <li v-for="file in activity.files" :key="file.name">
+              <a
+                class="day__file"
+                :class="{ 'day__file--image': file.kind === 'image' }"
+                :href="file.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="day__file-thumb" aria-hidden="true">
+                  <img
+                    v-if="file.kind === 'image' && (file.thumb || file.url)"
+                    :src="file.thumb || file.url"
+                    alt=""
+                  />
+                  <FileText
+                    v-else
+                    :size="14"
+                    :stroke-width="2.25"
+                  />
+                </span>
+                <span class="day__file-name">{{ file.name }}</span>
+              </a>
             </li>
           </ul>
         </div>

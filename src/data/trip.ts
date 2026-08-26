@@ -27,6 +27,16 @@ export const activityTypes: Record<
   suggestion: { label: 'Suggestion', emoji: '💡' },
 };
 
+/** File attached to a stop — tickets, confirmations, photos */
+export type ActivityFile = {
+  name: string;
+  kind: 'pdf' | 'image' | 'other';
+  /** Open / preview URL (mock may point at Drive or a sample image) */
+  url: string;
+  /** Optional thumbnail for images */
+  thumb?: string;
+};
+
 export type Activity = {
   /** e.g. "10:00 AM" or "Morning" */
   time?: string;
@@ -40,6 +50,8 @@ export type Activity = {
   notes?: string[];
   /** One URL — booking, menu, tickets, Drive, etc. */
   link?: string;
+  /** Photos or PDFs on this stop (tickets, confirmations, etc.) */
+  files?: ActivityFile[];
   /** One type for chips / icons */
   type?: ActivityType;
 };
@@ -147,6 +159,13 @@ export const days: Day[] = [
         type: 'flight',
         notes: ['Arrives 4:00 PM', '6 hr 25 min layover in Kuala Lumpur'],
         link: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
+        files: [
+          {
+            name: 'MH138 boarding pass.pdf',
+            kind: 'pdf',
+            url: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
+          },
+        ],
       },
       {
         time: '10:25 PM',
@@ -277,6 +296,20 @@ export const days: Day[] = [
           'Explore the indoor gallery and outdoor observation areas',
         ],
         link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+        files: [
+          {
+            name: 'Shibuya Sky tickets.pdf',
+            kind: 'pdf',
+            url: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+          },
+          {
+            name: 'Entry QR.png',
+            kind: 'image',
+            url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80',
+            thumb:
+              'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=160&q=60',
+          },
+        ],
       },
       {
         time: '5:40 PM',
@@ -417,6 +450,13 @@ export const days: Day[] = [
           'Includes free gelato at EN TEA HOUSE.',
         ],
         link: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
+        files: [
+          {
+            name: 'teamLab tickets.pdf',
+            kind: 'pdf',
+            url: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
+          },
+        ],
       },
       {
         time: '4:30 PM',

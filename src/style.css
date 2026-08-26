@@ -915,6 +915,61 @@ body {
   background: var(--line);
 }
 
+.day__files {
+  list-style: none;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.day__file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+  padding: 0.28rem 0.55rem 0.28rem 0.28rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgb(232 236 230 / 0.45);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.day__file:hover {
+  border-color: var(--ink-soft);
+  background: rgb(232 236 230 / 0.85);
+}
+
+.day__file-thumb {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--mist);
+  color: var(--ink-soft);
+}
+
+.day__file-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.day__file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .day__empty {
   margin: 0;
   font-size: 0.85rem;
@@ -1766,6 +1821,83 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-soft);
+}
+
+.edit__file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.edit__file {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.4rem 0.35rem 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.edit__file-thumb {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--mist);
+  color: var(--ink-soft);
+}
+
+.edit__file-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit__file-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.edit__add-file {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: fit-content;
+  margin: 0.1rem 0 0;
+  padding: 0.55rem 0.85rem;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  background: rgb(232 236 230 / 0.4);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: not-allowed;
+}
+
+.edit__add-file:disabled,
+.edit__file .edit__icon-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.edit__hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  opacity: 0.85;
 }
 
 .edit__input,
