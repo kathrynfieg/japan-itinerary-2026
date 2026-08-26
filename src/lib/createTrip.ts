@@ -1,0 +1,137 @@
+import type { Day } from '../data/trip'
+
+export type SessionTrip = {
+  name: string
+  year: string
+  start: string
+  end: string
+  rangeLabel: string
+  travelers: string[]
+  tagline: string
+  heroImage: string
+  heroAlt: string
+  groupPhoto?: string
+  groupPhotoAlt?: string
+  /** Original Japan itinerary demo */
+  isDemo?: boolean
+}
+
+export type CreateTripInput = {
+  name: string
+  /** ISO dates when using a range */
+  start?: string
+  end?: string
+  /** Used when dates are not set */
+  dayCount?: number
+  travelers?: string[]
+}
+
+const DEFAULT_HERO =
+  'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80'
+
+function parseLocalDate(iso: string) {
+  return new Date(iso + 'T12:00:00')
+}
+
+function toIso(date: Date) {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
+function addDays(iso: string, offset: number) {
+  const date = parseLocalDate(iso)
+  date.setDate(date.getDate() + offset)
+  return toIso(date)
+}
+
+function weekdayLabel(iso: string) {
+  return parseLocalDate(iso).toLocaleDateString('en-GB', { weekday: 'long' })
+}
+
+function formatRangeLabel(start: string, end: string) {
+  const startDate = parseLocalDate(start)
+  const endDate = parseLocalDate(end)
+  const sameMonth =
+    startDate.getMonth() === endDate.getMonth() &&
+    startDate.getFullYear() === endDate.getFullYear()
+
+  const dayStart = startDate.getDate()
+  const dayEnd = endDate.getDate()
+  const monthEnd = endDate.toLocaleDateString('en-GB', { month: 'short' })
+
+  if (sameMonth) {
+    return `${dayStart} – ${dayEnd} ${monthEnd}`
+  }
+
+  const monthStart = startDate.toLocaleDateString('en-GB', { month: 'short' })
+  return `${dayStart} ${monthStart} – ${dayEnd} ${monthEnd}`
+}
+
+function daysBetween(start: string, end: string) {
+  const ms =
+    parseLocalDate(end).getTime() - parseLocalDate(start).getTime()
+  return Math.floor(ms / 86_400_000) + 1
+}
+
+function buildDay(index: number, date: string): Day {
+  const n = index + 1
+  return {
+    id: `day-${n}-${date}`,
+    date,
+    weekday: weekdayLabel(date),
+    title: `Day ${n}`,
+    summary: 'Nothing planned yet.',
+    activities: [],
+  }
+}
+
+export function createTripFromInput(input: CreateTripInput): {
+  trip: SessionTrip
+  days: Day[]
+} {
+  const name = input.name.trim() || 'Trip'
+  const travelers = (input.travelers ?? [])
+    .map((t) => t.trim())
+    .filter(Boolean)
+
+  let start: string
+  let end: string
+  let count: number
+
+  if (input.start && input.end) {
+    start = input.start
+    end = input.end
+    count = Math.max(1, daysBetween(start, end))
+  } else {
+    count = Math.max(1, Math.min(60, input.dayCount ?? 7))
+    start = toIso(new Date())
+    end = addDays(start, count - 1)
+  }
+
+  const days: Day[] = Array.from({ length: count }, (_, index) =>
+    buildDay(index, addDays(start, index)),
+  )
+
+  const year = String(parseLocalDate(start).getFullYear())
+  const rangeLabel = formatRangeLabel(start, end)
+  const who =
+    travelers.length > 0
+      ? ` with ${travelers.join(', ').replace(/, ([^,]*)$/, ' & $1')}`
+      : ''
+
+  const trip: SessionTrip = {
+    name,
+    year,
+    start,
+    end,
+    rangeLabel,
+    travelers,
+    tagline: `${count} day${count === 1 ? '' : 's'}${who} — add plans whenever you're ready.`,
+    heroImage: DEFAULT_HERO,
+    heroAlt: 'Travel destination',
+  }
+
+  return { trip, days }
+}

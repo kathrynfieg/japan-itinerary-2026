@@ -10,12 +10,11 @@ import {
 } from '@lucide/vue'
 import {
   activityTypes,
-  days as sourceDays,
-  trip,
   type Activity,
   type ActivityType,
   type Day,
 } from '../data/trip'
+import type { SessionTrip } from '../lib/createTrip'
 
 type EditableActivity = Activity & { _id: string }
 
@@ -23,8 +22,13 @@ type EditableDay = Omit<Day, 'activities'> & {
   activities: EditableActivity[]
 }
 
+const props = defineProps<{
+  days: Day[]
+  trip: SessionTrip
+}>()
+
 const emit = defineEmits<{
-  done: []
+  done: [days: Day[]]
 }>()
 
 let idCounter = 0
@@ -33,8 +37,8 @@ function nextId() {
   return `a-${idCounter}`
 }
 
-function cloneDays(): EditableDay[] {
-  return sourceDays.map((day) => ({
+function cloneDays(source: Day[]): EditableDay[] {
+  return source.map((day) => ({
     ...day,
     activities: day.activities.map((activity) => ({
       ...activity,
@@ -44,8 +48,19 @@ function cloneDays(): EditableDay[] {
   }))
 }
 
-const editDays = ref<EditableDay[]>(cloneDays())
-const selectedDayId = ref(editDays.value[1]?.id ?? editDays.value[0]?.id ?? '')
+function stripIds(days: EditableDay[]): Day[] {
+  return days.map(({ activities, ...day }) => ({
+    ...day,
+    activities: activities.map(({ _id: _unused, ...activity }) => activity),
+  }))
+}
+
+function finish() {
+  emit('done', stripIds(editDays.value))
+}
+
+const editDays = ref<EditableDay[]>(cloneDays(props.days))
+const selectedDayId = ref(editDays.value[0]?.id ?? '')
 const expandedId = ref<string | null>(null)
 const quickTitle = ref('')
 const moveTarget = ref('')
@@ -153,7 +168,7 @@ function setType(activity: EditableActivity, value: string) {
         <p class="edit__eyebrow">Owner edit · mock</p>
         <h1 class="edit__heading">{{ trip.name }} {{ trip.year }}</h1>
       </div>
-      <button type="button" class="edit__done" @click="emit('done')">
+      <button type="button" class="edit__done" @click="finish">
         Done
       </button>
     </header>
@@ -397,7 +412,7 @@ function setType(activity: EditableActivity, value: string) {
       </form>
     </section>
 
-    <button type="button" class="edit__close-fab" @click="emit('done')">
+    <button type="button" class="edit__close-fab" @click="finish">
       <X :size="18" :stroke-width="2" aria-hidden="true" />
       Back to view
     </button>

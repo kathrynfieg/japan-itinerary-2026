@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ArrowUp, Cake, Pencil } from '@lucide/vue'
-import { days, trip } from './data/trip'
+import {
+  days as japanDays,
+  trip as japanTrip,
+  type Day,
+} from './data/trip'
+import type { SessionTrip } from './lib/createTrip'
 import DayNotice from './components/DayNotice.vue'
 import DaySection from './components/DaySection.vue'
 import EditMock from './components/EditMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
+import OnboardingMock from './components/OnboardingMock.vue'
 
-const mode = ref<'view' | 'edit'>('view')
+const mode = ref<'onboarding' | 'view' | 'edit'>('onboarding')
+const sessionTrip = ref<SessionTrip | null>(null)
+const sessionDays = ref<Day[]>([])
+
 const scrolled = ref(false)
 const showTop = ref(false)
-const activeDay = ref(days[0]?.id ?? '')
+const activeDay = ref('')
+
+const trip = computed(() => sessionTrip.value)
+const days = computed(() => sessionDays.value)
+const isDemo = computed(() => Boolean(sessionTrip.value?.isDemo))
 
 function localDateString(date = new Date()) {
   const y = date.getFullYear()
@@ -20,20 +33,32 @@ function localDateString(date = new Date()) {
 }
 
 const todayDayId = computed(() => {
+  const list = days.value
+  const currentTrip = trip.value
+  if (!list.length || !currentTrip) return ''
   const today = localDateString()
-  const match = days.find((day) => day.date === today)
+  const match = list.find((day) => day.date === today)
   if (match) return match.id
-  if (today < trip.start) return days[0]?.id ?? ''
-  return days[days.length - 1]?.id ?? ''
+  if (today < currentTrip.start) return list[0]?.id ?? ''
+  return list[list.length - 1]?.id ?? ''
+})
+
+const daysIntro = computed(() => {
+  const count = days.value.length
+  if (isDemo.value) {
+    return 'Eleven days across Japan! Here’s everything we’ve planned so far, including our confirmed bookings and flexible ideas for each day.'
+  }
+  return `${count} day${count === 1 ? '' : 's'} ready to go. Tap Edit to add plans — titles start as Day 1–${count} and you can rename anytime.`
 })
 
 function onScroll() {
   scrolled.value = window.scrollY > 40
   showTop.value = window.scrollY > window.innerHeight * 0.6
 
+  const list = days.value
   const marker = window.innerHeight * 0.35
-  let current = days[0]?.id ?? ''
-  for (const day of days) {
+  let current = list[0]?.id ?? ''
+  for (const day of list) {
     const el = document.getElementById(day.id)
     if (!el) continue
     if (el.getBoundingClientRect().top <= marker) current = day.id
@@ -41,23 +66,41 @@ function onScroll() {
   activeDay.value = current
 }
 
+function bindScroll() {
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+}
+
+function unbindScroll() {
+  window.removeEventListener('scroll', onScroll)
+}
+
 onMounted(() => {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'
   }
 
-  // Refresh should start at the hero, not a leftover day hash / scroll position
   if (window.location.hash) {
     history.replaceState(null, '', window.location.pathname + window.location.search)
   }
   window.scrollTo(0, 0)
-
-  window.addEventListener('scroll', onScroll, { passive: true })
-  onScroll()
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll)
+  unbindScroll()
+})
+
+watch(mode, (next) => {
+  unbindScroll()
+  if (next === 'view') {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0)
+      bindScroll()
+      activeDay.value = days.value[0]?.id ?? ''
+    })
+  } else {
+    window.scrollTo(0, 0)
+  }
 })
 
 function scrollToId(id: string) {
@@ -92,20 +135,67 @@ function dayNumber(date: string) {
 
 function openEdit() {
   mode.value = 'edit'
-  window.scrollTo(0, 0)
 }
 
-function closeEdit() {
+function closeEdit(updated: Day[]) {
+  sessionDays.value = updated
   mode.value = 'view'
-  window.scrollTo(0, 0)
+}
+
+function onCreated(payload: { trip: SessionTrip; days: Day[] }) {
+  sessionTrip.value = payload.trip
+  sessionDays.value = payload.days
+  mode.value = 'view'
+}
+
+function openJapanDemo() {
+  sessionTrip.value = {
+    name: japanTrip.name,
+    year: japanTrip.year,
+    start: japanTrip.start,
+    end: japanTrip.end,
+    rangeLabel: japanTrip.rangeLabel,
+    travelers: [...japanTrip.travelers],
+    tagline: japanTrip.tagline,
+    heroImage: japanTrip.heroImage,
+    heroAlt: japanTrip.heroAlt,
+    groupPhoto: japanTrip.groupPhoto,
+    groupPhotoAlt: japanTrip.groupPhotoAlt,
+    isDemo: true,
+  }
+  sessionDays.value = japanDays.map((day) => ({
+    ...day,
+    activities: day.activities.map((activity) => ({
+      ...activity,
+      notes: activity.notes ? [...activity.notes] : undefined,
+    })),
+  }))
+  mode.value = 'view'
+}
+
+function startNewTrip() {
+  sessionTrip.value = null
+  sessionDays.value = []
+  mode.value = 'onboarding'
 }
 </script>
 
 <template>
-  <EditMock v-if="mode === 'edit'" @done="closeEdit" />
+  <OnboardingMock
+    v-if="mode === 'onboarding'"
+    @created="onCreated"
+    @open-demo="openJapanDemo"
+  />
 
-  <div v-else class="page">
-    <DayNotice @open-day="scrollToDay" />
+  <EditMock
+    v-else-if="mode === 'edit' && trip"
+    :days="days"
+    :trip="trip"
+    @done="closeEdit"
+  />
+
+  <div v-else-if="trip" class="page">
+    <DayNotice v-if="isDemo" @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
       <a class="topbar__brand" href="#top">{{ trip.name }}</a>
@@ -158,7 +248,7 @@ function closeEdit() {
       />
       <div class="hero__veil" />
       <div class="hero__content">
-        <div class="hero__portrait">
+        <div v-if="trip.groupPhoto" class="hero__portrait">
           <img
             :src="trip.groupPhoto"
             :alt="trip.groupPhotoAlt"
@@ -173,8 +263,16 @@ function closeEdit() {
           <button type="button" class="hero__cta" @click="scrollToToday">
             View today
           </button>
-          <button type="button" class="hero__link" @click="scrollToLinks">
+          <button
+            v-if="isDemo"
+            type="button"
+            class="hero__link"
+            @click="scrollToLinks"
+          >
             Key links
+          </button>
+          <button v-else type="button" class="hero__link" @click="openEdit">
+            Add plans
           </button>
         </div>
       </div>
@@ -183,10 +281,7 @@ function closeEdit() {
     <main id="days" class="days">
       <header class="days__header">
         <h2 class="days__heading">The Days</h2>
-        <p class="days__sub">
-          Eleven days across Japan! Here’s everything we’ve planned so far,
-          including our confirmed bookings and flexible ideas for each day.
-        </p>
+        <p class="days__sub">{{ daysIntro }}</p>
       </header>
 
       <DaySection
@@ -197,14 +292,19 @@ function closeEdit() {
       />
     </main>
 
-    <KeyLinks />
+    <KeyLinks v-if="isDemo" />
 
     <footer class="footer">
       <div class="footer__inner">
         <p class="footer__brand">{{ trip.name }}</p>
         <p class="footer__year">{{ trip.year }}</p>
-        <p class="footer__travelers">{{ trip.travelers.join(' · ') }}</p>
+        <p v-if="trip.travelers.length" class="footer__travelers">
+          {{ trip.travelers.join(' · ') }}
+        </p>
         <p class="footer__dates">{{ trip.rangeLabel }}</p>
+        <button type="button" class="footer__new" @click="startNewTrip">
+          New trip mock
+        </button>
       </div>
     </footer>
 

@@ -789,6 +789,30 @@ body {
   color: #f4f6f2;
 }
 
+.footer__new {
+  margin: 1.5rem 0 0;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid rgb(244 246 242 / 0.28);
+  border-radius: 999px;
+  background: transparent;
+  color: #f4f6f2;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.85;
+  transition:
+    opacity 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.footer__new:hover {
+  opacity: 1;
+  background: rgb(244 246 242 / 0.08);
+}
+
 /* —— Floating back to top —— */
 .to-top {
   position: fixed;
@@ -1488,4 +1512,214 @@ body {
     padding: 0.45rem;
     border-radius: 999px;
   }
+}
+
+/* —— Onboarding mock —— */
+.onboard {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.25rem 3rem;
+  background:
+    radial-gradient(1000px 520px at 12% -8%, #dde5d8 0%, transparent 55%),
+    radial-gradient(800px 420px at 100% 0%, #d5ddd4 0%, transparent 50%),
+    var(--paper);
+}
+
+.onboard__inner {
+  width: min(100%, 28rem);
+}
+
+.onboard__eyebrow {
+  margin: 0 0 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.onboard__progress {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.onboard__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--line);
+  transition: background 0.25s var(--ease);
+}
+
+.onboard__dot--on {
+  background: var(--accent);
+}
+
+.onboard__step {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.onboard__title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 7vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.onboard__lede {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.onboard__field {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.onboard__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.onboard__input {
+  width: 100%;
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.onboard__input--lg {
+  padding: 0.95rem 1rem;
+  font-size: 1.1rem;
+}
+
+.onboard__input:focus {
+  outline: 2px solid rgb(181 69 27 / 0.35);
+  outline-offset: 1px;
+  border-color: rgb(181 69 27 / 0.45);
+}
+
+.onboard__toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border-radius: 12px;
+  background: rgb(197 207 198 / 0.35);
+}
+
+.onboard__toggle-btn {
+  margin: 0;
+  padding: 0.65rem 0.5rem;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.onboard__toggle-btn--on {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgb(21 32 24 / 0.06);
+}
+
+.onboard__dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.onboard__hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.onboard__hint strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.onboard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.75rem;
+}
+
+.onboard__back,
+.onboard__skip {
+  margin: 0;
+  padding: 0.7rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.onboard__next {
+  margin: 0 0 0 0;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.15rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.onboard__next:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.onboard__demo {
+  display: block;
+  width: 100%;
+  margin: 2rem 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent-deep);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-align: center;
+  cursor: pointer;
 }
