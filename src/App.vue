@@ -3,11 +3,14 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ArrowUp, Cake, Pencil } from '@lucide/vue'
 import {
   days as japanDays,
+  keyLinks as japanKeyLinks,
   trip as japanTrip,
   type Day,
+  type TripLink,
 } from './data/trip'
 import {
   nextTripId,
+  type SessionTrip,
   type TripRecord,
 } from './lib/createTrip'
 import DayNotice from './components/DayNotice.vue'
@@ -45,6 +48,7 @@ function makeJapanRecord(): TripRecord {
       isDemo: true,
     },
     days: cloneJapanDays(),
+    links: japanKeyLinks.map((link) => ({ ...link })),
   }
 }
 
@@ -57,7 +61,9 @@ const activeRecord = computed(
 )
 const trip = computed(() => activeRecord.value?.trip ?? null)
 const days = computed(() => activeRecord.value?.days ?? [])
+const links = computed(() => activeRecord.value?.links ?? [])
 const isDemo = computed(() => Boolean(trip.value?.isDemo))
+const hasLinks = computed(() => links.value.length > 0)
 
 const scrolled = ref(false)
 const showTop = ref(false)
@@ -189,14 +195,25 @@ function openEdit() {
   mode.value = 'edit'
 }
 
-function closeEdit(updated: Day[]) {
+function closeEdit(payload: {
+  trip: SessionTrip
+  days: Day[]
+  links: TripLink[]
+}) {
   const id = activeId.value
   if (!id) {
     mode.value = 'view'
     return
   }
   library.value = library.value.map((record) =>
-    record.id === id ? { ...record, days: updated } : record,
+    record.id === id
+      ? {
+          ...record,
+          trip: payload.trip,
+          days: payload.days,
+          links: payload.links,
+        }
+      : record,
   )
   mode.value = 'view'
 }
@@ -226,6 +243,7 @@ function onCreated(record: TripRecord) {
     v-else-if="mode === 'edit' && trip"
     :days="days"
     :trip="trip"
+    :links="links"
     @done="closeEdit"
   />
 
@@ -301,7 +319,7 @@ function onCreated(record: TripRecord) {
             View today
           </button>
           <button
-            v-if="isDemo"
+            v-if="hasLinks"
             type="button"
             class="hero__link"
             @click="scrollToLinks"
@@ -329,7 +347,7 @@ function onCreated(record: TripRecord) {
       />
     </main>
 
-    <KeyLinks v-if="isDemo" />
+    <KeyLinks :links="links" />
 
     <footer class="footer">
       <div class="footer__inner">

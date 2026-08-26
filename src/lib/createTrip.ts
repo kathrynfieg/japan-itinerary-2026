@@ -1,4 +1,4 @@
-import type { Day } from '../data/trip'
+import type { Day, TripLink } from '../data/trip'
 
 export type SessionTrip = {
   name: string
@@ -20,6 +20,7 @@ export type TripRecord = {
   id: string
   trip: SessionTrip
   days: Day[]
+  links: TripLink[]
 }
 
 let tripIdCounter = 0
@@ -39,8 +40,31 @@ export type CreateTripInput = {
   travelers?: string[]
 }
 
-const DEFAULT_HERO =
+export const DEFAULT_HERO =
   'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80'
+
+export const HERO_PRESETS = [
+  {
+    label: 'Kyoto dusk',
+    url: DEFAULT_HERO,
+    alt: 'Traditional street in Kyoto at dusk',
+  },
+  {
+    label: 'Coast',
+    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80',
+    alt: 'Tropical beach coastline',
+  },
+  {
+    label: 'Mountains',
+    url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=80',
+    alt: 'Mountain peaks above the clouds',
+  },
+  {
+    label: 'City night',
+    url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=2400&q=80',
+    alt: 'City lights at night',
+  },
+] as const
 
 function parseLocalDate(iso: string) {
   return new Date(iso + 'T12:00:00')
@@ -53,17 +77,17 @@ function toIso(date: Date) {
   return `${y}-${m}-${d}`
 }
 
-function addDays(iso: string, offset: number) {
+export function addDays(iso: string, offset: number) {
   const date = parseLocalDate(iso)
   date.setDate(date.getDate() + offset)
   return toIso(date)
 }
 
-function weekdayLabel(iso: string) {
+export function weekdayLabel(iso: string) {
   return parseLocalDate(iso).toLocaleDateString('en-GB', { weekday: 'long' })
 }
 
-function formatRangeLabel(start: string, end: string) {
+export function formatRangeLabel(start: string, end: string) {
   const startDate = parseLocalDate(start)
   const endDate = parseLocalDate(end)
   const sameMonth =
@@ -143,5 +167,5 @@ export function createTripFromInput(input: CreateTripInput): TripRecord {
     heroAlt: 'Travel destination',
   }
 
-  return { id: nextTripId(), trip, days }
+  return { id: nextTripId(), trip, days, links: [] }
 }

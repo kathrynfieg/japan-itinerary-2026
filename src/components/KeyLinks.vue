@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { ExternalLink } from '@lucide/vue'
-import { keyLinks } from '../data/trip'
+import type { TripLink } from '../data/trip'
+
+defineProps<{
+  links: TripLink[]
+}>()
 </script>
 
 <template>
-  <section id="links" class="links" aria-labelledby="links-heading">
+  <section
+    v-if="links.length"
+    id="links"
+    class="links"
+    aria-labelledby="links-heading"
+  >
     <header class="links__header">
       <h2 id="links-heading" class="links__heading">Key links</h2>
       <p class="links__sub">
@@ -13,7 +22,11 @@ import { keyLinks } from '../data/trip'
     </header>
 
     <ul class="links__list">
-      <li v-for="item in keyLinks" :key="item.href + item.label" class="links__item">
+      <li
+        v-for="item in links"
+        :key="item.href + item.label"
+        class="links__item"
+      >
         <a
           class="links__anchor"
           :href="item.href"
