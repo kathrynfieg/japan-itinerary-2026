@@ -54,13 +54,27 @@ function nextId(prefix = 'a') {
   return `${prefix}-${idCounter}`
 }
 
+function cloneActivityLinks(activity: Activity) {
+  if (activity.links?.length) {
+    return activity.links.map((link) => ({ ...link }))
+  }
+  if (activity.link) {
+    return [{ label: 'Link', href: activity.link }]
+  }
+  return undefined
+}
+
 function cloneDays(source: Day[]): EditableDay[] {
   return source.map((day) => ({
     ...day,
     activities: day.activities.map((activity) => ({
       ...activity,
       notes: activity.notes ? [...activity.notes] : undefined,
-      files: activity.files ? activity.files.map((file) => ({ ...file })) : undefined,
+      links: cloneActivityLinks(activity),
+      link: undefined,
+      files: activity.files
+        ? activity.files.map((file) => ({ ...file }))
+        : undefined,
       _id: nextId(),
     })),
   }))
@@ -73,7 +87,15 @@ function cloneLinks(source: TripLink[]): EditableLink[] {
 function stripDayIds(days: EditableDay[]): Day[] {
   return days.map(({ activities, ...day }) => ({
     ...day,
-    activities: activities.map(({ _id: _unused, ...activity }) => activity),
+    activities: activities.map(({ _id: _unused, ...activity }) => ({
+      ...activity,
+      links: activity.links
+        ?.map((link) => ({
+          label: link.label.trim(),
+          href: link.href.trim(),
+        }))
+        .filter((link) => link.label && link.href),
+    })),
   }))
 }
 
@@ -195,6 +217,21 @@ function setNotes(activity: EditableActivity, value: string) {
 
 function setType(activity: EditableActivity, value: string) {
   activity.type = value ? (value as ActivityType) : undefined
+}
+
+function ensureLinks(activity: EditableActivity) {
+  if (!activity.links) activity.links = []
+  return activity.links
+}
+
+function addActivityLink(activity: EditableActivity) {
+  ensureLinks(activity).push({ label: '', href: '' })
+}
+
+function removeActivityLink(activity: EditableActivity, index: number) {
+  if (!activity.links) return
+  activity.links.splice(index, 1)
+  if (!activity.links.length) activity.links = undefined
 }
 
 function addDay() {
@@ -464,15 +501,51 @@ function finish() {
                 />
               </label>
 
-              <label class="edit__field">
-                <span class="edit__label">Booking / link</span>
-                <input
-                  v-model="activity.link"
-                  type="url"
-                  class="edit__input"
-                  placeholder="Tickets, Drive folder, menu…"
-                />
-              </label>
+              <div class="edit__field">
+                <span class="edit__label">Links</span>
+                <ul
+                  v-if="activity.links?.length"
+                  class="edit__act-links"
+                  aria-label="Activity links"
+                >
+                  <li
+                    v-for="(item, linkIndex) in activity.links"
+                    :key="`${activity._id}-link-${linkIndex}`"
+                    class="edit__act-link"
+                  >
+                    <input
+                      v-model="item.label"
+                      type="text"
+                      class="edit__input edit__act-link-label"
+                      placeholder="Label · Tickets, menu…"
+                      aria-label="Link label"
+                    />
+                    <input
+                      v-model="item.href"
+                      type="url"
+                      class="edit__input edit__act-link-url"
+                      placeholder="https://"
+                      aria-label="Link URL"
+                    />
+                    <button
+                      type="button"
+                      class="edit__icon-btn"
+                      aria-label="Remove link"
+                      @click="removeActivityLink(activity, linkIndex)"
+                    >
+                      <X :size="14" :stroke-width="2" aria-hidden="true" />
+                    </button>
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  class="edit__add-file"
+                  @click="addActivityLink(activity)"
+                >
+                  <Plus :size="14" :stroke-width="2" aria-hidden="true" />
+                  Add link
+                </button>
+              </div>
 
               <label class="edit__field">
                 <span class="edit__label">Type</span>

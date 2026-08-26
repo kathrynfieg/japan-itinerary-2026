@@ -56,7 +56,13 @@ const summaryText = computed(() => {
         const time = activity.time ? `${activity.time} · ` : ''
         const place = activity.place ? ` @ ${activity.place}` : ''
         lines.push(`  • ${time}${activity.title}${place}`)
-        if (activity.link) lines.push(`    ${activity.link}`)
+        if (activity.links?.length) {
+          for (const item of activity.links) {
+            lines.push(`    ${item.label}: ${item.href}`)
+          }
+        } else if (activity.link) {
+          lines.push(`    ${activity.link}`)
+        }
         if (activity.maps) lines.push(`    Maps: ${activity.maps}`)
         if (activity.notes?.length) {
           for (const note of activity.notes) lines.push(`    - ${note}`)

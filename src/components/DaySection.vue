@@ -122,6 +122,22 @@ function monthLabel(date: string) {
             />
             <span>{{ activity.place }}</span>
           </p>
+          <ul
+            v-if="activity.links?.length"
+            class="day__links"
+            aria-label="Links"
+          >
+            <li v-for="item in activity.links" :key="`${item.label}-${item.href}`">
+              <a
+                class="day__link"
+                :href="item.href"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          </ul>
           <ul v-if="activity.notes?.length" class="day__notes">
             <li
               v-for="(note, noteIndex) in activity.notes"

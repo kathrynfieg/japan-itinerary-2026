@@ -37,6 +37,12 @@ export type ActivityFile = {
   thumb?: string;
 };
 
+/** Labeled URL on a stop — tickets, menu, booking, etc. */
+export type ActivityLink = {
+  label: string;
+  href: string;
+};
+
 export type Activity = {
   /** e.g. "10:00 AM" or "Morning" */
   time?: string;
@@ -48,8 +54,10 @@ export type Activity = {
   maps?: string;
   /** Extra bits — seats, inclusions, tips, etc. */
   notes?: string[];
-  /** One URL — booking, menu, tickets, Drive, etc. */
+  /** @deprecated Prefer `links` with labels — kept for older stops */
   link?: string;
+  /** Labeled URLs on this stop (tickets, menu, booking…) */
+  links?: ActivityLink[];
   /** Photos or PDFs on this stop (tickets, confirmations, etc.) */
   files?: ActivityFile[];
   /** One type for chips / icons */
@@ -295,7 +303,16 @@ export const days: Day[] = [
           'Arrive early because entry is tied to the booked time',
           'Explore the indoor gallery and outdoor observation areas',
         ],
-        link: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+        links: [
+          {
+            label: 'Tickets',
+            href: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
+          },
+          {
+            label: 'Official site',
+            href: 'https://www.shibuya-sky.com/',
+          },
+        ],
         files: [
           {
             name: 'Shibuya Sky tickets.pdf',
@@ -346,6 +363,16 @@ export const days: Day[] = [
         notes: [
           'Recommended easy option: Uobei for affordable made-to-order sushi',
           'Alternative: Gyukatsu Motomura for beef cutlet if the queue is reasonable',
+        ],
+        links: [
+          {
+            label: 'Uobei menu',
+            href: 'https://www.uobei.jp/',
+          },
+          {
+            label: 'Gyukatsu Motomura',
+            href: 'https://www.google.com/maps/search/?api=1&query=Gyukatsu+Motomura+Shibuya',
+          },
         ],
       },
       {
@@ -449,7 +476,20 @@ export const days: Day[] = [
           'Allow approximately two to three hours and wear comfortable shoes.',
           'Includes free gelato at EN TEA HOUSE.',
         ],
-        link: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
+        links: [
+          {
+            label: 'Tickets',
+            href: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
+          },
+          {
+            label: 'Official site',
+            href: 'https://www.teamlab.art/e/tokyo/',
+          },
+          {
+            label: 'Getting there',
+            href: 'https://www.google.com/maps/search/?api=1&query=teamLab+Borderless+Azabudai+Hills',
+          },
+        ],
         files: [
           {
             name: 'teamLab tickets.pdf',
@@ -758,7 +798,16 @@ export const days: Day[] = [
           'Settle in and enjoy the slower atmosphere after Tokyo.',
           'Confirm the exact check-in process with the Airbnb host.',
         ],
-        link: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
+        links: [
+          {
+            label: 'Booking details',
+            href: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
+          },
+          {
+            label: 'House guide',
+            href: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
+          },
+        ],
       },
       {
         time: 'Evening',
