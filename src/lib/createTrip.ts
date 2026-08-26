@@ -16,6 +16,19 @@ export type SessionTrip = {
   isDemo?: boolean
 }
 
+export type TripRecord = {
+  id: string
+  trip: SessionTrip
+  days: Day[]
+}
+
+let tripIdCounter = 0
+
+export function nextTripId(prefix = 'trip') {
+  tripIdCounter += 1
+  return `${prefix}-${tripIdCounter}`
+}
+
 export type CreateTripInput = {
   name: string
   /** ISO dates when using a range */
@@ -87,10 +100,7 @@ function buildDay(index: number, date: string): Day {
   }
 }
 
-export function createTripFromInput(input: CreateTripInput): {
-  trip: SessionTrip
-  days: Day[]
-} {
+export function createTripFromInput(input: CreateTripInput): TripRecord {
   const name = input.name.trim() || 'Trip'
   const travelers = (input.travelers ?? [])
     .map((t) => t.trim())
@@ -133,5 +143,5 @@ export function createTripFromInput(input: CreateTripInput): {
     heroAlt: 'Travel destination',
   }
 
-  return { trip, days }
+  return { id: nextTripId(), trip, days }
 }

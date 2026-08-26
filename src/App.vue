@@ -6,24 +6,62 @@ import {
   trip as japanTrip,
   type Day,
 } from './data/trip'
-import type { SessionTrip } from './lib/createTrip'
+import {
+  nextTripId,
+  type TripRecord,
+} from './lib/createTrip'
 import DayNotice from './components/DayNotice.vue'
 import DaySection from './components/DaySection.vue'
 import EditMock from './components/EditMock.vue'
+import HomeMock from './components/HomeMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
 import OnboardingMock from './components/OnboardingMock.vue'
 
-const mode = ref<'onboarding' | 'view' | 'edit'>('onboarding')
-const sessionTrip = ref<SessionTrip | null>(null)
-const sessionDays = ref<Day[]>([])
+function cloneJapanDays(): Day[] {
+  return japanDays.map((day) => ({
+    ...day,
+    activities: day.activities.map((activity) => ({
+      ...activity,
+      notes: activity.notes ? [...activity.notes] : undefined,
+    })),
+  }))
+}
+
+function makeJapanRecord(): TripRecord {
+  return {
+    id: nextTripId('japan'),
+    trip: {
+      name: japanTrip.name,
+      year: japanTrip.year,
+      start: japanTrip.start,
+      end: japanTrip.end,
+      rangeLabel: japanTrip.rangeLabel,
+      travelers: [...japanTrip.travelers],
+      tagline: japanTrip.tagline,
+      heroImage: japanTrip.heroImage,
+      heroAlt: japanTrip.heroAlt,
+      groupPhoto: japanTrip.groupPhoto,
+      groupPhotoAlt: japanTrip.groupPhotoAlt,
+      isDemo: true,
+    },
+    days: cloneJapanDays(),
+  }
+}
+
+const mode = ref<'home' | 'onboarding' | 'view' | 'edit'>('home')
+const library = ref<TripRecord[]>([makeJapanRecord()])
+const activeId = ref<string | null>(null)
+
+const activeRecord = computed(
+  () => library.value.find((t) => t.id === activeId.value) ?? null,
+)
+const trip = computed(() => activeRecord.value?.trip ?? null)
+const days = computed(() => activeRecord.value?.days ?? [])
+const isDemo = computed(() => Boolean(trip.value?.isDemo))
 
 const scrolled = ref(false)
 const showTop = ref(false)
 const activeDay = ref('')
-
-const trip = computed(() => sessionTrip.value)
-const days = computed(() => sessionDays.value)
-const isDemo = computed(() => Boolean(sessionTrip.value?.isDemo))
 
 function localDateString(date = new Date()) {
   const y = date.getFullYear()
@@ -133,58 +171,55 @@ function dayNumber(date: string) {
   return new Date(date + 'T12:00:00').getDate()
 }
 
+function goHome() {
+  activeId.value = null
+  mode.value = 'home'
+}
+
+function startCreate() {
+  mode.value = 'onboarding'
+}
+
+function openTrip(id: string) {
+  activeId.value = id
+  mode.value = 'view'
+}
+
 function openEdit() {
   mode.value = 'edit'
 }
 
 function closeEdit(updated: Day[]) {
-  sessionDays.value = updated
-  mode.value = 'view'
-}
-
-function onCreated(payload: { trip: SessionTrip; days: Day[] }) {
-  sessionTrip.value = payload.trip
-  sessionDays.value = payload.days
-  mode.value = 'view'
-}
-
-function openJapanDemo() {
-  sessionTrip.value = {
-    name: japanTrip.name,
-    year: japanTrip.year,
-    start: japanTrip.start,
-    end: japanTrip.end,
-    rangeLabel: japanTrip.rangeLabel,
-    travelers: [...japanTrip.travelers],
-    tagline: japanTrip.tagline,
-    heroImage: japanTrip.heroImage,
-    heroAlt: japanTrip.heroAlt,
-    groupPhoto: japanTrip.groupPhoto,
-    groupPhotoAlt: japanTrip.groupPhotoAlt,
-    isDemo: true,
+  const id = activeId.value
+  if (!id) {
+    mode.value = 'view'
+    return
   }
-  sessionDays.value = japanDays.map((day) => ({
-    ...day,
-    activities: day.activities.map((activity) => ({
-      ...activity,
-      notes: activity.notes ? [...activity.notes] : undefined,
-    })),
-  }))
+  library.value = library.value.map((record) =>
+    record.id === id ? { ...record, days: updated } : record,
+  )
   mode.value = 'view'
 }
 
-function startNewTrip() {
-  sessionTrip.value = null
-  sessionDays.value = []
-  mode.value = 'onboarding'
+function onCreated(record: TripRecord) {
+  library.value = [record, ...library.value]
+  activeId.value = record.id
+  mode.value = 'view'
 }
 </script>
 
 <template>
+  <HomeMock
+    v-if="mode === 'home'"
+    :trips="library"
+    @create="startCreate"
+    @open="openTrip"
+  />
+
   <OnboardingMock
-    v-if="mode === 'onboarding'"
+    v-else-if="mode === 'onboarding'"
     @created="onCreated"
-    @open-demo="openJapanDemo"
+    @back="goHome"
   />
 
   <EditMock
@@ -198,7 +233,9 @@ function startNewTrip() {
     <DayNotice v-if="isDemo" @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
-      <a class="topbar__brand" href="#top">{{ trip.name }}</a>
+      <button type="button" class="topbar__brand topbar__brand--btn" @click="goHome">
+        {{ trip.name }}
+      </button>
       <div class="topbar__end">
         <nav class="topbar__nav" aria-label="Day jump">
           <a
@@ -302,9 +339,14 @@ function startNewTrip() {
           {{ trip.travelers.join(' · ') }}
         </p>
         <p class="footer__dates">{{ trip.rangeLabel }}</p>
-        <button type="button" class="footer__new" @click="startNewTrip">
-          New trip mock
-        </button>
+        <div class="footer__actions">
+          <button type="button" class="footer__new" @click="goHome">
+            Home
+          </button>
+          <button type="button" class="footer__new" @click="startCreate">
+            New trip
+          </button>
+        </div>
       </div>
     </footer>
 

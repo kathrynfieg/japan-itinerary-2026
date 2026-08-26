@@ -4,13 +4,12 @@ import { ArrowRight } from '@lucide/vue'
 import {
   createTripFromInput,
   type CreateTripInput,
-  type SessionTrip,
+  type TripRecord,
 } from '../lib/createTrip'
-import type { Day } from '../data/trip'
 
 const emit = defineEmits<{
-  created: [payload: { trip: SessionTrip; days: Day[] }]
-  openDemo: []
+  created: [payload: TripRecord]
+  back: []
 }>()
 
 const step = ref(1)
@@ -213,8 +212,8 @@ function create() {
         </template>
       </div>
 
-      <button type="button" class="onboard__demo" @click="emit('openDemo')">
-        Or open the Japan demo trip
+      <button type="button" class="onboard__demo" @click="emit('back')">
+        Back to home
       </button>
     </div>
   </div>
