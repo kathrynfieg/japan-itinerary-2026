@@ -10,11 +10,47 @@ export type SessionTrip = {
   tagline: string
   heroImage: string
   heroAlt: string
+  /** Layout treatment for the trip hero */
+  heroStyle?: HeroStyle
   groupPhoto?: string
   groupPhotoAlt?: string
   /** Original Japan itinerary demo */
   isDemo?: boolean
 }
+
+export type HeroStyle = 'full' | 'compact' | 'poster' | 'banner' | 'minimal'
+
+export const HERO_STYLES: {
+  id: HeroStyle
+  label: string
+  blurb: string
+}[] = [
+  {
+    id: 'full',
+    label: 'Full bleed',
+    blurb: 'Edge-to-edge photo — current look',
+  },
+  {
+    id: 'compact',
+    label: 'Compact',
+    blurb: 'Shorter hero, faster to the days',
+  },
+  {
+    id: 'poster',
+    label: 'Poster',
+    blurb: 'Centered title over a deeper veil',
+  },
+  {
+    id: 'banner',
+    label: 'Banner',
+    blurb: 'Photo strip on top, text on paper',
+  },
+  {
+    id: 'minimal',
+    label: 'Minimal',
+    blurb: 'Typography first, soft atmosphere',
+  },
+]
 
 export type TripRecord = {
   id: string
@@ -165,6 +201,7 @@ export function createTripFromInput(input: CreateTripInput): TripRecord {
     tagline: `${count} day${count === 1 ? '' : 's'}${who} — add plans whenever you're ready.`,
     heroImage: DEFAULT_HERO,
     heroAlt: 'Travel destination',
+    heroStyle: 'full',
   }
 
   return { id: nextTripId(), trip, days, links: [] }

@@ -17,9 +17,11 @@ import {
 } from '../data/trip'
 import {
   HERO_PRESETS,
+  HERO_STYLES,
   addDays,
   formatRangeLabel,
   weekdayLabel,
+  type HeroStyle,
   type SessionTrip,
 } from '../lib/createTrip'
 
@@ -88,6 +90,7 @@ const editTrip = ref({
   end: props.trip.end,
   heroImage: props.trip.heroImage,
   heroAlt: props.trip.heroAlt,
+  heroStyle: (props.trip.heroStyle ?? 'full') as HeroStyle,
 })
 
 const selectedDayId = ref(editDays.value[0]?.id ?? '')
@@ -257,6 +260,7 @@ function buildTrip(): SessionTrip {
     rangeLabel: formatRangeLabel(start, end),
     heroImage: editTrip.value.heroImage.trim() || props.trip.heroImage,
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
+    heroStyle: editTrip.value.heroStyle,
   }
 }
 
@@ -612,6 +616,36 @@ function finish() {
         Dates update the trip header. Day chips stay as you’ve built them
         unless you add/remove days.
       </p>
+
+      <div class="edit__styles">
+        <span class="edit__label">Hero style</span>
+        <p class="edit__hint">
+          Layout of the trip cover — try a few, hit Done, then check the view.
+        </p>
+        <div class="edit__style-grid" role="radiogroup" aria-label="Hero style">
+          <button
+            v-for="style in HERO_STYLES"
+            :key="style.id"
+            type="button"
+            role="radio"
+            class="edit__style"
+            :class="{ 'edit__style--on': editTrip.heroStyle === style.id }"
+            :aria-checked="editTrip.heroStyle === style.id"
+            @click="editTrip.heroStyle = style.id"
+          >
+            <span
+              class="edit__style-thumb"
+              :class="`edit__style-thumb--${style.id}`"
+              :style="{ '--style-thumb': `url(${editTrip.heroImage})` }"
+              aria-hidden="true"
+            />
+            <span class="edit__style-copy">
+              <span class="edit__style-label">{{ style.label }}</span>
+              <span class="edit__style-blurb">{{ style.blurb }}</span>
+            </span>
+          </button>
+        </div>
+      </div>
 
       <div class="edit__hero">
         <span class="edit__label">Hero photo</span>

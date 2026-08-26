@@ -328,6 +328,192 @@ body {
   text-decoration-color: rgb(244 246 242 / 0.75);
 }
 
+/* Hero layout styles */
+.hero--compact {
+  min-height: 62svh;
+}
+
+.hero--compact .hero__brand {
+  font-size: clamp(2.1rem, 7vw, 3.4rem);
+}
+
+.hero--compact .hero__content {
+  padding-top: 5.5rem;
+  padding-bottom: 2.25rem;
+}
+
+.hero--compact .hero__portrait {
+  width: 4.75rem;
+  height: 4.75rem;
+  margin-bottom: 1rem;
+}
+
+.hero--poster {
+  align-items: center;
+  text-align: center;
+}
+
+.hero--poster .hero__veil {
+  background: linear-gradient(
+    180deg,
+    rgba(21, 32, 24, 0.35) 0%,
+    rgba(21, 32, 24, 0.62) 45%,
+    rgba(21, 32, 24, 0.82) 100%
+  );
+}
+
+.hero--poster .hero__content {
+  max-width: 34rem;
+  margin-inline: auto;
+  padding-block: 7rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero--poster .hero__lede {
+  max-width: 26rem;
+}
+
+.hero--poster .hero__actions {
+  justify-content: center;
+}
+
+.hero--banner {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.hero--banner .hero__image {
+  position: relative;
+  inset: auto;
+  height: clamp(11rem, 32vw, 16rem);
+  transform: none;
+  animation: none;
+}
+
+.hero--banner .hero__veil {
+  display: none;
+}
+
+.hero--banner .hero__content {
+  max-width: 44rem;
+  margin-inline: auto;
+  width: 100%;
+  padding: 1.75rem 1.35rem 2.25rem;
+  animation: none;
+}
+
+.hero--banner .hero__brand {
+  color: var(--ink);
+}
+
+.hero--banner .hero__title {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.hero--banner .hero__lede {
+  color: var(--ink-soft);
+}
+
+.hero--banner .hero__portrait {
+  border-color: rgb(21 32 24 / 0.12);
+}
+
+.hero--banner .hero__cta {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.hero--banner .hero__cta:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.hero--banner .hero__link {
+  color: var(--accent-deep);
+  text-decoration-color: rgb(181 69 27 / 0.35);
+}
+
+.hero--banner .hero__link:hover {
+  color: var(--accent-deep);
+  text-decoration-color: var(--accent);
+}
+
+.hero--minimal {
+  min-height: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(900px 420px at 8% -10%, #dde5d8 0%, transparent 55%),
+    radial-gradient(700px 360px at 100% 0%, #d5ddd4 0%, transparent 50%),
+    var(--paper);
+}
+
+.hero--minimal .hero__image {
+  position: absolute;
+  inset: auto 0 0 auto;
+  width: min(42vw, 18rem);
+  height: min(42vw, 18rem);
+  border-radius: 50%;
+  opacity: 0.28;
+  transform: none;
+  animation: none;
+  object-position: center;
+  mask-image: radial-gradient(circle, #000 55%, transparent 78%);
+}
+
+.hero--minimal .hero__veil {
+  display: none;
+}
+
+.hero--minimal .hero__content {
+  max-width: 40rem;
+  padding: 6.5rem 1.5rem 2.75rem;
+  animation: rise 0.8s var(--ease) both;
+}
+
+.hero--minimal .hero__brand {
+  color: var(--ink);
+}
+
+.hero--minimal .hero__title {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.hero--minimal .hero__lede {
+  color: var(--ink-soft);
+}
+
+.hero--minimal .hero__portrait {
+  border-color: rgb(21 32 24 / 0.14);
+}
+
+.hero--minimal .hero__cta {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.hero--minimal .hero__cta:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.hero--minimal .hero__link {
+  color: var(--accent-deep);
+  text-decoration-color: rgb(181 69 27 / 0.35);
+}
+
+.hero--minimal .hero__link:hover {
+  color: var(--accent-deep);
+  text-decoration-color: var(--accent);
+}
+
 /* —— Key links —— */
 .links {
   max-width: 44rem;
@@ -915,6 +1101,26 @@ body {
     height: 7.5rem;
   }
 
+  .hero--compact {
+    min-height: 58svh;
+  }
+
+  .hero--compact .hero__content {
+    padding: 6rem 3rem 2.75rem;
+  }
+
+  .hero--banner .hero__content,
+  .hero--minimal .hero__content {
+    padding-inline: 2rem;
+  }
+
+  .hero--minimal .hero__image {
+    width: 16rem;
+    height: 16rem;
+    right: 2.5rem;
+    bottom: 1.5rem;
+  }
+
   .to-top {
     right: 1.5rem;
     bottom: 1.5rem;
@@ -1294,6 +1500,140 @@ body {
   font-size: 0.8rem;
   color: var(--ink-soft);
   line-height: 1.4;
+}
+
+.edit__styles {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.edit__style-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.edit__style {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+
+.edit__style:hover {
+  border-color: rgb(181 69 27 / 0.35);
+}
+
+.edit__style--on {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.edit__style-thumb {
+  position: relative;
+  width: 4.5rem;
+  height: 3.35rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--mist);
+  border: 1px solid var(--line);
+}
+
+.edit__style-thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--style-thumb) center / cover no-repeat;
+}
+
+.edit__style-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 35%,
+    rgb(21 32 24 / 0.55)
+  );
+}
+
+.edit__style-thumb--compact::before {
+  inset: 20% 0 0;
+}
+
+.edit__style-thumb--compact::after {
+  top: 20%;
+}
+
+.edit__style-thumb--poster::after {
+  background: rgb(21 32 24 / 0.5);
+}
+
+.edit__style-thumb--poster::before {
+  filter: brightness(0.85);
+}
+
+.edit__style-thumb--banner {
+  display: grid;
+  grid-template-rows: 1.35rem 1fr;
+  background: var(--paper);
+}
+
+.edit__style-thumb--banner::before {
+  inset: 0 0 auto;
+  height: 1.35rem;
+}
+
+.edit__style-thumb--banner::after {
+  display: none;
+}
+
+.edit__style-thumb--minimal {
+  background:
+    radial-gradient(circle at 85% 70%, rgb(197 207 198 / 0.7), transparent 45%),
+    var(--paper);
+}
+
+.edit__style-thumb--minimal::before {
+  inset: auto 0.35rem 0.35rem auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+.edit__style-thumb--minimal::after {
+  display: none;
+}
+
+.edit__style-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.edit__style-label {
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.edit__style-blurb {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
 }
 
 .edit__hero {

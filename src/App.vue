@@ -44,6 +44,7 @@ function makeJapanRecord(): TripRecord {
       tagline: japanTrip.tagline,
       heroImage: japanTrip.heroImage,
       heroAlt: japanTrip.heroAlt,
+      heroStyle: 'full',
       groupPhoto: japanTrip.groupPhoto,
       groupPhotoAlt: japanTrip.groupPhotoAlt,
       isDemo: true,
@@ -313,7 +314,11 @@ function onCreated(record: TripRecord) {
       </div>
     </header>
 
-    <section id="top" class="hero">
+    <section
+      id="top"
+      class="hero"
+      :class="`hero--${trip.heroStyle ?? 'full'}`"
+    >
       <img
         class="hero__image"
         :src="trip.heroImage"
