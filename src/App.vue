@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { ArrowUp, Cake } from '@lucide/vue'
+import { ArrowUp, Cake, Pencil } from '@lucide/vue'
 import { days, trip } from './data/trip'
 import DayNotice from './components/DayNotice.vue'
 import DaySection from './components/DaySection.vue'
+import EditMock from './components/EditMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
 
+const mode = ref<'view' | 'edit'>('view')
 const scrolled = ref(false)
 const showTop = ref(false)
 const activeDay = ref(days[0]?.id ?? '')
@@ -87,40 +89,63 @@ function scrollToTop() {
 function dayNumber(date: string) {
   return new Date(date + 'T12:00:00').getDate()
 }
+
+function openEdit() {
+  mode.value = 'edit'
+  window.scrollTo(0, 0)
+}
+
+function closeEdit() {
+  mode.value = 'view'
+  window.scrollTo(0, 0)
+}
 </script>
 
 <template>
-  <div class="page">
+  <EditMock v-if="mode === 'edit'" @done="closeEdit" />
+
+  <div v-else class="page">
     <DayNotice @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
       <a class="topbar__brand" href="#top">{{ trip.name }}</a>
-      <nav class="topbar__nav" aria-label="Day jump">
-        <a
-          v-for="day in days"
-          :key="day.id"
-          :href="`#${day.id}`"
-          class="topbar__day"
-          :class="{
-            'topbar__day--active': activeDay === day.id,
-            'topbar__day--birthday': day.theme === 'birthday',
-          }"
-          :aria-label="
-            day.theme === 'birthday'
-              ? `${dayNumber(day.date)} July · Zac’s 30th birthday`
-              : undefined
-          "
+      <div class="topbar__end">
+        <nav class="topbar__nav" aria-label="Day jump">
+          <a
+            v-for="day in days"
+            :key="day.id"
+            :href="`#${day.id}`"
+            class="topbar__day"
+            :class="{
+              'topbar__day--active': activeDay === day.id,
+              'topbar__day--birthday': day.theme === 'birthday',
+            }"
+            :aria-label="
+              day.theme === 'birthday'
+                ? `${dayNumber(day.date)} July · Zac’s 30th birthday`
+                : undefined
+            "
+          >
+            <span>{{ dayNumber(day.date) }}</span>
+            <Cake
+              v-if="day.theme === 'birthday'"
+              class="topbar__day-cake"
+              :size="10"
+              :stroke-width="2.25"
+              aria-hidden="true"
+            />
+          </a>
+        </nav>
+        <button
+          type="button"
+          class="topbar__edit"
+          aria-label="Open edit mock"
+          @click="openEdit"
         >
-          <span>{{ dayNumber(day.date) }}</span>
-          <Cake
-            v-if="day.theme === 'birthday'"
-            class="topbar__day-cake"
-            :size="10"
-            :stroke-width="2.25"
-            aria-hidden="true"
-          />
-        </a>
-      </nav>
+          <Pencil :size="14" :stroke-width="2.25" aria-hidden="true" />
+          <span>Edit</span>
+        </button>
+      </div>
     </header>
 
     <section id="top" class="hero">
