@@ -159,7 +159,6 @@ function addActivity() {
   }
   selectedDay.value.activities.push(activity)
   quickTitle.value = ''
-  expandedId.value = activity._id
 }
 
 function removeActivity(id: string) {
