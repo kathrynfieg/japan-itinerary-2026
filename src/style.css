@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 3.5rem;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -624,77 +624,38 @@ body {
 }
 
 .day {
-  padding: 1.15rem 0;
+  padding: 1.15rem 0 1.5rem;
   scroll-margin-top: 0;
   animation: rise 0.8s var(--ease) both;
   animation-delay: calc(0.04s * var(--i));
 }
 
-.day__main {
-  display: grid;
-  grid-template-columns: 0.9rem 1fr;
-  gap: 0.75rem;
-  min-width: 0;
+.day__header {
+  margin: 0 0 1rem;
 }
 
-.day__rail {
-  position: relative;
+.day__heading-row {
   display: flex;
-  justify-content: center;
-  align-self: stretch;
-  padding-top: 0.4rem;
-}
-
-.day__rail::before {
-  content: '';
-  position: absolute;
-  top: 0.62rem;
-  bottom: 0;
-  width: 1px;
-  background: var(--line);
-}
-
-.day:not(:last-child) .day__rail::before {
-  bottom: -1.5rem;
-}
-
-.day__dot {
-  position: relative;
-  z-index: 1;
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px var(--paper);
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.2rem;
 }
 
 .day__cake {
-  position: relative;
-  z-index: 1;
   flex-shrink: 0;
   color: var(--accent-deep);
-  background: var(--paper);
-}
-
-.day__body {
-  min-width: 0;
-}
-
-.day__header {
-  margin-bottom: 0.7rem;
 }
 
 .day__date {
   position: sticky;
-  top: 3.75rem;
+  top: 4.75rem;
   z-index: 6;
   display: flex;
   align-items: baseline;
   gap: 0.45rem;
   margin: 0 0 0.55rem;
-  padding: 0.35rem 0 0.45rem;
-  background: rgb(244 246 242 / 0.96);
-  backdrop-filter: blur(8px);
+  padding: 0.45rem 0 0.5rem;
+  background: var(--paper);
 }
 
 .day__date::before {
@@ -703,8 +664,9 @@ body {
   left: 0;
   right: 0;
   bottom: 100%;
-  height: 0.75rem;
-  background: rgb(244 246 242 / 0.96);
+  /* Fill the clearance between sticky date and navbar so scrolled text can’t peek through */
+  height: 1.5rem;
+  background: var(--paper);
 }
 
 .day__num {
@@ -727,7 +689,7 @@ body {
 }
 
 .day__title {
-  margin: 0 0 0.15rem;
+  margin: 0;
   font-family: var(--serif);
   font-size: 1.25rem;
   font-weight: 400;
@@ -746,26 +708,83 @@ body {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.65rem;
+  gap: 0;
 }
 
 .day__item {
   display: grid;
-  gap: 0.45rem;
+  grid-template-columns: 0.85rem 4.6rem 1fr;
+  gap: 0.55rem 0.65rem;
   align-items: start;
+  padding: 0.35rem 0;
 }
 
-.day__item--timed {
-  grid-template-columns: 4.5rem 1fr;
+.day__track {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  padding-top: 0.28rem;
+  min-height: 100%;
+}
+
+.day__track::before {
+  content: '';
+  position: absolute;
+  /* Reach through item padding so the rail meets the next dot */
+  top: -0.35rem;
+  bottom: -0.35rem;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--line);
+}
+
+.day__item:first-child .day__track::before {
+  top: 0.4rem;
+}
+
+.day__item:last-child .day__track::before {
+  bottom: auto;
+  height: 0.55rem;
+}
+
+.day__dot {
+  position: relative;
+  z-index: 1;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--paper);
+  flex-shrink: 0;
+}
+
+.day__dot--quiet {
+  background: transparent;
+  border: 1.5px solid var(--line);
+  box-shadow: 0 0 0 3px var(--paper);
 }
 
 .day__time {
+  margin: 0;
+  padding-top: 0.2rem;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--accent-deep);
-  padding-top: 0.12rem;
   line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.day__time--empty {
+  color: var(--line);
+  font-weight: 500;
+}
+
+.day__info {
+  min-width: 0;
+  padding-bottom: 0.15rem;
 }
 
 .day__activity-title {
@@ -902,6 +921,10 @@ body {
   font-style: italic;
   color: var(--ink-soft);
   opacity: 0.85;
+}
+
+.day--birthday .day__dot:not(.day__dot--quiet) {
+  background: #e23d6f;
 }
 
 .day__birthday-mark {
@@ -1085,7 +1108,7 @@ body {
 
 @media (min-width: 768px) {
   html {
-    scroll-padding-top: 3.75rem;
+    scroll-padding-top: 5.25rem;
   }
 
   .topbar {
@@ -1181,51 +1204,19 @@ body {
     border-bottom: 1px solid var(--line);
   }
 
-  .day__main {
-    grid-template-columns: 1.5rem 1fr;
-    gap: 1.75rem;
-  }
-
-  .day:last-child .day__rail::before {
-    bottom: -2.35rem;
-  }
-
-  .day:not(:last-child) .day__rail::before {
-    bottom: -2.45rem;
-  }
-
-  .day__rail {
-    padding-top: 0.55rem;
-  }
-
-  .day__rail::before {
-    top: 0.78rem;
-  }
-
-  .day__dot {
-    width: 0.55rem;
-    height: 0.55rem;
-    box-shadow: 0 0 0 4px var(--paper);
-  }
-
-  .day--birthday .day__cake {
-    width: 16px;
-    height: 16px;
-  }
-
   .day__header {
-    margin-bottom: 1.15rem;
+    margin-bottom: 1.25rem;
   }
 
   .day__date {
-    top: 3.85rem;
+    top: 5rem;
     gap: 0.65rem;
     margin-bottom: 0.75rem;
-    padding: 0.45rem 0 0.55rem;
+    padding: 0.5rem 0 0.55rem;
   }
 
   .day__date::before {
-    height: 1rem;
+    height: 1.65rem;
   }
 
   .day__num {
@@ -1238,7 +1229,6 @@ body {
   }
 
   .day__title {
-    margin-bottom: 0.35rem;
     font-size: 1.65rem;
   }
 
@@ -1247,22 +1237,44 @@ body {
     line-height: 1.5;
   }
 
-  .day__list {
-    gap: 1rem;
-  }
-
   .day__item {
-    gap: 0.75rem;
+    grid-template-columns: 1rem 5.25rem 1fr;
+    gap: 0.55rem 0.9rem;
+    padding: 0.4rem 0;
   }
 
-  .day__item--timed {
-    grid-template-columns: 5.25rem 1fr;
+  .day__track {
+    padding-top: 0.32rem;
+  }
+
+  .day__track::before {
+    top: -0.4rem;
+    bottom: -0.4rem;
+  }
+
+  .day__item:first-child .day__track::before {
+    top: 0.45rem;
+  }
+
+  .day__item:last-child .day__track::before {
+    bottom: auto;
+    height: 0.6rem;
+  }
+
+  .day__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    box-shadow: 0 0 0 4px var(--paper);
+  }
+
+  .day__dot--quiet {
+    box-shadow: 0 0 0 4px var(--paper);
   }
 
   .day__time {
     font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    padding-top: 0.15rem;
+    letter-spacing: 0.03em;
+    padding-top: 0.25rem;
   }
 
   .day__activity-title {

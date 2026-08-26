@@ -155,7 +155,7 @@ function scrollToId(id: string) {
   if (!el) return
 
   const topbar = document.querySelector('.topbar')
-  const offset = (topbar?.getBoundingClientRect().height ?? 64) + 12
+  const offset = (topbar?.getBoundingClientRect().height ?? 64) + 28
   const top = el.getBoundingClientRect().top + window.scrollY - offset
   window.scrollTo({ top, behavior: 'smooth' })
 }

@@ -42,81 +42,99 @@ function monthLabel(date: string) {
       </span>
     </p>
 
-    <div class="day__main">
-      <div class="day__rail" aria-hidden="true">
+    <header class="day__header">
+      <div class="day__heading-row">
+        <h3 class="day__title">{{ day.title }}</h3>
         <Cake
           v-if="day.theme === 'birthday'"
           class="day__cake"
-          :size="14"
+          :size="16"
           :stroke-width="2"
+          aria-hidden="true"
         />
-        <span v-else class="day__dot" />
       </div>
+      <p class="day__summary">{{ day.summary }}</p>
+    </header>
 
-      <div class="day__body">
-        <header class="day__header">
-          <h3 class="day__title">{{ day.title }}</h3>
-          <p class="day__summary">{{ day.summary }}</p>
-        </header>
+    <ul v-if="day.activities.length" class="day__list">
+      <li
+        v-for="(activity, i) in day.activities"
+        :key="`${day.id}-${i}`"
+        class="day__item"
+        :class="{ 'day__item--untimed': !activity.time }"
+      >
+        <div class="day__track" aria-hidden="true">
+          <span
+            class="day__dot"
+            :class="{ 'day__dot--quiet': !activity.time }"
+          />
+        </div>
 
-        <ul v-if="day.activities.length" class="day__list">
-          <li
-            v-for="(activity, i) in day.activities"
-            :key="`${day.id}-${i}`"
-            class="day__item"
-            :class="{ 'day__item--timed': activity.time }"
+        <time v-if="activity.time" class="day__time">{{ activity.time }}</time>
+        <span v-else class="day__time day__time--empty" aria-hidden="true"
+          >—</span
+        >
+
+        <div class="day__info">
+          <div class="day__title-row">
+            <a
+              v-if="activity.link"
+              class="day__activity-title day__activity-title--link"
+              :href="activity.link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ activity.title }}
+            </a>
+            <p v-else class="day__activity-title">{{ activity.title }}</p>
+            <span
+              v-if="activity.type"
+              class="day__chip"
+              :data-type="activity.type"
+            >
+              <span aria-hidden="true">{{
+                activityTypes[activity.type].emoji
+              }}</span>
+              {{ activityTypes[activity.type].label }}
+            </span>
+          </div>
+          <a
+            v-if="activity.place && activity.maps"
+            class="day__place day__place--link"
+            :href="activity.maps"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <time v-if="activity.time" class="day__time">{{ activity.time }}</time>
-            <div class="day__info">
-              <div class="day__title-row">
-                <a
-                  v-if="activity.link"
-                  class="day__activity-title day__activity-title--link"
-                  :href="activity.link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {{ activity.title }}
-                </a>
-                <p v-else class="day__activity-title">{{ activity.title }}</p>
-                <span
-                  v-if="activity.type"
-                  class="day__chip"
-                  :data-type="activity.type"
-                >
-                  <span aria-hidden="true">{{ activityTypes[activity.type].emoji }}</span>
-                  {{ activityTypes[activity.type].label }}
-                </span>
-              </div>
-              <a
-                v-if="activity.place && activity.maps"
-                class="day__place day__place--link"
-                :href="activity.maps"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <MapPin class="day__place-icon" :size="13" :stroke-width="2" aria-hidden="true" />
-                <span>{{ activity.place }}</span>
-              </a>
-              <p v-else-if="activity.place" class="day__place">
-                <MapPin class="day__place-icon" :size="13" :stroke-width="2" aria-hidden="true" />
-                <span>{{ activity.place }}</span>
-              </p>
-              <ul v-if="activity.notes?.length" class="day__notes">
-                <li
-                  v-for="(note, noteIndex) in activity.notes"
-                  :key="noteIndex"
-                  class="day__note"
-                >
-                  {{ note }}
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+            <MapPin
+              class="day__place-icon"
+              :size="13"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+            <span>{{ activity.place }}</span>
+          </a>
+          <p v-else-if="activity.place" class="day__place">
+            <MapPin
+              class="day__place-icon"
+              :size="13"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+            <span>{{ activity.place }}</span>
+          </p>
+          <ul v-if="activity.notes?.length" class="day__notes">
+            <li
+              v-for="(note, noteIndex) in activity.notes"
+              :key="noteIndex"
+              class="day__note"
+            >
+              {{ note }}
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
 
-        <p v-else class="day__empty">No stops listed yet.</p>
-      </div>
-    </div>
+    <p v-else class="day__empty">No stops listed yet.</p>
   </article>
 </template>
