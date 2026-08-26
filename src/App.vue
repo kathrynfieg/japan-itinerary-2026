@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import { ArrowUp, Cake, Pencil } from '@lucide/vue'
+import { ArrowUp, Cake, Pencil, Share2 } from '@lucide/vue'
 import {
   days as japanDays,
   keyLinks as japanKeyLinks,
@@ -19,6 +19,7 @@ import EditMock from './components/EditMock.vue'
 import HomeMock from './components/HomeMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
 import OnboardingMock from './components/OnboardingMock.vue'
+import ShareSheet from './components/ShareSheet.vue'
 
 function cloneJapanDays(): Day[] {
   return japanDays.map((day) => ({
@@ -68,6 +69,7 @@ const hasLinks = computed(() => links.value.length > 0)
 const scrolled = ref(false)
 const showTop = ref(false)
 const activeDay = ref('')
+const shareOpen = ref(false)
 
 function localDateString(date = new Date()) {
   const y = date.getFullYear()
@@ -192,7 +194,16 @@ function openTrip(id: string) {
 }
 
 function openEdit() {
+  shareOpen.value = false
   mode.value = 'edit'
+}
+
+function openShare() {
+  shareOpen.value = true
+}
+
+function closeShare() {
+  shareOpen.value = false
 }
 
 function closeEdit(payload: {
@@ -284,6 +295,15 @@ function onCreated(record: TripRecord) {
         <button
           type="button"
           class="topbar__edit"
+          aria-label="Share trip"
+          @click="openShare"
+        >
+          <Share2 :size="14" :stroke-width="2.25" aria-hidden="true" />
+          <span>Share</span>
+        </button>
+        <button
+          type="button"
+          class="topbar__edit"
           aria-label="Open edit mock"
           @click="openEdit"
         >
@@ -317,6 +337,9 @@ function onCreated(record: TripRecord) {
         <div class="hero__actions">
           <button type="button" class="hero__cta" @click="scrollToToday">
             View today
+          </button>
+          <button type="button" class="hero__link" @click="openShare">
+            Share
           </button>
           <button
             v-if="hasLinks"
@@ -377,5 +400,15 @@ function onCreated(record: TripRecord) {
     >
       <ArrowUp :size="18" :stroke-width="2" aria-hidden="true" />
     </button>
+
+    <ShareSheet
+      v-if="trip && activeId"
+      :open="shareOpen"
+      :trip="trip"
+      :days="days"
+      :links="links"
+      :trip-id="activeId"
+      @close="closeShare"
+    />
   </div>
 </template>

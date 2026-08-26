@@ -2250,3 +2250,247 @@ body {
     padding: 0.3rem;
   }
 }
+
+/* —— Share sheet mock —— */
+.share {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+}
+
+.share__backdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgb(21 32 24 / 0.45);
+  cursor: pointer;
+}
+
+.share__sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 28rem);
+  max-height: min(92svh, 40rem);
+  overflow: auto;
+  margin: 0;
+  padding: 1.15rem 1.15rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  border-radius: 20px 20px 0 0;
+  background: var(--paper);
+  box-shadow: 0 -12px 40px rgb(21 32 24 / 0.18);
+}
+
+.share__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.share__eyebrow {
+  margin: 0 0 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.share__title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.share__close {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.share__lede {
+  margin: 0.75rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.share__block {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 1.15rem;
+}
+
+.share__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.share__link-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem;
+}
+
+.share__link-input {
+  width: 100%;
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.share__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.share__note {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.share__actions {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.15rem;
+}
+
+.share__action {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.share__action:hover {
+  border-color: rgb(181 69 27 / 0.35);
+  background: rgb(232 236 230 / 0.45);
+}
+
+.share__action--static {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.share__action--static:hover {
+  border-color: var(--line);
+  background: #fff;
+}
+
+.share__action-icon {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: var(--mist);
+  color: var(--accent-deep);
+}
+
+.share__action-copy {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.share__action-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.share__action-sub {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+@media (min-width: 640px) {
+  .share {
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .share__sheet {
+    border-radius: 18px;
+    max-height: min(88vh, 38rem);
+  }
+}
+
+@media print {
+  .topbar,
+  .to-top,
+  .footer__actions,
+  .hero__actions,
+  .share,
+  .day-notice,
+  .edit,
+  .dash,
+  .onboard {
+    display: none !important;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero__image {
+    position: absolute;
+    opacity: 0.35;
+  }
+
+  .page {
+    background: #fff;
+  }
+
+  body {
+    background: #fff;
+  }
+}
