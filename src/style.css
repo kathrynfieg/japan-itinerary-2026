@@ -1424,28 +1424,77 @@ body {
 
 .edit__main {
   width: min(100% - 2rem, 40rem);
-  margin: 1.35rem auto 0;
+  margin: 1rem auto 0;
   padding-bottom: 2rem;
 }
 
-.edit__header {
-  margin-bottom: 1rem;
+.edit__trip-strip {
+  position: relative;
+  border-bottom: 1px solid rgb(21 32 24 / 0.25);
+  background: var(--trip-cover) center / cover no-repeat;
+  color: #f4f6f2;
 }
 
-.edit__heading {
+.edit__trip-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgb(21 32 24 / 0.88) 0%,
+    rgb(21 32 24 / 0.62) 48%,
+    rgb(21 32 24 / 0.38) 100%
+  );
+}
+
+.edit__trip-strip-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 40rem);
+  margin: 0 auto;
+  padding: 0.85rem 0 0.95rem;
+}
+
+.edit__trip-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   margin: 0;
-  font-family: var(--sans);
-  font-size: clamp(1.65rem, 4vw, 2rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(244 246 242 / 0.72);
 }
 
-.edit__lede {
-  margin: 0.35rem 0 0;
-  color: var(--ink-soft);
-  font-size: 0.85rem;
-  line-height: 1.45;
+.edit__trip-badge {
+  padding: 0.12rem 0.38rem;
+  border-radius: 999px;
+  background: rgb(244 246 242 / 0.14);
+  color: #f4f6f2;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+}
+
+.edit__trip-name {
+  margin: 0.2rem 0 0;
+  overflow: hidden;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.edit__trip-dates {
+  margin: 0.18rem 0 0;
+  font-size: 0.76rem;
+  color: rgb(244 246 242 / 0.82);
+}
+
+.edit__trip-sep {
+  opacity: 0.55;
 }
 
 .dash__brand-btn {

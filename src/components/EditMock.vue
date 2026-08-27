@@ -137,6 +137,19 @@ const selectedDay = computed(
   () => editDays.value.find((d) => d.id === selectedDayId.value) ?? null,
 )
 
+const tripStrip = computed(() => {
+  const start = editTrip.value.start || props.trip.start
+  const end = editTrip.value.end || start
+  return {
+    name: editTrip.value.name.trim() || props.trip.name,
+    range: formatRangeLabel(start, end),
+    days: editDays.value.length,
+    hero: editTrip.value.heroImage.trim() || props.trip.heroImage,
+    heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
+    isDemo: props.trip.isDemo,
+  }
+})
+
 const typeOptions = Object.entries(activityTypes) as [
   ActivityType,
   (typeof activityTypes)[ActivityType],
@@ -335,14 +348,26 @@ function finish() {
       </div>
     </header>
 
-    <main class="edit__main">
-      <header class="edit__header">
-        <h1 class="edit__heading">{{ editTrip.name || trip.name }}</h1>
-        <p class="edit__lede">
-          Done saves changes for this session — refresh resets everything.
+    <div
+      class="edit__trip-strip"
+      :style="{ '--trip-cover': `url(${tripStrip.hero})` }"
+      aria-label="Trip being edited"
+    >
+      <div class="edit__trip-strip-inner">
+        <p class="edit__trip-kicker">
+          Editing
+          <span v-if="tripStrip.isDemo" class="edit__trip-badge">Demo</span>
         </p>
-      </header>
+        <p class="edit__trip-name">{{ tripStrip.name }}</p>
+        <p class="edit__trip-dates">
+          {{ tripStrip.range }}
+          <span class="edit__trip-sep">·</span>
+          {{ tripStrip.days }} day{{ tripStrip.days === 1 ? '' : 's' }}
+        </p>
+      </div>
+    </div>
 
+    <main class="edit__main">
       <div class="edit__tabs" role="tablist" aria-label="Edit sections">
       <button
         type="button"
