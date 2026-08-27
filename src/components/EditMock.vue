@@ -146,6 +146,8 @@ const tripStrip = computed(() => {
     days: editDays.value.length,
     hero: editTrip.value.heroImage.trim() || props.trip.heroImage,
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
+    photo: props.trip.groupPhoto,
+    photoAlt: props.trip.groupPhotoAlt,
     isDemo: props.trip.isDemo,
   }
 })
@@ -354,16 +356,21 @@ function finish() {
       aria-label="Trip being edited"
     >
       <div class="edit__trip-strip-inner">
-        <p class="edit__trip-kicker">
-          Editing
-          <span v-if="tripStrip.isDemo" class="edit__trip-badge">Demo</span>
-        </p>
-        <p class="edit__trip-name">{{ tripStrip.name }}</p>
-        <p class="edit__trip-dates">
-          {{ tripStrip.range }}
-          <span class="edit__trip-sep">·</span>
-          {{ tripStrip.days }} day{{ tripStrip.days === 1 ? '' : 's' }}
-        </p>
+        <div v-if="tripStrip.photo" class="edit__trip-portrait">
+          <img :src="tripStrip.photo" :alt="tripStrip.photoAlt" />
+        </div>
+        <div class="edit__trip-copy">
+          <p class="edit__trip-kicker">
+            Editing
+            <span v-if="tripStrip.isDemo" class="edit__trip-badge">Demo</span>
+          </p>
+          <p class="edit__trip-name">{{ tripStrip.name }}</p>
+          <p class="edit__trip-dates">
+            {{ tripStrip.range }}
+            <span class="edit__trip-sep">·</span>
+            {{ tripStrip.days }} day{{ tripStrip.days === 1 ? '' : 's' }}
+          </p>
+        </div>
       </div>
     </div>
 
