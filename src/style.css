@@ -1742,6 +1742,34 @@ body {
   justify-items: start;
 }
 
+@media (min-width: 640px) {
+  .img-sheet {
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .img-sheet__panel {
+    width: min(100%, 30rem);
+    max-height: min(88vh, 42rem);
+    border-radius: 18px;
+    padding: 1.35rem 1.4rem 1.5rem;
+    box-shadow: 0 18px 50px rgb(21 32 24 / 0.22);
+  }
+
+  .img-sheet__title {
+    font-size: 1.5rem;
+  }
+
+  .img-sheet__cover-preview {
+    height: 9rem;
+  }
+
+  .img-sheet__group-preview {
+    width: 4.75rem;
+    height: 4.75rem;
+  }
+}
+
 .edit__tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
