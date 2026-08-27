@@ -79,29 +79,6 @@ export type CreateTripInput = {
 export const DEFAULT_HERO =
   'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80'
 
-export const HERO_PRESETS = [
-  {
-    label: 'Kyoto dusk',
-    url: DEFAULT_HERO,
-    alt: 'Traditional street in Kyoto at dusk',
-  },
-  {
-    label: 'Coast',
-    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80',
-    alt: 'Tropical beach coastline',
-  },
-  {
-    label: 'Mountains',
-    url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=80',
-    alt: 'Mountain peaks above the clouds',
-  },
-  {
-    label: 'City night',
-    url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=2400&q=80',
-    alt: 'City lights at night',
-  },
-] as const
-
 function parseLocalDate(iso: string) {
   return new Date(iso + 'T12:00:00')
 }

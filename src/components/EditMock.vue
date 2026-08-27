@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import {
   FileText,
   GripVertical,
@@ -7,6 +7,7 @@ import {
   ImagePlus,
   Paperclip,
   Plus,
+  Search,
   Settings,
   Trash2,
   UserRound,
@@ -20,7 +21,6 @@ import {
   type TripLink,
 } from '../data/trip'
 import {
-  HERO_PRESETS,
   HERO_STYLES,
   addDays,
   formatRangeLabel,
@@ -28,6 +28,11 @@ import {
   type HeroStyle,
   type SessionTrip,
 } from '../lib/createTrip'
+import {
+  hasUnsplashKey,
+  searchUnsplash,
+  type UnsplashPhoto,
+} from '../lib/unsplash'
 
 type EditableActivity = Activity & { _id: string }
 
@@ -136,6 +141,48 @@ const expandedId = ref<string | null>(null)
 const quickTitle = ref('')
 const moveTarget = ref('')
 const imagesSheetOpen = ref(false)
+const coverQuery = ref('')
+const coverResults = ref<UnsplashPhoto[]>([])
+const coverSearching = ref(false)
+const coverError = ref('')
+let coverAbort: AbortController | null = null
+
+async function runCoverSearch(query: string) {
+  coverAbort?.abort()
+  const controller = new AbortController()
+  coverAbort = controller
+  coverSearching.value = true
+  coverError.value = ''
+
+  try {
+    const { photos } = await searchUnsplash(query, controller.signal)
+    if (controller.signal.aborted) return
+    coverResults.value = photos
+  } catch (err) {
+    if (controller.signal.aborted) return
+    coverError.value =
+      err instanceof Error ? err.message : 'Couldn’t search Unsplash'
+    coverResults.value = []
+  } finally {
+    if (!controller.signal.aborted) coverSearching.value = false
+  }
+}
+
+function applyCoverPhoto(photo: UnsplashPhoto) {
+  editTrip.value.heroImage = photo.url
+  editTrip.value.heroAlt = photo.alt
+}
+
+watch(imagesSheetOpen, (open) => {
+  if (!open) {
+    coverAbort?.abort()
+    return
+  }
+  if (!coverResults.value.length) {
+    coverQuery.value = props.trip.name || 'travel'
+    void runCoverSearch(coverQuery.value)
+  }
+})
 
 const selectedDay = computed(
   () => editDays.value.find((d) => d.id === selectedDayId.value) ?? null,
@@ -287,11 +334,6 @@ function addLink() {
 
 function removeLink(id: string) {
   editLinks.value = editLinks.value.filter((l) => l._id !== id)
-}
-
-function applyHeroPreset(url: string, alt: string) {
-  editTrip.value.heroImage = url
-  editTrip.value.heroAlt = alt
 }
 
 function clearGroupPhoto() {
@@ -939,24 +981,75 @@ function finish() {
               placeholder="Paste an image URL"
             />
           </label>
-          <div class="edit__presets">
-            <span class="edit__label">Presets</span>
-            <div class="edit__preset-row">
+          <form
+            class="img-sheet__search"
+            @submit.prevent="runCoverSearch(coverQuery)"
+          >
+            <span class="edit__label">Search Unsplash</span>
+            <div class="img-sheet__search-row">
+              <Search
+                class="img-sheet__search-icon"
+                :size="16"
+                :stroke-width="2"
+                aria-hidden="true"
+              />
+              <input
+                v-model="coverQuery"
+                type="search"
+                class="edit__input img-sheet__search-input"
+                placeholder="Tokyo, beach, mountains…"
+                aria-label="Search Unsplash photos"
+              />
               <button
-                v-for="preset in HERO_PRESETS"
-                :key="preset.url"
-                type="button"
-                class="edit__preset"
-                :class="{
-                  'edit__preset--on': editTrip.heroImage === preset.url,
-                }"
-                :style="{ '--preset-image': `url(${preset.url})` }"
-                :aria-label="`Use ${preset.label} cover`"
-                @click="applyHeroPreset(preset.url, preset.alt)"
+                type="submit"
+                class="img-sheet__search-btn"
+                :disabled="coverSearching"
               >
-                <span>{{ preset.label }}</span>
+                {{ coverSearching ? '…' : 'Search' }}
               </button>
             </div>
+            <p class="edit__hint">
+              <template v-if="hasUnsplashKey()">
+                Free photos from Unsplash.
+              </template>
+              <template v-else>
+                Demo catalog — add
+                <code>VITE_UNSPLASH_ACCESS_KEY</code> for live Unsplash search.
+              </template>
+            </p>
+          </form>
+          <p v-if="coverError" class="img-sheet__error">{{ coverError }}</p>
+          <p
+            v-else-if="!coverSearching && !coverResults.length"
+            class="edit__hint"
+          >
+            No photos found. Try another place or vibe.
+          </p>
+          <div
+            v-else
+            class="img-sheet__results"
+            :class="{ 'img-sheet__results--loading': coverSearching }"
+            role="listbox"
+            aria-label="Cover photo results"
+          >
+            <button
+              v-for="photo in coverResults"
+              :key="photo.id"
+              type="button"
+              role="option"
+              class="img-sheet__result"
+              :class="{
+                'img-sheet__result--on': editTrip.heroImage === photo.url,
+              }"
+              :style="{ '--result-image': `url(${photo.thumb})` }"
+              :aria-label="`Use photo by ${photo.photographer}`"
+              :aria-selected="editTrip.heroImage === photo.url"
+              @click="applyCoverPhoto(photo)"
+            >
+              <span class="img-sheet__result-credit">{{
+                photo.photographer
+              }}</span>
+            </button>
           </div>
         </section>
 
