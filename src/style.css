@@ -1420,12 +1420,16 @@ body {
 .edit {
   min-height: 100svh;
   padding-bottom: 5rem;
+  overflow-x: clip;
 }
 
 .edit__main {
-  width: min(100% - 2rem, 40rem);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 40rem;
   margin: 1rem auto 0;
-  padding-bottom: 2rem;
+  padding: 0 1rem 2rem;
+  min-width: 0;
 }
 
 .edit__trip-strip {
@@ -1814,6 +1818,8 @@ body {
 .edit__panel {
   display: grid;
   gap: 1.1rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .edit__day-head {
@@ -1848,8 +1854,29 @@ body {
 
 .edit__dates {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.edit__dates .edit__field {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.edit__input[type='date'] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.edit__input[type='date']::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 
 .edit__hint {
@@ -2484,6 +2511,15 @@ body {
 @media (max-width: 640px) {
   .edit__preset-row {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .edit__dates {
+    grid-template-columns: 1fr;
+  }
+
+  .edit__input[type='date'] {
+    padding-inline: 0.55rem;
+    font-size: 0.85rem;
   }
 
   .edit__row-main {
