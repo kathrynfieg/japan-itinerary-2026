@@ -263,6 +263,7 @@ function onCreated(record: TripRecord) {
     :trip="trip"
     :links="links"
     @done="closeEdit"
+    @home="goHome"
   />
 
   <div v-else-if="trip" class="page">

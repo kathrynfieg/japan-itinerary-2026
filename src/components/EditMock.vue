@@ -6,7 +6,9 @@ import {
   Image as ImageIcon,
   Paperclip,
   Plus,
+  Settings,
   Trash2,
+  UserRound,
   X,
 } from '@lucide/vue'
 import {
@@ -44,6 +46,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   done: [payload: { trip: SessionTrip; days: Day[]; links: TripLink[] }]
+  home: []
 }>()
 
 let idCounter = 0
@@ -306,19 +309,41 @@ function finish() {
 
 <template>
   <div class="edit">
-    <header class="edit__bar">
-      <div class="edit__bar-text">
-        <p class="edit__eyebrow">Owner edit · mock</p>
-        <h1 class="edit__heading">{{ editTrip.name || trip.name }}</h1>
+    <header class="dash__top">
+      <button
+        type="button"
+        class="dash__brand-wrap dash__brand-btn"
+        @click="emit('home')"
+      >
+        <p class="dash__brand">Piper Travel</p>
+        <p class="dash__brand-sub">Editing · session mock</p>
+      </button>
+      <div class="dash__top-actions">
+        <button type="button" class="dash__icon-btn" aria-label="Settings">
+          <Settings :size="18" :stroke-width="2" aria-hidden="true" />
+        </button>
+        <button type="button" class="dash__account" aria-label="Account">
+          <span class="dash__avatar" aria-hidden="true">
+            <UserRound :size="16" :stroke-width="2" />
+          </span>
+          <span class="dash__account-text">
+            <span class="dash__account-name">You</span>
+            <span class="dash__account-meta">Owner</span>
+          </span>
+        </button>
+        <button type="button" class="edit__done" @click="finish">Done</button>
       </div>
-      <button type="button" class="edit__done" @click="finish">Done</button>
     </header>
 
-    <p class="edit__banner">
-      Session mock only — Done updates this trip until you refresh.
-    </p>
+    <main class="edit__main">
+      <header class="edit__header">
+        <h1 class="edit__heading">{{ editTrip.name || trip.name }}</h1>
+        <p class="edit__lede">
+          Done saves changes for this session — refresh resets everything.
+        </p>
+      </header>
 
-    <div class="edit__tabs" role="tablist" aria-label="Edit sections">
+      <div class="edit__tabs" role="tablist" aria-label="Edit sections">
       <button
         type="button"
         role="tab"
@@ -851,5 +876,6 @@ function finish() {
       <X :size="18" :stroke-width="2" aria-hidden="true" />
       Back to view
     </button>
+    </main>
   </div>
 </template>
