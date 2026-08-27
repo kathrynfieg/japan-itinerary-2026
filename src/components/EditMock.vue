@@ -939,15 +939,6 @@ function finish() {
               placeholder="Paste an image URL"
             />
           </label>
-          <label class="edit__field">
-            <span class="edit__label">Alt text</span>
-            <input
-              v-model="editTrip.heroAlt"
-              type="text"
-              class="edit__input"
-              placeholder="Short description of the cover"
-            />
-          </label>
           <div class="edit__presets">
             <span class="edit__label">Presets</span>
             <div class="edit__preset-row">
@@ -1004,15 +995,6 @@ function finish() {
               <p class="edit__hint">Upload coming soon</p>
             </div>
           </div>
-          <label v-if="editTrip.groupPhoto" class="edit__field">
-            <span class="edit__label">Alt text</span>
-            <input
-              v-model="editTrip.groupPhotoAlt"
-              type="text"
-              class="edit__input"
-              placeholder="Who’s in the photo?"
-            />
-          </label>
         </section>
       </div>
     </div>
