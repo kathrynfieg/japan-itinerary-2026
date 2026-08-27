@@ -4,6 +4,7 @@ import {
   FileText,
   GripVertical,
   Image as ImageIcon,
+  ImagePlus,
   Paperclip,
   Plus,
   Settings,
@@ -126,12 +127,15 @@ const editTrip = ref({
   heroImage: props.trip.heroImage,
   heroAlt: props.trip.heroAlt,
   heroStyle: (props.trip.heroStyle ?? 'full') as HeroStyle,
+  groupPhoto: props.trip.groupPhoto ?? '',
+  groupPhotoAlt: props.trip.groupPhotoAlt ?? '',
 })
 
 const selectedDayId = ref(editDays.value[0]?.id ?? '')
 const expandedId = ref<string | null>(null)
 const quickTitle = ref('')
 const moveTarget = ref('')
+const imagesSheetOpen = ref(false)
 
 const selectedDay = computed(
   () => editDays.value.find((d) => d.id === selectedDayId.value) ?? null,
@@ -146,8 +150,8 @@ const tripStrip = computed(() => {
     days: editDays.value.length,
     hero: editTrip.value.heroImage.trim() || props.trip.heroImage,
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
-    photo: props.trip.groupPhoto,
-    photoAlt: props.trip.groupPhotoAlt,
+    photo: editTrip.value.groupPhoto.trim() || undefined,
+    photoAlt: editTrip.value.groupPhotoAlt.trim() || 'Group photo',
     isDemo: props.trip.isDemo,
   }
 })
@@ -290,6 +294,11 @@ function applyHeroPreset(url: string, alt: string) {
   editTrip.value.heroAlt = alt
 }
 
+function clearGroupPhoto() {
+  editTrip.value.groupPhoto = ''
+  editTrip.value.groupPhotoAlt = ''
+}
+
 function buildTrip(): SessionTrip {
   const start = editTrip.value.start || props.trip.start
   const end = editTrip.value.end || start
@@ -297,6 +306,8 @@ function buildTrip(): SessionTrip {
     .split(/[,&]/)
     .map((t) => t.trim())
     .filter(Boolean)
+  const groupPhoto = editTrip.value.groupPhoto.trim()
+  const groupPhotoAlt = editTrip.value.groupPhotoAlt.trim()
 
   return {
     ...props.trip,
@@ -310,6 +321,8 @@ function buildTrip(): SessionTrip {
     heroImage: editTrip.value.heroImage.trim() || props.trip.heroImage,
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
     heroStyle: editTrip.value.heroStyle,
+    groupPhoto: groupPhoto || undefined,
+    groupPhotoAlt: groupPhoto ? groupPhotoAlt || 'Group photo' : undefined,
   }
 }
 
@@ -356,9 +369,22 @@ function finish() {
       aria-label="Trip being edited"
     >
       <div class="edit__trip-strip-inner">
-        <div v-if="tripStrip.photo" class="edit__trip-portrait">
-          <img :src="tripStrip.photo" :alt="tripStrip.photoAlt" />
-        </div>
+        <button
+          type="button"
+          class="edit__trip-portrait edit__trip-portrait--btn"
+          aria-label="Edit trip photos"
+          @click="imagesSheetOpen = true"
+        >
+          <img
+            v-if="tripStrip.photo"
+            :src="tripStrip.photo"
+            :alt="tripStrip.photoAlt"
+          />
+          <span v-else class="edit__trip-portrait-empty" aria-hidden="true">
+            <ImagePlus :size="18" :stroke-width="2" />
+          </span>
+          <span class="edit__trip-portrait-hint">Edit</span>
+        </button>
         <div class="edit__trip-copy">
           <p class="edit__trip-kicker">
             Editing
@@ -775,6 +801,7 @@ function finish() {
         <span class="edit__label">Hero style</span>
         <p class="edit__hint">
           Layout of the trip cover — try a few, hit Done, then check the view.
+          Tap the photo in the banner to change cover or group photo.
         </p>
         <div class="edit__style-grid" role="radiogroup" aria-label="Hero style">
           <button
@@ -798,53 +825,6 @@ function finish() {
               <span class="edit__style-blurb">{{ style.blurb }}</span>
             </span>
           </button>
-        </div>
-      </div>
-
-      <div class="edit__hero">
-        <span class="edit__label">Hero photo</span>
-        <div
-          class="edit__hero-preview"
-          :style="{ '--hero-preview': `url(${editTrip.heroImage})` }"
-          role="img"
-          :aria-label="editTrip.heroAlt || 'Hero preview'"
-        />
-        <label class="edit__field">
-          <span class="edit__label">Image URL</span>
-          <input
-            v-model="editTrip.heroImage"
-            type="url"
-            class="edit__input"
-            placeholder="Paste an image URL"
-          />
-        </label>
-        <label class="edit__field">
-          <span class="edit__label">Alt text</span>
-          <input
-            v-model="editTrip.heroAlt"
-            type="text"
-            class="edit__input"
-            placeholder="Short description of the photo"
-          />
-        </label>
-        <div class="edit__presets">
-          <span class="edit__label">Presets</span>
-          <div class="edit__preset-row">
-            <button
-              v-for="preset in HERO_PRESETS"
-              :key="preset.url"
-              type="button"
-              class="edit__preset"
-              :class="{
-                'edit__preset--on': editTrip.heroImage === preset.url,
-              }"
-              :style="{ '--preset-image': `url(${preset.url})` }"
-              :aria-label="`Use ${preset.label} hero`"
-              @click="applyHeroPreset(preset.url, preset.alt)"
-            >
-              <span>{{ preset.label }}</span>
-            </button>
-          </div>
         </div>
       </div>
     </section>
@@ -908,6 +888,134 @@ function finish() {
       <X :size="18" :stroke-width="2" aria-hidden="true" />
       Back to view
     </button>
+
+    <div
+      v-if="imagesSheetOpen"
+      class="img-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="img-sheet-title"
+    >
+      <button
+        type="button"
+        class="img-sheet__backdrop"
+        aria-label="Close"
+        @click="imagesSheetOpen = false"
+      />
+      <div class="img-sheet__panel">
+        <header class="img-sheet__header">
+          <div>
+            <p class="img-sheet__eyebrow">Personalise</p>
+            <h2 id="img-sheet-title" class="img-sheet__title">Trip photos</h2>
+          </div>
+          <button
+            type="button"
+            class="img-sheet__close"
+            aria-label="Close"
+            @click="imagesSheetOpen = false"
+          >
+            <X :size="16" :stroke-width="2" aria-hidden="true" />
+          </button>
+        </header>
+
+        <p class="img-sheet__lede">
+          Cover shows in the banner and trip view. Group photo is optional.
+        </p>
+
+        <section class="img-sheet__section">
+          <span class="edit__label">Cover image</span>
+          <div
+            class="img-sheet__cover-preview"
+            :style="{ '--cover-preview': `url(${editTrip.heroImage})` }"
+            role="img"
+            :aria-label="editTrip.heroAlt || 'Cover preview'"
+          />
+          <label class="edit__field">
+            <span class="edit__label">Image URL</span>
+            <input
+              v-model="editTrip.heroImage"
+              type="url"
+              class="edit__input"
+              placeholder="Paste an image URL"
+            />
+          </label>
+          <label class="edit__field">
+            <span class="edit__label">Alt text</span>
+            <input
+              v-model="editTrip.heroAlt"
+              type="text"
+              class="edit__input"
+              placeholder="Short description of the cover"
+            />
+          </label>
+          <div class="edit__presets">
+            <span class="edit__label">Presets</span>
+            <div class="edit__preset-row">
+              <button
+                v-for="preset in HERO_PRESETS"
+                :key="preset.url"
+                type="button"
+                class="edit__preset"
+                :class="{
+                  'edit__preset--on': editTrip.heroImage === preset.url,
+                }"
+                :style="{ '--preset-image': `url(${preset.url})` }"
+                :aria-label="`Use ${preset.label} cover`"
+                @click="applyHeroPreset(preset.url, preset.alt)"
+              >
+                <span>{{ preset.label }}</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="img-sheet__section">
+          <span class="edit__label">Group photo</span>
+          <p class="edit__hint">Shows in the edit banner and trip hero.</p>
+          <div class="img-sheet__group-row">
+            <div class="img-sheet__group-preview">
+              <img
+                v-if="editTrip.groupPhoto"
+                :src="editTrip.groupPhoto"
+                :alt="editTrip.groupPhotoAlt || 'Group photo preview'"
+              />
+              <span v-else class="img-sheet__group-empty" aria-hidden="true">
+                <UserRound :size="22" :stroke-width="1.75" />
+              </span>
+            </div>
+            <div class="img-sheet__group-actions">
+              <button
+                type="button"
+                class="edit__add-file"
+                disabled
+                aria-disabled="true"
+              >
+                <ImagePlus :size="14" :stroke-width="2" aria-hidden="true" />
+                Upload photo
+              </button>
+              <button
+                v-if="editTrip.groupPhoto"
+                type="button"
+                class="edit__delete"
+                @click="clearGroupPhoto"
+              >
+                Remove
+              </button>
+              <p class="edit__hint">Upload coming soon</p>
+            </div>
+          </div>
+          <label v-if="editTrip.groupPhoto" class="edit__field">
+            <span class="edit__label">Alt text</span>
+            <input
+              v-model="editTrip.groupPhotoAlt"
+              type="text"
+              class="edit__input"
+              placeholder="Who’s in the photo?"
+            />
+          </label>
+        </section>
+      </div>
+    </div>
     </main>
   </div>
 </template>

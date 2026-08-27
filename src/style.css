@@ -1474,6 +1474,49 @@ body {
   box-shadow: 0 4px 18px rgb(21 32 24 / 0.28);
 }
 
+.edit__trip-portrait--btn {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: rgb(244 246 242 / 0.12);
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.edit__trip-portrait--btn:hover {
+  border-color: rgb(244 246 242 / 0.9);
+  transform: scale(1.03);
+}
+
+.edit__trip-portrait--btn:focus-visible {
+  outline: 2px solid #f4f6f2;
+  outline-offset: 2px;
+}
+
+.edit__trip-portrait-empty {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: rgb(244 246 242 / 0.75);
+}
+
+.edit__trip-portrait-hint {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 0.28rem 0.15rem 0.22rem;
+  background: linear-gradient(180deg, transparent, rgb(21 32 24 / 0.72));
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f4f6f2;
+  line-height: 1;
+}
+
 .edit__trip-portrait img {
   display: block;
   width: 100%;
@@ -1555,6 +1598,144 @@ body {
 
 .edit__done:hover {
   background: var(--accent-deep);
+}
+
+/* —— Trip images sheet (edit mock) —— */
+.img-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+}
+
+.img-sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgb(21 32 24 / 0.45);
+  cursor: pointer;
+}
+
+.img-sheet__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 28rem);
+  max-height: min(92svh, 44rem);
+  overflow: auto;
+  margin: 0;
+  padding: 1.15rem 1.15rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  border-radius: 20px 20px 0 0;
+  background: var(--paper);
+  box-shadow: 0 -12px 40px rgb(21 32 24 / 0.18);
+}
+
+.img-sheet__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.img-sheet__eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.img-sheet__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.img-sheet__close {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.img-sheet__lede {
+  margin: 0.65rem 0 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.img-sheet__section {
+  display: grid;
+  gap: 0.65rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--mist);
+}
+
+.img-sheet__section:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.img-sheet__cover-preview {
+  width: 100%;
+  height: 7.5rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cover-preview) center / cover no-repeat;
+}
+
+.img-sheet__group-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.img-sheet__group-preview {
+  flex-shrink: 0;
+  width: 4.25rem;
+  height: 4.25rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--mist);
+}
+
+.img-sheet__group-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  transform: scale(1.65);
+}
+
+.img-sheet__group-empty {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--ink-soft);
+  opacity: 0.55;
+}
+
+.img-sheet__group-actions {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
 }
 
 .edit__tabs {
