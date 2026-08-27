@@ -444,37 +444,37 @@ function finish() {
 
     <main class="edit__main">
       <div class="edit__tabs" role="tablist" aria-label="Edit sections">
-      <button
-        type="button"
-        role="tab"
-        class="edit__tab"
-        :class="{ 'edit__tab--on': tab === 'days' }"
-        :aria-selected="tab === 'days'"
-        @click="tab = 'days'"
-      >
-        Days
-      </button>
-      <button
-        type="button"
-        role="tab"
-        class="edit__tab"
-        :class="{ 'edit__tab--on': tab === 'trip' }"
-        :aria-selected="tab === 'trip'"
-        @click="tab = 'trip'"
-      >
-        Trip
-      </button>
-      <button
-        type="button"
-        role="tab"
-        class="edit__tab"
-        :class="{ 'edit__tab--on': tab === 'links' }"
-        :aria-selected="tab === 'links'"
-        @click="tab = 'links'"
-      >
-        Links
-      </button>
-    </div>
+        <button
+          type="button"
+          role="tab"
+          class="edit__tab"
+          :class="{ 'edit__tab--on': tab === 'days' }"
+          :aria-selected="tab === 'days'"
+          @click="tab = 'days'"
+        >
+          Days
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="edit__tab"
+          :class="{ 'edit__tab--on': tab === 'trip' }"
+          :aria-selected="tab === 'trip'"
+          @click="tab = 'trip'"
+        >
+          Trip
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="edit__tab"
+          :class="{ 'edit__tab--on': tab === 'links' }"
+          :aria-selected="tab === 'links'"
+          @click="tab = 'links'"
+        >
+          Links
+        </button>
+      </div>
 
     <!-- Days -->
     <template v-if="tab === 'days'">
