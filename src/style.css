@@ -1917,6 +1917,16 @@ body {
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+@media (hover: hover) {
+  .edit__tab:hover:not(.edit__tab--on) {
+    background: rgb(255 255 255 / 0.55);
+    color: var(--ink);
+  }
 }
 
 .edit__tab--on {
@@ -1940,9 +1950,13 @@ body {
 
 .edit__day-chip {
   flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 2.4rem;
   height: 2.4rem;
   margin: 0;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--paper);
@@ -1950,7 +1964,31 @@ body {
   font: inherit;
   font-size: 0.85rem;
   font-weight: 600;
+  line-height: 1;
   cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+@media (hover: hover) {
+  .edit__day-chip:hover:not(.edit__day-chip--active) {
+    background: var(--mist);
+    border-color: var(--ink-soft);
+    color: var(--ink);
+  }
+
+  .edit__day-chip--add:hover {
+    background: rgb(181 69 27 / 0.1);
+    border-color: var(--accent);
+    color: var(--accent-deep);
+  }
+
+  .edit__day-chip--active:hover {
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
+  }
 }
 
 .edit__day-chip--active {
@@ -1962,6 +2000,11 @@ body {
 .edit__day-chip--add {
   color: var(--accent-deep);
   border-style: dashed;
+}
+
+.edit__day-chip--add svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .edit__day-chip--birthday:not(.edit__day-chip--active) {
