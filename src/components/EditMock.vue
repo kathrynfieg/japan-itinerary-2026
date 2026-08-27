@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import {
   FileText,
   GripVertical,
@@ -226,8 +226,26 @@ function selectDay(id: string) {
 }
 
 function toggleExpand(id: string) {
-  expandedId.value = expandedId.value === id ? null : id
+  const opening = expandedId.value !== id
+  expandedId.value = opening ? id : null
   moveTarget.value = ''
+
+  if (!opening) return
+
+  void nextTick(() => {
+    const row = document.querySelector<HTMLElement>('.edit__row--open')
+    if (!row) return
+
+    const sticky = document.querySelector<HTMLElement>('.dash__top')
+    const offset = (sticky?.getBoundingClientRect().height ?? 56) + 6
+    const top = window.scrollY + row.getBoundingClientRect().top - offset
+
+    const root = document.documentElement
+    const previous = root.style.scrollBehavior
+    root.style.scrollBehavior = 'auto'
+    window.scrollTo({ top: Math.max(0, top) })
+    root.style.scrollBehavior = previous
+  })
 }
 
 function addActivity() {
