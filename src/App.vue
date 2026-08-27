@@ -350,9 +350,6 @@ function onCreated(record: TripRecord) {
           <button type="button" class="hero__cta" @click="scrollToToday">
             View today
           </button>
-          <button type="button" class="hero__link" @click="openShare">
-            Share
-          </button>
           <button
             v-if="hasLinks"
             type="button"
