@@ -212,6 +212,12 @@ function dayNumber(date: string) {
   return new Date(date + 'T12:00:00').getDate()
 }
 
+function monthLabel(date: string) {
+  return new Date(date + 'T12:00:00').toLocaleDateString('en-GB', {
+    month: 'short',
+  })
+}
+
 function selectDay(id: string) {
   selectedDayId.value = id
   expandedId.value = null
@@ -488,9 +494,11 @@ function finish() {
             'edit__day-chip--active': day.id === selectedDayId,
             'edit__day-chip--birthday': day.theme === 'birthday',
           }"
+          :aria-label="`${day.weekday} ${dayNumber(day.date)} ${monthLabel(day.date)}`"
           @click="selectDay(day.id)"
         >
-          {{ dayNumber(day.date) }}
+          <span class="edit__day-chip-month">{{ monthLabel(day.date) }}</span>
+          <span class="edit__day-chip-num">{{ dayNumber(day.date) }}</span>
         </button>
         <button
           type="button"
