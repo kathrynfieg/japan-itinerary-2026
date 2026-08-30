@@ -33,6 +33,7 @@ import {
   searchUnsplash,
   type UnsplashPhoto,
 } from '../lib/unsplash'
+import logo from '../assets/3.png'
 
 type EditableActivity = Activity & { _id: string }
 
@@ -409,7 +410,8 @@ function finish() {
         class="dash__brand dash__brand-btn"
         @click="emit('home')"
       >
-        Piper Travel
+        <img class="dash__mark" :src="logo" alt="" width="38" height="38" />
+        <span>Piper Travel</span>
       </button>
       <div class="dash__top-actions">
         <button type="button" class="dash__icon-btn" aria-label="Settings">

@@ -3026,12 +3026,23 @@ body {
 }
 
 .dash__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   margin: 0;
   font-family: var(--serif);
   font-size: 1.55rem;
   letter-spacing: -0.025em;
   line-height: 1;
   color: var(--ink);
+}
+
+.dash__mark {
+  display: block;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .dash__top-actions {

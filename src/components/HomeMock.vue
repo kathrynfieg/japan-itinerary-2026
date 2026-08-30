@@ -12,6 +12,7 @@ import {
   Trash2,
 } from '@lucide/vue'
 import { TRIP_PRIVACY, type TripRecord } from '../lib/createTrip'
+import logo from '../assets/3.png'
 
 defineProps<{
   trips: TripRecord[]
@@ -85,7 +86,10 @@ onUnmounted(() => {
 <template>
   <div class="dash">
     <header class="dash__top">
-      <p class="dash__brand">Piper Travel</p>
+      <div class="dash__brand">
+        <img class="dash__mark" :src="logo" alt="" width="38" height="38" />
+        <span>Piper Travel</span>
+      </div>
       <div class="dash__top-actions">
         <button type="button" class="dash__icon-btn" aria-label="Settings">
           <Settings :size="18" :stroke-width="2" aria-hidden="true" />
