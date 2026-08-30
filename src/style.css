@@ -3276,6 +3276,16 @@ body {
   line-height: 1.35;
 }
 
+.dash-card__privacy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0.15rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 550;
+}
+
 .dash-card__sep {
   margin-inline: 0.2rem;
   opacity: 0.6;
@@ -3566,6 +3576,10 @@ body {
   color: var(--ink-soft);
 }
 
+.share__note--foot {
+  margin-top: 1rem;
+}
+
 .share__actions {
   display: grid;
   gap: 0.55rem;
@@ -3592,6 +3606,16 @@ body {
 .share__action:hover {
   border-color: rgb(181 69 27 / 0.35);
   background: rgb(232 236 230 / 0.45);
+}
+
+.share__action--on {
+  border-color: var(--accent);
+  background: rgb(181 69 27 / 0.06);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.share__action--on .share__action-icon {
+  background: rgb(181 69 27 / 0.12);
 }
 
 .share__action--static {

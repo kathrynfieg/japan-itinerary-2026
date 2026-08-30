@@ -14,8 +14,26 @@ export type SessionTrip = {
   heroStyle?: HeroStyle
   groupPhoto?: string
   groupPhotoAlt?: string
+  /** Who can open the trip · default private */
+  privacy?: TripPrivacy
   /** Original Japan itinerary demo */
   isDemo?: boolean
+}
+
+export type TripPrivacy = 'private' | 'link'
+
+export const TRIP_PRIVACY: Record<
+  TripPrivacy,
+  { label: string; blurb: string }
+> = {
+  private: {
+    label: 'Private',
+    blurb: 'Only you can open this trip',
+  },
+  link: {
+    label: 'Anyone with the link',
+    blurb: 'View-only · you’re still the only editor',
+  },
 }
 
 export type HeroStyle = 'full' | 'compact' | 'poster' | 'banner' | 'minimal'
@@ -179,6 +197,7 @@ export function createTripFromInput(input: CreateTripInput): TripRecord {
     heroImage: DEFAULT_HERO,
     heroAlt: 'Travel destination',
     heroStyle: 'full',
+    privacy: 'private',
   }
 
   return { id: nextTripId(), trip, days, links: [] }

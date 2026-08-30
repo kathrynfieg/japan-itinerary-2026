@@ -2,6 +2,8 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import {
   Copy,
+  Link2,
+  Lock,
   MoreHorizontal,
   Pencil,
   Plus,
@@ -10,7 +12,7 @@ import {
   Trash2,
   UserRound,
 } from '@lucide/vue'
-import type { TripRecord } from '../lib/createTrip'
+import { TRIP_PRIVACY, type TripRecord } from '../lib/createTrip'
 
 defineProps<{
   trips: TripRecord[]
@@ -21,6 +23,7 @@ const emit = defineEmits<{
   open: [id: string]
   edit: [id: string]
   share: [id: string]
+  privacy: [id: string]
   duplicate: [id: string]
   remove: [id: string]
 }>()
@@ -37,6 +40,14 @@ function travelersLabel(record: TripRecord) {
   return list.join(' · ')
 }
 
+function privacyLabel(record: TripRecord) {
+  return TRIP_PRIVACY[record.trip.privacy ?? 'private'].label
+}
+
+function isPrivate(record: TripRecord) {
+  return (record.trip.privacy ?? 'private') === 'private'
+}
+
 function toggleMenu(id: string, event: Event) {
   event.stopPropagation()
   menuId.value = menuId.value === id ? null : id
@@ -44,7 +55,7 @@ function toggleMenu(id: string, event: Event) {
 
 function runAction(
   event: Event,
-  action: 'edit' | 'share' | 'duplicate' | 'remove',
+  action: 'edit' | 'share' | 'privacy' | 'duplicate' | 'remove',
   id: string,
 ) {
   event.stopPropagation()
@@ -139,6 +150,21 @@ onUnmounted(() => {
                     {{ travelersLabel(record) }}
                   </template>
                 </p>
+                <p class="dash-card__privacy">
+                  <Lock
+                    v-if="isPrivate(record)"
+                    :size="12"
+                    :stroke-width="2.25"
+                    aria-hidden="true"
+                  />
+                  <Link2
+                    v-else
+                    :size="12"
+                    :stroke-width="2.25"
+                    aria-hidden="true"
+                  />
+                  {{ privacyLabel(record) }}
+                </p>
               </div>
             </button>
 
@@ -177,6 +203,15 @@ onUnmounted(() => {
                 >
                   <Share2 :size="15" :stroke-width="2" aria-hidden="true" />
                   Share
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  class="dash-card__menu-item"
+                  @click="runAction($event, 'privacy', record.id)"
+                >
+                  <Lock :size="15" :stroke-width="2" aria-hidden="true" />
+                  Privacy
                 </button>
                 <button
                   type="button"
