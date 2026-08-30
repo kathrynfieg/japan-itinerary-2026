@@ -121,11 +121,25 @@ onUnmounted(() => {
       </header>
 
       <ul v-if="trips.length" class="dash__grid">
+        <li class="dash__cell" style="--i: 0">
+          <button
+            type="button"
+            class="dash-card dash-card--new"
+            @click="emit('create')"
+          >
+            <span class="dash-card__new-icon" aria-hidden="true">
+              <Plus :size="22" :stroke-width="2" />
+            </span>
+            <span class="dash-card__new-label">Create a trip</span>
+            <span class="dash-card__new-hint">Pick dates and go</span>
+          </button>
+        </li>
+
         <li
           v-for="(record, index) in trips"
           :key="record.id"
           class="dash__cell"
-          :style="{ '--i': index }"
+          :style="{ '--i': index + 1 }"
         >
           <article class="dash-card">
             <button
@@ -253,20 +267,6 @@ onUnmounted(() => {
               </div>
             </div>
           </article>
-        </li>
-
-        <li class="dash__cell" :style="{ '--i': trips.length }">
-          <button
-            type="button"
-            class="dash-card dash-card--new"
-            @click="emit('create')"
-          >
-            <span class="dash-card__new-icon" aria-hidden="true">
-              <Plus :size="22" :stroke-width="2" />
-            </span>
-            <span class="dash-card__new-label">Create a trip</span>
-            <span class="dash-card__new-hint">Pick dates and go</span>
-          </button>
         </li>
       </ul>
 
