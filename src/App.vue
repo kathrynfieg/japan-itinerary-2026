@@ -200,6 +200,67 @@ function openTrip(id: string) {
   mode.value = 'view'
 }
 
+function editTrip(id: string) {
+  activeId.value = id
+  shareOpen.value = false
+  mode.value = 'edit'
+}
+
+function shareTrip(id: string) {
+  activeId.value = id
+  shareOpen.value = true
+}
+
+function duplicateTrip(id: string) {
+  const source = library.value.find((t) => t.id === id)
+  if (!source) return
+
+  const copy: TripRecord = {
+    id: nextTripId(),
+    trip: {
+      ...source.trip,
+      name: `${source.trip.name} copy`,
+      travelers: [...source.trip.travelers],
+      isDemo: false,
+    },
+    days: source.days.map((day, index) => ({
+      ...day,
+      id: `day-${index + 1}-${day.date}-${nextTripId('d')}`,
+      activities: day.activities.map((activity) => ({
+        ...activity,
+        notes: activity.notes ? [...activity.notes] : undefined,
+        links: activity.links
+          ? activity.links.map((link) => ({ ...link }))
+          : undefined,
+        files: activity.files
+          ? activity.files.map((file) => ({ ...file }))
+          : undefined,
+      })),
+    })),
+    links: source.links.map((link) => ({ ...link })),
+  }
+
+  const index = library.value.findIndex((t) => t.id === id)
+  const next = [...library.value]
+  next.splice(index + 1, 0, copy)
+  library.value = next
+}
+
+function removeTrip(id: string) {
+  const record = library.value.find((t) => t.id === id)
+  if (!record) return
+  const ok = window.confirm(
+    `Delete “${record.trip.name}”? This can’t be undone in the mock.`,
+  )
+  if (!ok) return
+  library.value = library.value.filter((t) => t.id !== id)
+  if (activeId.value === id) {
+    activeId.value = null
+    shareOpen.value = false
+    mode.value = 'home'
+  }
+}
+
 function openEdit() {
   shareOpen.value = false
   mode.value = 'edit'
@@ -211,6 +272,7 @@ function openShare() {
 
 function closeShare() {
   shareOpen.value = false
+  if (mode.value === 'home') activeId.value = null
 }
 
 function closeEdit(payload: {
@@ -249,6 +311,10 @@ function onCreated(record: TripRecord) {
     :trips="library"
     @create="startCreate"
     @open="openTrip"
+    @edit="editTrip"
+    @share="shareTrip"
+    @duplicate="duplicateTrip"
+    @remove="removeTrip"
   />
 
   <OnboardingMock
@@ -409,15 +475,15 @@ function onCreated(record: TripRecord) {
     >
       <ArrowUp :size="18" :stroke-width="2" aria-hidden="true" />
     </button>
-
-    <ShareSheet
-      v-if="trip && activeId"
-      :open="shareOpen"
-      :trip="trip"
-      :days="days"
-      :links="links"
-      :trip-id="activeId"
-      @close="closeShare"
-    />
   </div>
+
+  <ShareSheet
+    v-if="trip && activeId"
+    :open="shareOpen"
+    :trip="trip"
+    :days="days"
+    :links="links"
+    :trip-id="activeId"
+    @close="closeShare"
+  />
 </template>

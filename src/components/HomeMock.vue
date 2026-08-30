@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import { Plus, Settings, UserRound } from '@lucide/vue'
+import { onMounted, onUnmounted, ref } from 'vue'
+import {
+  Copy,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  Settings,
+  Share2,
+  Trash2,
+  UserRound,
+} from '@lucide/vue'
 import type { TripRecord } from '../lib/createTrip'
 
 defineProps<{
@@ -9,7 +19,13 @@ defineProps<{
 const emit = defineEmits<{
   create: []
   open: [id: string]
+  edit: [id: string]
+  share: [id: string]
+  duplicate: [id: string]
+  remove: [id: string]
 }>()
+
+const menuId = ref<string | null>(null)
 
 function dayCount(record: TripRecord) {
   return record.days.length
@@ -20,6 +36,40 @@ function travelersLabel(record: TripRecord) {
   if (!list.length) return null
   return list.join(' · ')
 }
+
+function toggleMenu(id: string, event: Event) {
+  event.stopPropagation()
+  menuId.value = menuId.value === id ? null : id
+}
+
+function runAction(
+  event: Event,
+  action: 'edit' | 'share' | 'duplicate' | 'remove',
+  id: string,
+) {
+  event.stopPropagation()
+  menuId.value = null
+  emit(action, id)
+}
+
+function onDocumentPointerDown(event: PointerEvent) {
+  const target = event.target as HTMLElement | null
+  if (!target?.closest('.dash-card__menu')) menuId.value = null
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') menuId.value = null
+}
+
+onMounted(() => {
+  document.addEventListener('pointerdown', onDocumentPointerDown)
+  document.addEventListener('keydown', onKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('pointerdown', onDocumentPointerDown)
+  document.removeEventListener('keydown', onKeydown)
+})
 </script>
 
 <template>
@@ -61,35 +111,94 @@ function travelersLabel(record: TripRecord) {
 
       <ul v-if="trips.length" class="dash__grid">
         <li v-for="record in trips" :key="record.id">
-          <button
-            type="button"
-            class="dash-card"
-            @click="emit('open', record.id)"
-          >
-            <div
-              class="dash-card__media"
-              :style="{ '--card-image': `url(${record.trip.heroImage})` }"
-              role="img"
-              :aria-label="record.trip.heroAlt"
-            />
-            <div class="dash-card__body">
-              <div class="dash-card__title-row">
-                <h2 class="dash-card__name">{{ record.trip.name }}</h2>
-                <span v-if="record.trip.isDemo" class="dash-card__badge"
-                  >Demo</span
-                >
+          <div class="dash-card">
+            <button
+              type="button"
+              class="dash-card__open"
+              @click="emit('open', record.id)"
+            >
+              <div
+                class="dash-card__media"
+                :style="{ '--card-image': `url(${record.trip.heroImage})` }"
+                role="img"
+                :aria-label="record.trip.heroAlt"
+              />
+              <div class="dash-card__body">
+                <div class="dash-card__title-row">
+                  <h2 class="dash-card__name">{{ record.trip.name }}</h2>
+                  <span v-if="record.trip.isDemo" class="dash-card__badge"
+                    >Demo</span
+                  >
+                </div>
+                <p class="dash-card__dates">{{ record.trip.rangeLabel }}</p>
+                <p class="dash-card__meta">
+                  {{ dayCount(record) }}
+                  day{{ dayCount(record) === 1 ? '' : 's' }}
+                  <template v-if="travelersLabel(record)">
+                    <span class="dash-card__sep">·</span>
+                    {{ travelersLabel(record) }}
+                  </template>
+                </p>
               </div>
-              <p class="dash-card__dates">{{ record.trip.rangeLabel }}</p>
-              <p class="dash-card__meta">
-                {{ dayCount(record) }}
-                day{{ dayCount(record) === 1 ? '' : 's' }}
-                <template v-if="travelersLabel(record)">
-                  <span class="dash-card__sep">·</span>
-                  {{ travelersLabel(record) }}
-                </template>
-              </p>
+            </button>
+
+            <div class="dash-card__menu">
+              <button
+                type="button"
+                class="dash-card__menu-btn"
+                :aria-expanded="menuId === record.id"
+                aria-haspopup="menu"
+                :aria-label="`Actions for ${record.trip.name}`"
+                @click="toggleMenu(record.id, $event)"
+              >
+                <MoreHorizontal :size="18" :stroke-width="2" aria-hidden="true" />
+              </button>
+
+              <div
+                v-if="menuId === record.id"
+                class="dash-card__menu-panel"
+                role="menu"
+                :aria-label="`${record.trip.name} actions`"
+              >
+                <button
+                  type="button"
+                  role="menuitem"
+                  class="dash-card__menu-item"
+                  @click="runAction($event, 'edit', record.id)"
+                >
+                  <Pencil :size="15" :stroke-width="2" aria-hidden="true" />
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  class="dash-card__menu-item"
+                  @click="runAction($event, 'share', record.id)"
+                >
+                  <Share2 :size="15" :stroke-width="2" aria-hidden="true" />
+                  Share
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  class="dash-card__menu-item"
+                  @click="runAction($event, 'duplicate', record.id)"
+                >
+                  <Copy :size="15" :stroke-width="2" aria-hidden="true" />
+                  Duplicate
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  class="dash-card__menu-item dash-card__menu-item--danger"
+                  @click="runAction($event, 'remove', record.id)"
+                >
+                  <Trash2 :size="15" :stroke-width="2" aria-hidden="true" />
+                  Delete
+                </button>
+              </div>
             </div>
-          </button>
+          </div>
         </li>
 
         <li>
