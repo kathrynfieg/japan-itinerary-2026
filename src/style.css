@@ -1434,6 +1434,91 @@ body {
   min-width: 0;
 }
 
+.edit__bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem clamp(1rem, 3vw, 1.5rem);
+  border-bottom: 1px solid rgb(21 32 24 / 0.08);
+  background: rgb(244 246 242 / 0.92);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.edit__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.4rem 0.55rem 0.4rem 0.35rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.edit__back:hover {
+  color: var(--ink);
+  background: rgb(21 32 24 / 0.06);
+}
+
+.edit__bar-title {
+  display: grid;
+  gap: 0.1rem;
+  margin: 0;
+  min-width: 0;
+  text-align: center;
+  justify-items: center;
+}
+
+.edit__bar-kicker {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.edit__bar-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.edit__done {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit__done:hover {
+  background: var(--accent-deep);
+}
+
 .edit__trip-strip {
   position: relative;
   border-bottom: 1px solid rgb(21 32 24 / 0.25);
@@ -1592,24 +1677,6 @@ body {
 
 .dash__brand-btn:hover {
   color: var(--accent-deep);
-}
-
-.edit__done {
-  flex-shrink: 0;
-  margin: 0 0 0 0.25rem;
-  padding: 0.55rem 1rem;
-  border: none;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  font: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.edit__done:hover {
-  background: var(--accent-deep);
 }
 
 /* —— Trip images sheet (edit mock) —— */

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
 import {
+  ArrowLeft,
   FileText,
   GripVertical,
   Image as ImageIcon,
@@ -8,7 +9,6 @@ import {
   Paperclip,
   Plus,
   Search,
-  Settings,
   Trash2,
   UserRound,
   X,
@@ -33,7 +33,6 @@ import {
   searchUnsplash,
   type UnsplashPhoto,
 } from '../lib/unsplash'
-import logo from '../assets/3.png'
 
 type EditableActivity = Activity & { _id: string }
 
@@ -237,7 +236,7 @@ function toggleExpand(id: string) {
     const row = document.querySelector<HTMLElement>('.edit__row--open')
     if (!row) return
 
-    const sticky = document.querySelector<HTMLElement>('.dash__top')
+    const sticky = document.querySelector<HTMLElement>('.edit__bar')
     const offset = (sticky?.getBoundingClientRect().height ?? 56) + 6
     const top = window.scrollY + row.getBoundingClientRect().top - offset
 
@@ -404,24 +403,21 @@ function finish() {
 
 <template>
   <div class="edit">
-    <header class="dash__top">
+    <header class="edit__bar">
       <button
         type="button"
-        class="dash__brand dash__brand-btn"
+        class="edit__back"
+        aria-label="Back to trips"
         @click="emit('home')"
       >
-        <img class="dash__mark" :src="logo" alt="" width="46" height="46" />
-        <span>Piper Travel</span>
+        <ArrowLeft :size="18" :stroke-width="2" aria-hidden="true" />
+        <span>Trips</span>
       </button>
-      <div class="dash__top-actions">
-        <button type="button" class="dash__icon-btn" aria-label="Settings">
-          <Settings :size="18" :stroke-width="2" aria-hidden="true" />
-        </button>
-        <button type="button" class="dash__account" aria-label="Account">
-          <span class="dash__avatar" aria-hidden="true">K</span>
-        </button>
-        <button type="button" class="edit__done" @click="finish">Done</button>
-      </div>
+      <p class="edit__bar-title">
+        <span class="edit__bar-kicker">Editing</span>
+        <span class="edit__bar-name">{{ tripStrip.name }}</span>
+      </p>
+      <button type="button" class="edit__done" @click="finish">Done</button>
     </header>
 
     <div
