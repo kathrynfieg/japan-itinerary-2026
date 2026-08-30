@@ -16,8 +16,10 @@ export type SessionTrip = {
   groupPhotoAlt?: string
   /** Who can open the trip · default private */
   privacy?: TripPrivacy
-  /** Original Japan itinerary demo */
+  /** Sample / seeded itinerary shown in the library */
   isDemo?: boolean
+  /** View-mode intro under the days heading (demos) */
+  daysIntro?: string
 }
 
 export type TripPrivacy = 'private' | 'link'

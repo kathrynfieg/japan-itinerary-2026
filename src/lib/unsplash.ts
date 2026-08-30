@@ -109,6 +109,31 @@ const LOCAL_CATALOG: (UnsplashPhoto & { keywords: string[] })[] = [
     keywords: ['lake', 'water', 'mountains', 'sunrise', 'nature', 'calm'],
   },
   {
+    id: 'cape-town',
+    url: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=2400&q=80',
+    thumb:
+      'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=400&q=60',
+    alt: 'Table Mountain overlooking Cape Town harbour',
+    photographer: 'Tobias Reich',
+    keywords: [
+      'africa',
+      'cape town',
+      'south africa',
+      'mountain',
+      'city',
+      'travel',
+    ],
+  },
+  {
+    id: 'safari',
+    url: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=2400&q=80',
+    thumb:
+      'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=400&q=60',
+    alt: 'Safari landscape at golden hour',
+    photographer: 'Harshil Gudka',
+    keywords: ['africa', 'safari', 'wildlife', 'savanna', 'nature', 'travel'],
+  },
+  {
     id: 'nyc',
     url: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=2400&q=80',
     thumb:

@@ -2,6 +2,11 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ArrowUp, Cake, Pencil, Share2 } from '@lucide/vue'
 import {
+  africaDays,
+  africaKeyLinks,
+  africaTrip,
+} from './data/africaTrip'
+import {
   days as japanDays,
   keyLinks as japanKeyLinks,
   trip as japanTrip,
@@ -23,8 +28,8 @@ import OnboardingMock from './components/OnboardingMock.vue'
 import PrivacySheet from './components/PrivacySheet.vue'
 import ShareSheet from './components/ShareSheet.vue'
 
-function cloneJapanDays(): Day[] {
-  return japanDays.map((day) => ({
+function cloneDays(source: Day[]): Day[] {
+  return source.map((day) => ({
     ...day,
     activities: day.activities.map((activity) => ({
       ...activity,
@@ -57,14 +62,39 @@ function makeJapanRecord(): TripRecord {
       groupPhotoAlt: japanTrip.groupPhotoAlt,
       privacy: 'link',
       isDemo: true,
+      daysIntro:
+        'Eleven days across Japan! Here’s everything we’ve planned so far, including our confirmed bookings and flexible ideas for each day.',
     },
-    days: cloneJapanDays(),
+    days: cloneDays(japanDays),
     links: japanKeyLinks.map((link) => ({ ...link })),
   }
 }
 
+function makeAfricaRecord(): TripRecord {
+  return {
+    id: nextTripId('africa'),
+    trip: {
+      name: africaTrip.name,
+      year: africaTrip.year,
+      start: africaTrip.start,
+      end: africaTrip.end,
+      rangeLabel: africaTrip.rangeLabel,
+      travelers: [...africaTrip.travelers],
+      tagline: africaTrip.tagline,
+      heroImage: africaTrip.heroImage,
+      heroAlt: africaTrip.heroAlt,
+      heroStyle: 'full',
+      privacy: 'private',
+      isDemo: true,
+      daysIntro: africaTrip.daysIntro,
+    },
+    days: cloneDays(africaDays),
+    links: africaKeyLinks.map((link) => ({ ...link })),
+  }
+}
+
 const mode = ref<'home' | 'onboarding' | 'view' | 'edit'>('home')
-const library = ref<TripRecord[]>([makeJapanRecord()])
+const library = ref<TripRecord[]>([makeJapanRecord(), makeAfricaRecord()])
 const activeId = ref<string | null>(null)
 
 const activeRecord = computed(
@@ -102,11 +132,14 @@ const todayDayId = computed(() => {
 
 const daysIntro = computed(() => {
   const count = days.value.length
-  if (isDemo.value) {
-    return 'Eleven days across Japan! Here’s everything we’ve planned so far, including our confirmed bookings and flexible ideas for each day.'
-  }
+  const custom = trip.value?.daysIntro
+  if (custom) return custom
   return `${count} day${count === 1 ? '' : 's'} ready to go. Tap Edit to add plans — titles start as Day 1–${count} and you can rename anytime.`
 })
+
+const showDayNotice = computed(
+  () => Boolean(trip.value?.isDemo && trip.value.name === 'Japan'),
+)
 
 function onScroll() {
   scrolled.value = window.scrollY > 40
@@ -243,6 +276,7 @@ function duplicateTrip(id: string) {
       name: `${source.trip.name} copy`,
       travelers: [...source.trip.travelers],
       isDemo: false,
+      daysIntro: undefined,
     },
     days: source.days.map((day, index) => ({
       ...day,
@@ -362,7 +396,7 @@ function onCreated(record: TripRecord) {
   />
 
   <div v-else-if="trip" class="page">
-    <DayNotice v-if="isDemo" @open-day="scrollToDay" />
+    <DayNotice v-if="showDayNotice" @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
       <button type="button" class="topbar__brand topbar__brand--btn" @click="goHome">
