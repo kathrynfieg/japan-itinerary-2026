@@ -121,8 +121,13 @@ onUnmounted(() => {
       </header>
 
       <ul v-if="trips.length" class="dash__grid">
-        <li v-for="record in trips" :key="record.id">
-          <div class="dash-card">
+        <li
+          v-for="(record, index) in trips"
+          :key="record.id"
+          class="dash__cell"
+          :style="{ '--i': index }"
+        >
+          <article class="dash-card">
             <button
               type="button"
               class="dash-card__open"
@@ -133,21 +138,31 @@ onUnmounted(() => {
                 :style="{ '--card-image': `url(${record.trip.heroImage})` }"
                 role="img"
                 :aria-label="record.trip.heroAlt"
-              />
-              <div class="dash-card__body">
-                <div class="dash-card__title-row">
+              >
+                <span
+                  v-if="record.trip.isDemo"
+                  class="dash-card__badge"
+                  >Demo</span
+                >
+                <span class="dash-card__year" aria-hidden="true">{{
+                  record.trip.year
+                }}</span>
+                <div class="dash-card__caption">
                   <h2 class="dash-card__name">{{ record.trip.name }}</h2>
-                  <span v-if="record.trip.isDemo" class="dash-card__badge"
-                    >Demo</span
-                  >
+                  <p class="dash-card__dates">{{ record.trip.rangeLabel }}</p>
                 </div>
-                <p class="dash-card__dates">{{ record.trip.rangeLabel }}</p>
+              </div>
+              <div class="dash-card__foot">
                 <p class="dash-card__meta">
-                  {{ dayCount(record) }}
-                  day{{ dayCount(record) === 1 ? '' : 's' }}
+                  <span class="dash-card__days"
+                    >{{ dayCount(record) }}
+                    day{{ dayCount(record) === 1 ? '' : 's' }}</span
+                  >
                   <template v-if="travelersLabel(record)">
-                    <span class="dash-card__sep">·</span>
-                    {{ travelersLabel(record) }}
+                    <span class="dash-card__sep" aria-hidden="true">·</span>
+                    <span class="dash-card__who">{{
+                      travelersLabel(record)
+                    }}</span>
                   </template>
                 </p>
                 <p class="dash-card__privacy">
@@ -177,7 +192,11 @@ onUnmounted(() => {
                 :aria-label="`Actions for ${record.trip.name}`"
                 @click="toggleMenu(record.id, $event)"
               >
-                <MoreHorizontal :size="18" :stroke-width="2" aria-hidden="true" />
+                <MoreHorizontal
+                  :size="18"
+                  :stroke-width="2"
+                  aria-hidden="true"
+                />
               </button>
 
               <div
@@ -233,10 +252,10 @@ onUnmounted(() => {
                 </button>
               </div>
             </div>
-          </div>
+          </article>
         </li>
 
-        <li>
+        <li class="dash__cell" :style="{ '--i': trips.length }">
           <button
             type="button"
             class="dash-card dash-card--new"
@@ -246,6 +265,7 @@ onUnmounted(() => {
               <Plus :size="22" :stroke-width="2" />
             </span>
             <span class="dash-card__new-label">Create a trip</span>
+            <span class="dash-card__new-hint">Pick dates and go</span>
           </button>
         </li>
       </ul>
