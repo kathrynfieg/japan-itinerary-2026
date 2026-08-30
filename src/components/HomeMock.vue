@@ -127,11 +127,21 @@ onUnmounted(() => {
             class="dash-card dash-card--new"
             @click="emit('create')"
           >
-            <span class="dash-card__new-icon" aria-hidden="true">
-              <Plus :size="22" :stroke-width="2" />
+            <span class="dash-card__new-frame" aria-hidden="true">
+              <span class="dash-card__new-corner dash-card__new-corner--tl"></span>
+              <span class="dash-card__new-corner dash-card__new-corner--tr"></span>
+              <span class="dash-card__new-corner dash-card__new-corner--bl"></span>
+              <span class="dash-card__new-corner dash-card__new-corner--br"></span>
             </span>
-            <span class="dash-card__new-label">Create a trip</span>
-            <span class="dash-card__new-hint">Pick dates and go</span>
+            <span class="dash-card__new-plus" aria-hidden="true">
+              <Plus :size="26" :stroke-width="2" />
+            </span>
+            <span class="dash-card__new-copy">
+              <span class="dash-card__new-label">Create a trip</span>
+              <span class="dash-card__new-hint"
+                >Blank plan · add dates anytime</span
+              >
+            </span>
           </button>
         </li>
 
