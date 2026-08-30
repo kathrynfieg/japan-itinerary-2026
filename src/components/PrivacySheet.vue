@@ -41,7 +41,7 @@ function privacyOf(trip: SessionTrip): TripPrivacy {
         <div>
           <p class="share__eyebrow">
             <Lock :size="13" :stroke-width="2.25" aria-hidden="true" />
-            Privacy · mock
+            Privacy
           </p>
           <h2 id="privacy-title" class="share__title">{{ trip.name }}</h2>
         </div>
@@ -108,8 +108,7 @@ function privacyOf(trip: SessionTrip): TripPrivacy {
       </div>
 
       <p class="share__note share__note--foot">
-        Mock only — the link doesn’t publish anything yet. Use Share when you
-        want the fake view URL.
+        You can change this anytime. Sharing still uses a view-only link.
       </p>
     </div>
   </div>

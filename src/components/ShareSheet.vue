@@ -82,7 +82,7 @@ const summaryText = computed(() => {
   }
 
   lines.push('')
-  lines.push('Shared from Piper Travel (mock)')
+  lines.push('Shared from Piper Travel')
   return lines.join('\n')
 })
 
@@ -160,7 +160,7 @@ onUnmounted(() => {
           <div>
             <p class="share__eyebrow">
               <Share2 :size="13" :stroke-width="2.25" aria-hidden="true" />
-              Share · mock
+              Share
             </p>
             <h2 id="share-title" class="share__title">{{ trip.name }}</h2>
           </div>
@@ -206,7 +206,7 @@ onUnmounted(() => {
             </button>
           </div>
           <p class="share__note">
-            Fake URL for the mock — nothing is hosted yet.
+            Anyone with the link can view this trip.
           </p>
         </div>
 

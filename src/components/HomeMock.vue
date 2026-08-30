@@ -10,7 +10,6 @@ import {
   Settings,
   Share2,
   Trash2,
-  UserRound,
 } from '@lucide/vue'
 import { TRIP_PRIVACY, type TripRecord } from '../lib/createTrip'
 
@@ -86,22 +85,13 @@ onUnmounted(() => {
 <template>
   <div class="dash">
     <header class="dash__top">
-      <div class="dash__brand-wrap">
-        <p class="dash__brand">Piper Travel</p>
-        <p class="dash__brand-sub">Mock · session only</p>
-      </div>
+      <p class="dash__brand">Piper Travel</p>
       <div class="dash__top-actions">
         <button type="button" class="dash__icon-btn" aria-label="Settings">
           <Settings :size="18" :stroke-width="2" aria-hidden="true" />
         </button>
         <button type="button" class="dash__account" aria-label="Account">
-          <span class="dash__avatar" aria-hidden="true">
-            <UserRound :size="16" :stroke-width="2" />
-          </span>
-          <span class="dash__account-text">
-            <span class="dash__account-name">You</span>
-            <span class="dash__account-meta">Owner</span>
-          </span>
+          <span class="dash__avatar" aria-hidden="true">K</span>
         </button>
       </div>
     </header>

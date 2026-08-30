@@ -305,7 +305,7 @@ function removeTrip(id: string) {
   const record = library.value.find((t) => t.id === id)
   if (!record) return
   const ok = window.confirm(
-    `Delete “${record.trip.name}”? This can’t be undone in the mock.`,
+    `Delete “${record.trip.name}”? This can’t be undone.`,
   )
   if (!ok) return
   library.value = library.value.filter((t) => t.id !== id)
@@ -441,7 +441,7 @@ function onCreated(record: TripRecord) {
         <button
           type="button"
           class="topbar__edit"
-          aria-label="Open edit mock"
+          aria-label="Edit trip"
           @click="openEdit"
         >
           <Pencil :size="14" :stroke-width="2.25" aria-hidden="true" />

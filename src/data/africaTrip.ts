@@ -20,7 +20,7 @@ export const africaKeyLinks: TripLink[] = [
   {
     label: 'Flights',
     href: '#',
-    note: '12 & 16 Sep · mock booking',
+    note: '12 & 16 Sep · booking',
   },
   {
     label: 'Safari lodge',

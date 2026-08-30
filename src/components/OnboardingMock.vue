@@ -72,7 +72,7 @@ function create() {
 <template>
   <div class="onboard">
     <div class="onboard__inner">
-      <p class="onboard__eyebrow">New trip · mock</p>
+      <p class="onboard__eyebrow">New trip</p>
 
       <div class="onboard__progress" aria-hidden="true">
         <span
