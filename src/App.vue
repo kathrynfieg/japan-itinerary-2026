@@ -105,7 +105,6 @@ const activeRecord = computed(
 const trip = computed(() => activeRecord.value?.trip ?? null)
 const days = computed(() => activeRecord.value?.days ?? [])
 const links = computed(() => activeRecord.value?.links ?? [])
-const isDemo = computed(() => Boolean(trip.value?.isDemo))
 const hasLinks = computed(() => links.value.length > 0)
 
 const scrolled = ref(false)

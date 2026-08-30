@@ -60,7 +60,23 @@ function runAction(
 ) {
   event.stopPropagation()
   menuId.value = null
-  emit(action, id)
+  switch (action) {
+    case 'edit':
+      emit('edit', id)
+      break
+    case 'share':
+      emit('share', id)
+      break
+    case 'privacy':
+      emit('privacy', id)
+      break
+    case 'duplicate':
+      emit('duplicate', id)
+      break
+    case 'remove':
+      emit('remove', id)
+      break
+  }
 }
 
 function onDocumentPointerDown(event: PointerEvent) {
