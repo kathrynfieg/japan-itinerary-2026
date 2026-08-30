@@ -410,7 +410,7 @@ function finish() {
         class="dash__brand dash__brand-btn"
         @click="emit('home')"
       >
-        <img class="dash__mark" :src="logo" alt="" width="38" height="38" />
+        <img class="dash__mark" :src="logo" alt="" width="46" height="46" />
         <span>Piper Travel</span>
       </button>
       <div class="dash__top-actions">

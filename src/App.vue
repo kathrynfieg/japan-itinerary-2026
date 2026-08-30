@@ -27,6 +27,8 @@ import KeyLinks from './components/KeyLinks.vue'
 import OnboardingMock from './components/OnboardingMock.vue'
 import PrivacySheet from './components/PrivacySheet.vue'
 import ShareSheet from './components/ShareSheet.vue'
+import logo from './assets/3.png'
+import logoWhite from './assets/3-white.png'
 
 function cloneDays(source: Day[]): Day[] {
   return source.map((day) => ({
@@ -399,8 +401,19 @@ function onCreated(record: TripRecord) {
     <DayNotice v-if="showDayNotice" @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
-      <button type="button" class="topbar__brand topbar__brand--btn" @click="goHome">
-        {{ trip.name }}
+      <button
+        type="button"
+        class="topbar__brand topbar__brand--btn"
+        aria-label="Back to trips"
+        @click="goHome"
+      >
+        <img
+          class="topbar__mark"
+          :src="scrolled ? logo : logoWhite"
+          alt=""
+          width="46"
+          height="46"
+        />
       </button>
       <div class="topbar__end">
         <nav class="topbar__nav" aria-label="Day jump">

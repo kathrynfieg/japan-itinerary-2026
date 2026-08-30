@@ -87,7 +87,7 @@ onUnmounted(() => {
   <div class="dash">
     <header class="dash__top">
       <div class="dash__brand">
-        <img class="dash__mark" :src="logo" alt="" width="38" height="38" />
+        <img class="dash__mark" :src="logo" alt="" width="46" height="46" />
         <span>Piper Travel</span>
       </div>
       <div class="dash__top-actions">
