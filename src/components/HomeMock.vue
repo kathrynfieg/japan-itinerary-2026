@@ -121,7 +121,7 @@ onUnmounted(() => {
       </header>
 
       <ul v-if="trips.length" class="dash__grid">
-        <li class="dash__cell" style="--i: 0">
+        <li class="dash__cell dash__cell--new" style="--i: 0">
           <button
             type="button"
             class="dash-card dash-card--new"

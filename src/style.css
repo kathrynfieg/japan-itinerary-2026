@@ -3165,6 +3165,11 @@ body {
   background: #0f1612;
 }
 
+/* Header CTA: mobile only · create card covers desktop */
+.dash__header .dash__create {
+  display: none;
+}
+
 .dash__grid {
   list-style: none;
   margin: 0;
@@ -3618,6 +3623,14 @@ body {
   .dash__header {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .dash__header .dash__create {
+    display: inline-flex;
+  }
+
+  .dash__cell--new {
+    display: none;
   }
 
   .dash__create {
