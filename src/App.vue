@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import { ArrowUp, Cake, CalendarDays, Link2, Pencil, Plus, Share2 } from '@lucide/vue'
+import {
+  ArrowUp,
+  Cake,
+  CalendarDays,
+  Link2,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  Share2,
+} from '@lucide/vue'
 import {
   africaDays,
   africaKeyLinks,
@@ -112,6 +121,7 @@ const showTop = ref(false)
 const activeDay = ref('')
 const shareOpen = ref(false)
 const privacyOpen = ref(false)
+const tripMenuOpen = ref(false)
 
 function localDateString(date = new Date()) {
   const y = date.getFullYear()
@@ -166,6 +176,15 @@ function unbindScroll() {
   window.removeEventListener('scroll', onScroll)
 }
 
+function onDocumentPointerDown(event: PointerEvent) {
+  const target = event.target as HTMLElement | null
+  if (!target?.closest('.topbar__menu')) tripMenuOpen.value = false
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') tripMenuOpen.value = false
+}
+
 onMounted(() => {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'
@@ -175,13 +194,18 @@ onMounted(() => {
     history.replaceState(null, '', window.location.pathname + window.location.search)
   }
   window.scrollTo(0, 0)
+  document.addEventListener('pointerdown', onDocumentPointerDown)
+  document.addEventListener('keydown', onKeydown)
 })
 
 onUnmounted(() => {
   unbindScroll()
+  document.removeEventListener('pointerdown', onDocumentPointerDown)
+  document.removeEventListener('keydown', onKeydown)
 })
 
 watch(mode, (next) => {
+  tripMenuOpen.value = false
   unbindScroll()
   if (next === 'view') {
     requestAnimationFrame(() => {
@@ -320,12 +344,26 @@ function removeTrip(id: string) {
 function openEdit() {
   shareOpen.value = false
   privacyOpen.value = false
+  tripMenuOpen.value = false
   mode.value = 'edit'
 }
 
 function openShare() {
   privacyOpen.value = false
+  tripMenuOpen.value = false
   shareOpen.value = true
+}
+
+function toggleTripMenu(event: Event) {
+  event.stopPropagation()
+  tripMenuOpen.value = !tripMenuOpen.value
+}
+
+function runTripMenuAction(action: 'share' | 'edit', event: Event) {
+  event.stopPropagation()
+  tripMenuOpen.value = false
+  if (action === 'share') openShare()
+  else openEdit()
 }
 
 function closeShare() {
@@ -441,24 +479,47 @@ function onCreated(record: TripRecord) {
             />
           </a>
         </nav>
-        <button
-          type="button"
-          class="topbar__edit"
-          aria-label="Share trip"
-          @click="openShare"
-        >
-          <Share2 :size="14" :stroke-width="2.25" aria-hidden="true" />
-          <span>Share</span>
-        </button>
-        <button
-          type="button"
-          class="topbar__edit"
-          aria-label="Edit trip"
-          @click="openEdit"
-        >
-          <Pencil :size="14" :stroke-width="2.25" aria-hidden="true" />
-          <span>Edit</span>
-        </button>
+        <div class="topbar__menu">
+          <button
+            type="button"
+            class="topbar__menu-btn"
+            :aria-expanded="tripMenuOpen"
+            aria-haspopup="menu"
+            aria-label="Trip actions"
+            @click="toggleTripMenu"
+          >
+            <MoreHorizontal
+              :size="18"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+          </button>
+          <div
+            v-if="tripMenuOpen"
+            class="topbar__menu-panel"
+            role="menu"
+            aria-label="Trip actions"
+          >
+            <button
+              type="button"
+              role="menuitem"
+              class="topbar__menu-item"
+              @click="runTripMenuAction('share', $event)"
+            >
+              <Share2 :size="15" :stroke-width="2" aria-hidden="true" />
+              Share
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              class="topbar__menu-item"
+              @click="runTripMenuAction('edit', $event)"
+            >
+              <Pencil :size="15" :stroke-width="2" aria-hidden="true" />
+              Edit
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 

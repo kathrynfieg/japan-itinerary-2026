@@ -154,43 +154,88 @@ body {
   align-items: center;
   gap: 0.65rem;
   min-width: 0;
+  margin-left: auto;
 }
 
-.topbar__edit {
+.topbar__menu {
+  position: relative;
   flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+}
+
+.topbar__menu-btn {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
   margin: 0;
-  padding: 0.4rem 0.7rem;
-  border: 1px solid currentColor;
+  padding: 0;
+  border: 1px solid rgb(244 246 242 / 0.4);
   border-radius: 999px;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  background: rgb(21 32 24 / 0.38);
+  color: #f4f6f2;
   cursor: pointer;
-  opacity: 0.9;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition:
-    opacity 0.2s var(--ease),
-    background 0.2s var(--ease);
+    background 0.2s var(--ease),
+    transform 0.2s var(--ease);
 }
 
-.topbar__edit:hover {
-  opacity: 1;
-  background: rgb(255 255 255 / 0.12);
+@media (hover: hover) {
+  .topbar__menu-btn:hover {
+    background: rgb(21 32 24 / 0.62);
+    transform: scale(1.04);
+  }
 }
 
-.topbar--solid .topbar__edit {
-  border-color: var(--line);
-  background: var(--paper);
+.topbar--solid .topbar__menu-btn {
+  border-color: rgb(21 32 24 / 0.12);
+  background: rgb(21 32 24 / 0.06);
+  color: var(--ink);
 }
 
-.topbar--solid .topbar__edit:hover {
-  background: var(--mist);
+@media (hover: hover) {
+  .topbar--solid .topbar__menu-btn:hover {
+    background: rgb(21 32 24 / 0.1);
+  }
+}
+
+.topbar__menu-panel {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 50;
+  display: grid;
+  min-width: 10.5rem;
+  padding: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 32px rgb(21 32 24 / 0.16);
+}
+
+.topbar__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 550;
+  text-align: left;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .topbar__menu-item:hover {
+    background: var(--mist);
+  }
 }
 
 /* —— Hero —— */
@@ -2881,15 +2926,6 @@ body {
   .edit__icon-btn--more {
     padding-inline: 0.35rem;
     font-size: 0.64rem;
-  }
-
-  .topbar__edit span {
-    display: none;
-  }
-
-  .topbar__edit {
-    padding: 0.45rem;
-    border-radius: 999px;
   }
 }
 
