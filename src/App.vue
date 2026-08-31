@@ -39,7 +39,6 @@ import EditMock from './components/EditMock.vue'
 import HomeMock from './components/HomeMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
 import OnboardingMock from './components/OnboardingMock.vue'
-import PrivacySheet from './components/PrivacySheet.vue'
 import ShareSheet from './components/ShareSheet.vue'
 import logo from './assets/3.png'
 import logoWhite from './assets/3-white.png'
@@ -154,7 +153,6 @@ const scrolled = ref(false)
 const showTop = ref(false)
 const activeDay = ref('')
 const shareOpen = ref(false)
-const privacyOpen = ref(false)
 const tripMenuOpen = ref(false)
 
 function localDateString(date = new Date()) {
@@ -304,14 +302,7 @@ function editTrip(id: string) {
 
 function shareTrip(id: string) {
   activeId.value = id
-  privacyOpen.value = false
   shareOpen.value = true
-}
-
-function openPrivacy(id: string) {
-  activeId.value = id
-  shareOpen.value = false
-  privacyOpen.value = true
 }
 
 function setPrivacy(privacy: TripPrivacy) {
@@ -377,13 +368,11 @@ function removeTrip(id: string) {
 
 function openEdit() {
   shareOpen.value = false
-  privacyOpen.value = false
   tripMenuOpen.value = false
   mode.value = 'edit'
 }
 
 function openShare() {
-  privacyOpen.value = false
   tripMenuOpen.value = false
   shareOpen.value = true
 }
@@ -402,12 +391,7 @@ function runTripMenuAction(action: 'share' | 'edit', event: Event) {
 
 function closeShare() {
   shareOpen.value = false
-  if (mode.value === 'home' && !privacyOpen.value) activeId.value = null
-}
-
-function closePrivacy() {
-  privacyOpen.value = false
-  if (mode.value === 'home' && !shareOpen.value) activeId.value = null
+  if (mode.value === 'home') activeId.value = null
 }
 
 function closeEdit(payload: {
@@ -448,7 +432,6 @@ function onCreated(record: TripRecord) {
     @open="openTrip"
     @edit="editTrip"
     @share="shareTrip"
-    @privacy="openPrivacy"
     @duplicate="duplicateTrip"
     @remove="removeTrip"
   />
@@ -662,17 +645,8 @@ function onCreated(record: TripRecord) {
     v-if="trip && activeId"
     :open="shareOpen"
     :trip="trip"
-    :days="days"
-    :links="links"
     :trip-id="activeId"
     @close="closeShare"
-  />
-
-  <PrivacySheet
-    v-if="trip && activeId"
-    :open="privacyOpen"
-    :trip="trip"
-    @close="closePrivacy"
     @update="setPrivacy"
   />
 </template>

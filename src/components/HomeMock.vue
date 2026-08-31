@@ -23,7 +23,6 @@ const emit = defineEmits<{
   open: [id: string]
   edit: [id: string]
   share: [id: string]
-  privacy: [id: string]
   duplicate: [id: string]
   remove: [id: string]
 }>()
@@ -55,7 +54,7 @@ function toggleMenu(id: string, event: Event) {
 
 function runAction(
   event: Event,
-  action: 'edit' | 'share' | 'privacy' | 'duplicate' | 'remove',
+  action: 'edit' | 'share' | 'duplicate' | 'remove',
   id: string,
 ) {
   event.stopPropagation()
@@ -66,9 +65,6 @@ function runAction(
       break
     case 'share':
       emit('share', id)
-      break
-    case 'privacy':
-      emit('privacy', id)
       break
     case 'duplicate':
       emit('duplicate', id)
@@ -232,15 +228,6 @@ onUnmounted(() => {
                 >
                   <Share2 :size="15" :stroke-width="2" aria-hidden="true" />
                   Share
-                </button>
-                <button
-                  type="button"
-                  role="menuitem"
-                  class="dash-card__menu-item"
-                  @click="runAction($event, 'privacy', record.id)"
-                >
-                  <Lock :size="15" :stroke-width="2" aria-hidden="true" />
-                  Privacy
                 </button>
                 <button
                   type="button"
