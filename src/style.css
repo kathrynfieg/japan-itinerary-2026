@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4.25rem;
 }
 
 body {
@@ -61,7 +61,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 1.25rem;
+  padding: 0.55rem 1.25rem;
   color: #f4f6f2;
   transition:
     background 0.45s var(--ease),
@@ -96,8 +96,8 @@ body {
 
 .topbar__mark {
   display: block;
-  width: 2.85rem;
-  height: 2.85rem;
+  width: 2.5rem;
+  height: 2.5rem;
   object-fit: contain;
 }
 
@@ -1264,11 +1264,11 @@ body {
 
 @media (min-width: 768px) {
   html {
-    scroll-padding-top: 5.25rem;
+    scroll-padding-top: 4.5rem;
   }
 
   .topbar {
-    padding: 1rem 2rem;
+    padding: 0.65rem 2rem;
   }
 
   .hero__content {
