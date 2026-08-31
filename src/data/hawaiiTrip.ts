@@ -9,8 +9,8 @@ export const hawaiiTrip = {
   travelers: ['Kat', 'Jess'] as const,
   tagline: 'Four days on Oahu — beaches, poke, and one slow morning before flying home.',
   heroImage:
-    'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=2400&q=80',
-  heroAlt: 'Palm trees and turquoise water on a Hawaiian beach',
+    'https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?auto=format&fit=crop&w=2400&q=80',
+  heroAlt: 'Green coastline with mountains and reef in Hawaii',
   groupPhoto:
     'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=640&h=640&fit=crop',
   groupPhotoAlt: 'Kat and Jess',
