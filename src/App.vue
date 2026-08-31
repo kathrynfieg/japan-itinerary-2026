@@ -16,6 +16,11 @@ import {
   africaTrip,
 } from './data/africaTrip'
 import {
+  hawaiiDays,
+  hawaiiKeyLinks,
+  hawaiiTrip,
+} from './data/hawaiiTrip'
+import {
   days as japanDays,
   keyLinks as japanKeyLinks,
   trip as japanTrip,
@@ -104,8 +109,37 @@ function makeAfricaRecord(): TripRecord {
   }
 }
 
+function makeHawaiiRecord(): TripRecord {
+  return {
+    id: nextTripId('hawaii'),
+    trip: {
+      name: hawaiiTrip.name,
+      year: hawaiiTrip.year,
+      start: hawaiiTrip.start,
+      end: hawaiiTrip.end,
+      rangeLabel: hawaiiTrip.rangeLabel,
+      travelers: [...hawaiiTrip.travelers],
+      tagline: hawaiiTrip.tagline,
+      heroImage: hawaiiTrip.heroImage,
+      heroAlt: hawaiiTrip.heroAlt,
+      heroStyle: 'full',
+      groupPhoto: hawaiiTrip.groupPhoto,
+      groupPhotoAlt: hawaiiTrip.groupPhotoAlt,
+      privacy: 'link',
+      isDemo: true,
+      daysIntro: hawaiiTrip.daysIntro,
+    },
+    days: cloneDays(hawaiiDays),
+    links: hawaiiKeyLinks.map((link) => ({ ...link })),
+  }
+}
+
 const mode = ref<'home' | 'onboarding' | 'view' | 'edit'>('home')
-const library = ref<TripRecord[]>([makeJapanRecord(), makeAfricaRecord()])
+const library = ref<TripRecord[]>([
+  makeJapanRecord(),
+  makeAfricaRecord(),
+  makeHawaiiRecord(),
+])
 const activeId = ref<string | null>(null)
 
 const activeRecord = computed(
@@ -537,16 +571,20 @@ function onCreated(record: TripRecord) {
       />
       <div class="hero__veil" />
       <div class="hero__content">
-        <div v-if="trip.groupPhoto" class="hero__portrait">
-          <img
-            :src="trip.groupPhoto"
-            :alt="trip.groupPhotoAlt"
-            width="320"
-            height="320"
-          />
+        <div class="hero__head">
+          <div v-if="trip.groupPhoto" class="hero__portrait">
+            <img
+              :src="trip.groupPhoto"
+              :alt="trip.groupPhotoAlt"
+              width="320"
+              height="320"
+            />
+          </div>
+          <div class="hero__headline">
+            <p class="hero__brand">{{ trip.name }} {{ trip.year }}</p>
+            <h1 class="hero__title">{{ trip.rangeLabel }}</h1>
+          </div>
         </div>
-        <p class="hero__brand">{{ trip.name }} {{ trip.year }}</p>
-        <h1 class="hero__title">{{ trip.rangeLabel }}</h1>
         <p class="hero__lede">{{ trip.tagline }}</p>
         <div class="hero__actions">
           <button type="button" class="hero__cta" @click="scrollToToday">
