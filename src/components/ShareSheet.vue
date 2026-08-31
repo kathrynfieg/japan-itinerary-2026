@@ -16,6 +16,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
   update: [privacy: TripPrivacy]
+  'update-extras': [shareLinksAndAttachments: boolean]
 }>()
 
 const copied = ref(false)
@@ -23,6 +24,9 @@ let copiedTimer: ReturnType<typeof setTimeout> | null = null
 
 const privacy = computed(() => props.trip.privacy ?? 'private')
 const canShareLink = computed(() => privacy.value === 'link')
+const shareExtras = computed(
+  () => props.trip.shareLinksAndAttachments !== false,
+)
 
 const shareUrl = computed(
   () => `https://piper.travel/t/${props.tripId}?view=1`,
@@ -61,6 +65,10 @@ function printTrip() {
 
 function setPrivacy(next: TripPrivacy) {
   emit('update', next)
+}
+
+function setShareExtras(show: boolean) {
+  emit('update-extras', show)
 }
 
 function onKey(event: KeyboardEvent) {
@@ -158,6 +166,26 @@ onUnmounted(() => {
               }}</span>
             </span>
           </button>
+        </div>
+
+        <div v-if="canShareLink" class="share__extras">
+          <div class="share__extras-row">
+            <div class="share__extras-copy">
+              <span class="share__extras-label">Include links & attachments</span>
+              <span class="share__extras-hint">Tickets, bookings, and files</span>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              class="share__switch"
+              :class="{ 'share__switch--on': shareExtras }"
+              :aria-checked="shareExtras"
+              aria-label="Include links and attachments on shared view"
+              @click="setShareExtras(!shareExtras)"
+            >
+              <span class="share__switch-knob" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
 
         <div v-if="canShareLink" class="share__block">

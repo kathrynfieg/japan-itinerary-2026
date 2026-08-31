@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Cake, FileText, MapPin, PartyPopper } from '@lucide/vue'
 import { activityTypes, type Day } from '../data/trip'
 
-defineProps<{
+const props = defineProps<{
   day: Day
   index: number
+  showExtras?: boolean
 }>()
+
+const showExtras = computed(() => props.showExtras !== false)
 
 function dayNumber(date: string) {
   return new Date(date + 'T12:00:00').getDate()
@@ -78,7 +82,7 @@ function monthLabel(date: string) {
         <div class="day__info">
           <div class="day__title-row">
             <a
-              v-if="activity.link"
+              v-if="showExtras && activity.link"
               class="day__activity-title day__activity-title--link"
               :href="activity.link"
               target="_blank"
@@ -132,7 +136,7 @@ function monthLabel(date: string) {
             </li>
           </ul>
           <ul
-            v-if="activity.links?.length"
+            v-if="showExtras && activity.links?.length"
             class="day__links"
             aria-label="Links"
           >
@@ -148,7 +152,7 @@ function monthLabel(date: string) {
             </li>
           </ul>
           <ul
-            v-if="activity.files?.length"
+            v-if="showExtras && activity.files?.length"
             class="day__files"
             aria-label="Attachments"
           >

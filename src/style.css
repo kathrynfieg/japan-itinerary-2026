@@ -3959,6 +3959,75 @@ body {
   line-height: 1.35;
 }
 
+.share__extras {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.share__extras-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.share__extras-copy {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.share__extras-label {
+  font-size: 0.88rem;
+  font-weight: 550;
+  color: var(--ink);
+}
+
+.share__extras-hint {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.share__switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.65rem;
+  height: 1.55rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--mist);
+  cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+
+.share__switch--on {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  background: color-mix(in srgb, var(--accent) 72%, #fff);
+}
+
+.share__switch-knob {
+  position: absolute;
+  top: 50%;
+  left: 0.15rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(21 32 24 / 0.14);
+  transform: translateY(-50%);
+  transition: transform 0.2s var(--ease);
+}
+
+.share__switch--on .share__switch-knob {
+  transform: translate(1.05rem, -50%);
+}
+
 .share__block {
   display: grid;
   gap: 0.4rem;

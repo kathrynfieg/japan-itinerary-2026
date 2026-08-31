@@ -16,6 +16,8 @@ export type SessionTrip = {
   groupPhotoAlt?: string
   /** Who can open the trip · default private */
   privacy?: TripPrivacy
+  /** Include key links and file attachments on the shared view · default true */
+  shareLinksAndAttachments?: boolean
   /** Sample / seeded itinerary shown in the library */
   isDemo?: boolean
   /** View-mode intro under the days heading (demos) */

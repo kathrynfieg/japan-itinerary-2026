@@ -315,6 +315,23 @@ function setPrivacy(privacy: TripPrivacy) {
   )
 }
 
+function setShareExtras(shareLinksAndAttachments: boolean) {
+  const id = activeId.value
+  if (!id) return
+  library.value = library.value.map((record) =>
+    record.id === id
+      ? { ...record, trip: { ...record.trip, shareLinksAndAttachments } }
+      : record,
+  )
+}
+
+const showSharedExtras = computed(
+  () => trip.value?.shareLinksAndAttachments !== false,
+)
+const hasVisibleLinks = computed(
+  () => hasLinks.value && showSharedExtras.value,
+)
+
 function duplicateTrip(id: string) {
   const source = library.value.find((t) => t.id === id)
   if (!source) return
@@ -579,7 +596,7 @@ function onCreated(record: TripRecord) {
             View today
           </button>
           <button
-            v-if="hasLinks"
+            v-if="hasVisibleLinks"
             type="button"
             class="hero__link"
             @click="scrollToLinks"
@@ -606,10 +623,11 @@ function onCreated(record: TripRecord) {
         :key="day.id"
         :day="day"
         :index="index"
+        :show-extras="showSharedExtras"
       />
     </main>
 
-    <KeyLinks :links="links" />
+    <KeyLinks v-if="showSharedExtras" :links="links" />
 
     <footer class="footer">
       <div class="footer__inner">
@@ -648,5 +666,6 @@ function onCreated(record: TripRecord) {
     :trip-id="activeId"
     @close="closeShare"
     @update="setPrivacy"
+    @update-extras="setShareExtras"
   />
 </template>
