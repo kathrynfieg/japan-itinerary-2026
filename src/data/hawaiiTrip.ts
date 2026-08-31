@@ -12,8 +12,8 @@ export const hawaiiTrip = {
     'https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?auto=format&fit=crop&w=2400&q=80',
   heroAlt: 'Green coastline with mountains and reef in Hawaii',
   groupPhoto:
-    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=640&h=640&fit=crop',
-  groupPhotoAlt: 'Kat and Jess',
+    'https://images.unsplash.com/photo-1758275557315-2685e63fa8d2?auto=format&fit=crop&w=640&h=640&fit=crop&q=80',
+  groupPhotoAlt: 'Kat and Jess taking a selfie outdoors',
   daysIntro:
     'Four days on Oahu. Flights and the Waikiki stay are booked — the rest is easy to fill in as you go.',
 }
