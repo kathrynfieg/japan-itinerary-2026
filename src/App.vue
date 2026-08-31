@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import { ArrowUp, Cake, Pencil, Share2 } from '@lucide/vue'
+import { ArrowUp, Cake, CalendarDays, Link2, Pencil, Plus, Share2 } from '@lucide/vue'
 import {
   africaDays,
   africaKeyLinks,
@@ -489,6 +489,11 @@ function onCreated(record: TripRecord) {
         <p class="hero__lede">{{ trip.tagline }}</p>
         <div class="hero__actions">
           <button type="button" class="hero__cta" @click="scrollToToday">
+            <CalendarDays
+              :size="15"
+              :stroke-width="2.25"
+              aria-hidden="true"
+            />
             View today
           </button>
           <button
@@ -497,9 +502,11 @@ function onCreated(record: TripRecord) {
             class="hero__link"
             @click="scrollToLinks"
           >
+            <Link2 :size="15" :stroke-width="2.25" aria-hidden="true" />
             Key links
           </button>
           <button v-else type="button" class="hero__link" @click="openEdit">
+            <Plus :size="15" :stroke-width="2.25" aria-hidden="true" />
             Add plans
           </button>
         </div>
