@@ -118,7 +118,7 @@ onUnmounted(() => {
 
     <main class="dash__main">
       <header class="dash__header">
-        <div>
+        <div class="dash__header-copy">
           <h1 class="dash__title">Your trips</h1>
           <p class="dash__lede">
             Open a trip to view the timeline, or start a new one.
@@ -131,35 +131,11 @@ onUnmounted(() => {
       </header>
 
       <ul v-if="trips.length" class="dash__grid">
-        <li class="dash__cell dash__cell--new" style="--i: 0">
-          <button
-            type="button"
-            class="dash-card dash-card--new"
-            @click="emit('create')"
-          >
-            <span class="dash-card__new-frame" aria-hidden="true">
-              <span class="dash-card__new-corner dash-card__new-corner--tl"></span>
-              <span class="dash-card__new-corner dash-card__new-corner--tr"></span>
-              <span class="dash-card__new-corner dash-card__new-corner--bl"></span>
-              <span class="dash-card__new-corner dash-card__new-corner--br"></span>
-            </span>
-            <span class="dash-card__new-plus" aria-hidden="true">
-              <Plus :size="26" :stroke-width="2" />
-            </span>
-            <span class="dash-card__new-copy">
-              <span class="dash-card__new-label">Create a trip</span>
-              <span class="dash-card__new-hint"
-                >Blank plan · add dates anytime</span
-              >
-            </span>
-          </button>
-        </li>
-
         <li
           v-for="(record, index) in trips"
           :key="record.id"
           class="dash__cell"
-          :style="{ '--i': index + 1 }"
+          :style="{ '--i': index }"
         >
           <article class="dash-card">
             <button
@@ -287,6 +263,30 @@ onUnmounted(() => {
               </div>
             </div>
           </article>
+        </li>
+
+        <li class="dash__cell dash__cell--new" :style="{ '--i': trips.length }">
+          <button
+            type="button"
+            class="dash-card dash-card--new"
+            @click="emit('create')"
+          >
+            <span class="dash-card__new-frame" aria-hidden="true">
+              <span class="dash-card__new-corner dash-card__new-corner--tl"></span>
+              <span class="dash-card__new-corner dash-card__new-corner--tr"></span>
+              <span class="dash-card__new-corner dash-card__new-corner--bl"></span>
+              <span class="dash-card__new-corner dash-card__new-corner--br"></span>
+            </span>
+            <span class="dash-card__new-plus" aria-hidden="true">
+              <Plus :size="26" :stroke-width="2" />
+            </span>
+            <span class="dash-card__new-copy">
+              <span class="dash-card__new-label">Create a trip</span>
+              <span class="dash-card__new-hint"
+                >Blank plan · add dates anytime</span
+              >
+            </span>
+          </button>
         </li>
       </ul>
 

@@ -3229,9 +3229,8 @@ body {
   background: #0f1612;
 }
 
-/* Header CTA: mobile only · create card covers desktop */
 .dash__header .dash__create {
-  display: none;
+  margin-left: auto;
 }
 
 .dash__grid {
@@ -3685,20 +3684,39 @@ body {
 
 @media (max-width: 640px) {
   .dash__header {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 0.45rem 0.75rem;
+  }
+
+  .dash__header-copy {
+    display: contents;
+  }
+
+  .dash__title {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
   }
 
   .dash__header .dash__create {
-    display: inline-flex;
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 0;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .dash__lede {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0;
   }
 
   .dash__cell--new {
     display: none;
-  }
-
-  .dash__create {
-    width: fit-content;
   }
 
   .dash__account {
