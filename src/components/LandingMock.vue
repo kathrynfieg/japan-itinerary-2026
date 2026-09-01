@@ -99,7 +99,7 @@ const faqs = [
   },
 ] as const
 
-const openFaq = ref(0)
+const openFaq = ref(-1)
 const videoOpen = ref(false)
 const videoEl = ref<HTMLVideoElement | null>(null)
 
