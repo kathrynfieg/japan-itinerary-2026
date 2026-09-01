@@ -39,6 +39,7 @@ import DaySection from './components/DaySection.vue'
 import EditMock from './components/EditMock.vue'
 import HomeMock from './components/HomeMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
+import LandingMock from './components/LandingMock.vue'
 import OnboardingMock from './components/OnboardingMock.vue'
 import ShareSheet from './components/ShareSheet.vue'
 import logo from './assets/3.png'
@@ -134,7 +135,7 @@ function makeHawaiiRecord(): TripRecord {
   }
 }
 
-const mode = ref<'home' | 'onboarding' | 'view' | 'edit'>('home')
+const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit'>('landing')
 const library = ref<TripRecord[]>([
   makeJapanRecord(),
   makeAfricaRecord(),
@@ -444,8 +445,14 @@ function onCreated(record: TripRecord) {
 </script>
 
 <template>
+  <LandingMock
+    v-if="mode === 'landing'"
+    @start="startCreate"
+    @trips="goHome"
+  />
+
   <HomeMock
-    v-if="mode === 'home'"
+    v-else-if="mode === 'home'"
     :trips="library"
     @create="startCreate"
     @open="openTrip"
