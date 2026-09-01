@@ -66,65 +66,38 @@ const emit = defineEmits<{
       </div>
     </section>
 
-    <section class="landing__feature">
-      <div class="landing__feature-inner">
-        <div class="landing__feature-copy">
-          <h2 class="landing__feature-title">
-            Your trip, without the travel planner clutter.
-          </h2>
-          <div class="landing__feature-body">
-            <p>
-              Daymark is a lightweight companion for organising what you want
-              to do each day.
-            </p>
-            <p>
-              Add places, plans and notes before you go. Update things as your
-              trip unfolds. Look back on it when you are home.
-            </p>
-            <p class="landing__feature-quiet">
-              No complicated planning system. No endless setup.
-            </p>
-            <p class="landing__feature-close">Just your trip, day by day.</p>
-          </div>
-        </div>
+    <section class="landing__features" id="features">
+      <div class="landing__features-inner">
+        <header class="landing__features-header">
+          <h2 class="landing__features-title">Everything you need. Nothing you don’t.</h2>
+          <p class="landing__features-lede">
+            A few quiet tools for planning, travelling, and remembering.
+          </p>
+        </header>
 
-        <div class="landing__preview" aria-hidden="true">
-          <div class="landing__preview-device">
-            <div class="landing__preview-top">
-              <span class="landing__preview-brand">Japan 2026</span>
-              <span class="landing__preview-range">21 – 31 July</span>
-            </div>
-            <div class="landing__preview-days">
-              <span class="landing__preview-day landing__preview-day--on"
-                >21</span
-              >
-              <span class="landing__preview-day">22</span>
-              <span class="landing__preview-day">23</span>
-              <span class="landing__preview-day">24</span>
-              <span class="landing__preview-day">25</span>
-            </div>
-            <div class="landing__preview-card">
-              <p class="landing__preview-daylabel">Day 1 · Tokyo</p>
-              <ul class="landing__preview-list">
-                <li>
-                  <span class="landing__preview-chip">✈️</span>
-                  Arrive Haneda
-                </li>
-                <li>
-                  <span class="landing__preview-chip">🏨</span>
-                  Check in Shibuya
-                </li>
-                <li>
-                  <span class="landing__preview-chip">🍜</span>
-                  Dinner in Ueno
-                </li>
-              </ul>
-            </div>
-            <div class="landing__preview-card landing__preview-card--muted">
-              <p class="landing__preview-daylabel">Day 2 · Tokyo</p>
-              <p class="landing__preview-note">TeamLab, Shibuya Sky, izakaya…</p>
-            </div>
-          </div>
+        <ul class="landing__features-list">
+          <li class="landing__features-item">
+            <h3 class="landing__features-name">Plan the days</h3>
+            <p class="landing__features-desc">
+              Sketch each day before you go — places, notes, and the things that matter.
+            </p>
+          </li>
+          <li class="landing__features-item">
+            <h3 class="landing__features-name">Keep pace</h3>
+            <p class="landing__features-desc">
+              Update as the trip unfolds so you’re always looking at what’s next.
+            </p>
+          </li>
+          <li class="landing__features-item">
+            <h3 class="landing__features-name">Look back</h3>
+            <p class="landing__features-desc">
+              Hold onto the shape of the trip when you’re home — not just the photos.
+            </p>
+          </li>
+        </ul>
+
+        <div class="landing__features-placeholder" aria-hidden="true">
+          <span class="landing__features-placeholder-label">Preview coming soon</span>
         </div>
       </div>
     </section>
