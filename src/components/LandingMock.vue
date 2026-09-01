@@ -689,7 +689,10 @@ function onTouchEnd(event: TouchEvent) {
 
     <section class="landing__closing">
       <div class="landing__closing-inner">
-        <p class="landing__closing-line">Just your trip, day by day.</p>
+        <div class="landing__closing-copy">
+          <p class="landing__closing-line">Your trip, day by day.</p>
+          <p class="landing__closing-sub">Simple to plan. Easy to keep.</p>
+        </div>
         <button type="button" class="landing__cta landing__cta--dark" @click="emit('start')">
           Start a trip
           <ArrowRight :size="16" :stroke-width="2.25" aria-hidden="true" />
