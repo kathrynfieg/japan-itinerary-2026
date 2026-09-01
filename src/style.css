@@ -4625,7 +4625,7 @@ body {
   flex-direction: column;
   padding: clamp(1.5rem, 3vw, 2rem);
   border: 1px solid rgb(21 32 24 / 0.08);
-  border-radius: 2px;
+  border-radius: 1.25rem;
   background: rgb(255 255 255 / 0.72);
 }
 
