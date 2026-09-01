@@ -4369,7 +4369,7 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: clamp(2.5rem, 6vw, 4rem);
+  margin-top: clamp(-0.5rem, -0.5vw, 0);
   padding: 0 clamp(0.5rem, 3vw, 2rem) clamp(2rem, 5vw, 3rem);
   animation: rise 1s var(--ease) 0.08s both;
 }
@@ -4702,7 +4702,7 @@ body {
 
 @media (min-width: 900px) {
   .landing__hero-mockup {
-    width: min(100%, 72rem);
+    width: min(100%, 58rem);
   }
 
   .landing__feature-inner {
