@@ -100,7 +100,7 @@ onUnmounted(() => {
     <header class="dash__top">
       <div class="dash__brand">
         <img class="dash__mark" :src="logo" alt="" width="46" height="46" />
-        <span>Piper Travel</span>
+        <span>Daymark</span>
       </div>
       <div class="dash__top-actions">
         <button type="button" class="dash__icon-btn" aria-label="Settings">

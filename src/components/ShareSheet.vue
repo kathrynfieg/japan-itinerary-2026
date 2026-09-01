@@ -29,7 +29,7 @@ const shareExtras = computed(
 )
 
 const shareUrl = computed(
-  () => `https://piper.travel/t/${props.tripId}?view=1`,
+  () => `https://daymark.app/t/${props.tripId}?view=1`,
 )
 
 async function copyLink() {
