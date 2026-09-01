@@ -23,6 +23,11 @@ const emit = defineEmits<{
           />
           <span>Daymark</span>
         </div>
+        <nav class="landing__nav-links" aria-label="Product">
+          <button type="button" class="landing__nav-link">Pricing</button>
+          <button type="button" class="landing__nav-link">Features</button>
+          <button type="button" class="landing__nav-link">How it works</button>
+        </nav>
         <div class="landing__nav-actions">
           <button type="button" class="landing__nav-text" @click="emit('trips')">
             Log in
