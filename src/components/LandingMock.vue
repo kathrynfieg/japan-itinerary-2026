@@ -36,10 +36,7 @@ const emit = defineEmits<{
 
     <section class="landing__hero">
       <div class="landing__hero-copy">
-        <p class="landing__eyebrow">The simple itinerary app.</p>
-        <h1 class="landing__title">
-          Plan your trip, or remember it as you go.
-        </h1>
+        <h1 class="landing__title">The simple itinerary app.</h1>
         <p class="landing__lede">
           Plan the days ahead, keep up with your trip as it unfolds, and hold
           onto the memories afterwards.
