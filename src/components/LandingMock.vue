@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ArrowRight } from '@lucide/vue'
-import logoWhite from '../assets/3-white.png'
+import logo from '../assets/3.png'
+import appMockup from '../assets/app-mockup.png'
 
 const emit = defineEmits<{
   start: []
   trips: []
 }>()
-
-const heroImage =
-  'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2400&q=80'
 </script>
 
 <template>
@@ -18,31 +16,26 @@ const heroImage =
         <div class="landing__brand">
           <img
             class="landing__mark"
-            :src="logoWhite"
+            :src="logo"
             alt=""
             width="40"
             height="40"
           />
           <span>Daymark</span>
         </div>
-        <button type="button" class="landing__nav-link" @click="emit('trips')">
-          Your trips
-        </button>
+        <div class="landing__nav-actions">
+          <button type="button" class="landing__nav-text" @click="emit('trips')">
+            Your trips
+          </button>
+          <button type="button" class="landing__nav-cta" @click="emit('start')">
+            Start a trip
+          </button>
+        </div>
       </div>
     </header>
 
     <section class="landing__hero">
-      <img
-        class="landing__hero-image"
-        :src="heroImage"
-        alt="Traditional street in Kyoto at dusk"
-        width="2400"
-        height="1600"
-      />
-      <div class="landing__hero-veil" aria-hidden="true" />
-      <div class="landing__hero-glow" aria-hidden="true" />
-
-      <div class="landing__hero-content">
+      <div class="landing__hero-copy">
         <p class="landing__eyebrow">The simple itinerary app.</p>
         <h1 class="landing__title">
           Plan your trip, or remember it as you go.
@@ -51,10 +44,23 @@ const heroImage =
           Plan the days ahead, keep up with your trip as it unfolds, and hold
           onto the memories afterwards.
         </p>
-        <button type="button" class="landing__cta" @click="emit('start')">
-          Start a trip
-          <ArrowRight :size="16" :stroke-width="2.25" aria-hidden="true" />
-        </button>
+        <div class="landing__hero-actions">
+          <button type="button" class="landing__cta" @click="emit('start')">
+            Start a trip
+            <ArrowRight :size="16" :stroke-width="2.25" aria-hidden="true" />
+          </button>
+          <p class="landing__hero-note">Free to try · no account needed</p>
+        </div>
+      </div>
+
+      <div class="landing__hero-visual">
+        <img
+          class="landing__hero-mockup"
+          :src="appMockup"
+          alt="Daymark on laptop and phone — Japan 2026 trip hero and day timeline"
+          width="2400"
+          height="1600"
+        />
       </div>
     </section>
 
