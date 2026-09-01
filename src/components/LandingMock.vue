@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ArrowLeft, ArrowRight } from '@lucide/vue'
+import { ArrowLeft, ArrowRight, Check, Link2, Share2 } from '@lucide/vue'
 import logo from '../assets/3.png'
 import appMockup from '../assets/app-mockup.png'
 
@@ -284,26 +284,56 @@ function onTouchEnd(event: TouchEvent) {
                     v-else-if="feature.id === 'share'"
                     class="landing__preview landing__preview--share"
                   >
-                    <div class="landing__preview-glow" />
-                    <div class="landing__share-card">
-                      <div class="landing__share-hero">
-                        <img
-                          :src="previewHero"
-                          alt=""
-                          width="800"
-                          height="420"
-                        />
-                        <div class="landing__share-veil" />
-                        <div class="landing__share-copy">
-                          <p class="landing__share-trip">Japan 2026</p>
-                          <p class="landing__share-range">21 – 31 July · Zac, Jess & Kat</p>
+                    <div class="landing__preview-glow landing__preview-glow--warm" />
+                    <div class="landing__share">
+                      <div class="landing__share-sheet">
+                        <header class="landing__share-head">
+                          <p class="landing__share-eyebrow">
+                            <Share2 :size="13" :stroke-width="2.25" aria-hidden="true" />
+                            Share
+                          </p>
+                          <h4 class="landing__share-title">Japan 2026</h4>
+                          <p class="landing__share-sub">21 – 31 July · three of us</p>
+                        </header>
+
+                        <div class="landing__share-cover">
+                          <img
+                            :src="previewHero"
+                            alt=""
+                            width="800"
+                            height="420"
+                          />
+                          <div class="landing__share-cover-veil" />
+                          <div class="landing__share-cover-meta">
+                            <span>11 days</span>
+                            <span aria-hidden="true">·</span>
+                            <span>4 cities</span>
+                          </div>
+                        </div>
+
+                        <div class="landing__share-access">
+                          <div class="landing__share-faces" aria-hidden="true">
+                            <span class="landing__share-face">J</span>
+                            <span class="landing__share-face">K</span>
+                            <span class="landing__share-face landing__share-face--plus">+</span>
+                          </div>
+                          <div>
+                            <p class="landing__share-access-label">Anyone with the link</p>
+                            <p class="landing__share-access-hint">Can view · no account needed</p>
+                          </div>
+                        </div>
+
+                        <div class="landing__share-link">
+                          <Link2 :size="14" :stroke-width="2.25" aria-hidden="true" />
+                          <span class="landing__share-url">daymark.app/t/japan-2026</span>
+                          <span class="landing__share-copy">Copy</span>
                         </div>
                       </div>
-                      <div class="landing__share-bar">
-                        <span class="landing__share-url">daymark.app/japan-2026</span>
-                        <span class="landing__share-action">Copy link</span>
+
+                      <div class="landing__share-toast">
+                        <Check :size="14" :stroke-width="2.5" aria-hidden="true" />
+                        Link copied — send it to anyone
                       </div>
-                      <p class="landing__share-note">No account needed to view</p>
                     </div>
                   </div>
 
