@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
+  ChevronDown,
   ExternalLink,
   FileText,
   Link2,
@@ -47,6 +48,60 @@ const features = [
     detail: 'Look back on where you went and what you did.',
   },
 ] as const
+
+const faqs = [
+  {
+    question: 'What is Daymark?',
+    answer: [
+      'Daymark is a simple itinerary app for planning your trip and keeping track of it as you go.',
+    ],
+  },
+  {
+    question: 'Who is Daymark for?',
+    answer: [
+      'Anyone who wants a simple way to organise a trip without using a full travel planner.',
+      'It works especially well for solo trips, couples, families and groups who just want a clear itinerary they can easily share.',
+    ],
+  },
+  {
+    question: 'Is Daymark a full travel planner?',
+    answer: [
+      'No. Daymark is intentionally lightweight. It helps you organise your days without all the extra travel planning clutter.',
+    ],
+  },
+  {
+    question: 'Do I need to download an app?',
+    answer: [
+      'No. Daymark works in your browser on phone, tablet and desktop, with no download required.',
+      'It is designed to work simply on the go, so your itinerary is always easy to access wherever you are.',
+    ],
+  },
+  {
+    question: 'Can I use Daymark while I’m travelling?',
+    answer: [
+      'Yes. Check your plans, make changes and add notes as your trip unfolds.',
+    ],
+  },
+  {
+    question: 'Can I share my itinerary?',
+    answer: [
+      'Yes. Share your trip with a simple link. Viewers do not need an account or sign in.',
+    ],
+  },
+  {
+    question: 'Does Daymark use AI?',
+    answer: [
+      'Not right now. Daymark is intentionally simple and puts you in control of your trip.',
+      'No generated itineraries, no unnecessary suggestions, no extra noise. Just an easy place to plan your days your way.',
+    ],
+  },
+] as const
+
+const openFaq = ref(0)
+
+function toggleFaq(index: number) {
+  openFaq.value = openFaq.value === index ? -1 : index
+}
 
 const featureIndex = ref(0)
 const touchStartX = ref<number | null>(null)
@@ -102,9 +157,9 @@ function onTouchEnd(event: TouchEvent) {
           <span>Daymark</span>
         </div>
         <nav class="landing__nav-links" aria-label="Product">
-          <a href="#pricing" class="landing__nav-link">Pricing</a>
           <a href="#features" class="landing__nav-link">Features</a>
-          <button type="button" class="landing__nav-link">How it works</button>
+          <a href="#pricing" class="landing__nav-link">Pricing</a>
+          <a href="#faq" class="landing__nav-link">FAQ</a>
         </nav>
         <div class="landing__nav-actions">
           <button type="button" class="landing__nav-text" @click="emit('trips')">
@@ -518,6 +573,60 @@ function onTouchEnd(event: TouchEvent) {
               Coming soon
             </button>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing__faq" id="faq">
+      <div class="landing__faq-inner">
+        <header class="landing__faq-header">
+          <h2 class="landing__faq-title">FAQs</h2>
+          <p class="landing__faq-lede">
+            A few things people usually want to know.
+          </p>
+        </header>
+
+        <div class="landing__faq-list">
+          <div
+            v-for="(faq, index) in faqs"
+            :key="faq.question"
+            class="landing__faq-item"
+            :class="{ 'landing__faq-item--open': openFaq === index }"
+          >
+            <h3 class="landing__faq-question">
+              <button
+                type="button"
+                class="landing__faq-trigger"
+                :aria-expanded="openFaq === index"
+                :aria-controls="`faq-panel-${index}`"
+                :id="`faq-trigger-${index}`"
+                @click="toggleFaq(index)"
+              >
+                <span>{{ faq.question }}</span>
+                <ChevronDown
+                  class="landing__faq-chevron"
+                  :size="18"
+                  :stroke-width="2.25"
+                  aria-hidden="true"
+                />
+              </button>
+            </h3>
+            <div
+              :id="`faq-panel-${index}`"
+              class="landing__faq-panel"
+              role="region"
+              :aria-labelledby="`faq-trigger-${index}`"
+              :hidden="openFaq !== index"
+            >
+              <p
+                v-for="(paragraph, paragraphIndex) in faq.answer"
+                :key="paragraphIndex"
+                class="landing__faq-answer"
+              >
+                {{ paragraph }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
