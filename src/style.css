@@ -4405,6 +4405,14 @@ body {
   margin-top: clamp(1.5rem, 4vw, 2.25rem);
 }
 
+.landing__hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
 .landing__hero-visual {
   display: flex;
   justify-content: center;
@@ -4500,6 +4508,20 @@ body {
 
 .landing__cta--dark:hover {
   background: #0f1612;
+}
+
+.landing__cta--ghost {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+  border: 1px solid rgb(21 32 24 / 0.14);
+}
+
+.landing__cta--ghost:hover {
+  background: rgb(21 32 24 / 0.04);
+  color: var(--ink);
+  box-shadow: none;
+  border-color: rgb(21 32 24 / 0.22);
 }
 
 .landing__features {
@@ -5786,6 +5808,109 @@ body {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.landing-video {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.landing-video__backdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgb(21 32 24 / 0.58);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.landing-video__sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 52rem);
+  padding: 1.15rem 1.15rem 1.25rem;
+  border-radius: 1.35rem;
+  background: #fffef9;
+  border: 1px solid rgb(21 32 24 / 0.08);
+  box-shadow: 0 28px 80px rgb(21 32 24 / 0.28);
+  animation: rise 0.45s var(--ease) both;
+}
+
+.landing-video__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.landing-video__eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.landing-video__title {
+  margin: 0.35rem 0 0;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.landing-video__close {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgb(21 32 24 / 0.1);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+
+.landing-video__close:hover {
+  background: var(--paper);
+  border-color: rgb(21 32 24 / 0.18);
+}
+
+.landing-video__frame {
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #152018;
+  aspect-ratio: 16 / 9;
+}
+
+.landing-video__player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.landing-video__note {
+  margin: 0.85rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
   color: var(--ink-soft);
 }
 

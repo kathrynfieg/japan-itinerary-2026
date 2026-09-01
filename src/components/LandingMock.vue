@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,7 +9,9 @@ import {
   FileText,
   Link2,
   MapPin,
+  Play,
   Share2,
+  X,
 } from '@lucide/vue'
 import logo from '../assets/3.png'
 import appMockup from '../assets/app-mockup.png'
@@ -98,10 +100,54 @@ const faqs = [
 ] as const
 
 const openFaq = ref(0)
+const videoOpen = ref(false)
+const videoEl = ref<HTMLVideoElement | null>(null)
+
+/** Free public sample clip — placeholder until a real Daymark walkthrough exists */
+const howItWorksVideo =
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
 
 function toggleFaq(index: number) {
   openFaq.value = openFaq.value === index ? -1 : index
 }
+
+function openVideo() {
+  videoOpen.value = true
+}
+
+function closeVideo() {
+  videoOpen.value = false
+}
+
+function onVideoKey(event: KeyboardEvent) {
+  if (event.key === 'Escape') closeVideo()
+}
+
+watch(videoOpen, async (open) => {
+  if (open) {
+    document.addEventListener('keydown', onVideoKey)
+    document.body.style.overflow = 'hidden'
+    await nextTick()
+    try {
+      await videoEl.value?.play()
+    } catch {
+      /* autoplay may be blocked; controls remain available */
+    }
+    return
+  }
+
+  document.removeEventListener('keydown', onVideoKey)
+  document.body.style.overflow = ''
+  if (videoEl.value) {
+    videoEl.value.pause()
+    videoEl.value.currentTime = 0
+  }
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', onVideoKey)
+  document.body.style.overflow = ''
+})
 
 const featureIndex = ref(0)
 const touchStartX = ref<number | null>(null)
@@ -180,10 +226,20 @@ function onTouchEnd(event: TouchEvent) {
           onto the memories afterwards.
         </p>
         <div class="landing__hero-actions">
-          <button type="button" class="landing__cta" @click="emit('start')">
-            Start a trip
-            <ArrowRight :size="16" :stroke-width="2.25" aria-hidden="true" />
-          </button>
+          <div class="landing__hero-ctas">
+            <button
+              type="button"
+              class="landing__cta landing__cta--ghost"
+              @click="openVideo"
+            >
+              <Play :size="15" :stroke-width="2.25" aria-hidden="true" />
+              How it works
+            </button>
+            <button type="button" class="landing__cta" @click="emit('start')">
+              Start a trip
+              <ArrowRight :size="16" :stroke-width="2.25" aria-hidden="true" />
+            </button>
+          </div>
           <p class="landing__hero-note">Free to try · no account needed</p>
         </div>
       </div>
@@ -647,5 +703,56 @@ function onTouchEnd(event: TouchEvent) {
         <span class="landing__footer-note">Plan · travel · remember</span>
       </div>
     </footer>
+
+    <Teleport to="body">
+      <div
+        v-if="videoOpen"
+        class="landing-video"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="landing-video-title"
+      >
+        <button
+          type="button"
+          class="landing-video__backdrop"
+          aria-label="Close video"
+          @click="closeVideo"
+        />
+        <div class="landing-video__sheet">
+          <header class="landing-video__header">
+            <div>
+              <p class="landing-video__eyebrow">How it works</p>
+              <h2 id="landing-video-title" class="landing-video__title">
+                A quick look at Daymark
+              </h2>
+            </div>
+            <button
+              type="button"
+              class="landing-video__close"
+              aria-label="Close"
+              @click="closeVideo"
+            >
+              <X :size="18" :stroke-width="2" />
+            </button>
+          </header>
+          <div class="landing-video__frame">
+            <video
+              ref="videoEl"
+              class="landing-video__player"
+              :src="howItWorksVideo"
+              :poster="previewHero"
+              controls
+              playsinline
+              preload="metadata"
+            >
+              Your browser doesn’t support embedded video.
+            </video>
+          </div>
+          <p class="landing-video__note">
+            Placeholder clip for now — a real Daymark walkthrough will live here.
+          </p>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
