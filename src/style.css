@@ -5939,6 +5939,26 @@ body {
   color: var(--ink-soft);
 }
 
+@media (max-width: 767px) {
+  .landing__hero {
+    padding: 3.75rem 1.25rem 0;
+  }
+
+  .landing__lede {
+    margin-top: 1.5rem;
+  }
+
+  .landing__hero-actions {
+    gap: 1rem;
+    margin-top: 2.15rem;
+  }
+
+  .landing__hero-visual {
+    margin-top: 2rem;
+    padding: 0 0.75rem 2.75rem;
+  }
+}
+
 @media (min-width: 900px) {
   .landing__nav-inner {
     grid-template-columns: 1fr auto 1fr;
