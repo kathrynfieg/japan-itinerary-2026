@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ArrowRight } from '@lucide/vue'
+import { computed, ref } from 'vue'
+import { ArrowLeft, ArrowRight } from '@lucide/vue'
 import logo from '../assets/3.png'
 import appMockup from '../assets/app-mockup.png'
 
@@ -10,6 +11,71 @@ const emit = defineEmits<{
 
 const previewHero =
   'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80'
+
+const features = [
+  {
+    id: 'day-by-day',
+    name: 'Day by day',
+    lead: 'A simple itinerary for every day of your trip.',
+    detail: 'Add places, activities and plans without overcomplicating things.',
+  },
+  {
+    id: 'together',
+    name: 'Keep it all together',
+    lead: 'Notes, links and attachments in one place.',
+    detail: 'Keep bookings, tickets and useful details with your trip.',
+  },
+  {
+    id: 'share',
+    name: 'Share your trip',
+    lead: 'Send one simple view to anyone.',
+    detail: 'Share your itinerary without needing them to sign up.',
+  },
+  {
+    id: 'memory',
+    name: 'Keep the memory',
+    lead: 'Your itinerary stays with you after the trip.',
+    detail: 'Look back on where you went and what you did.',
+  },
+] as const
+
+const featureIndex = ref(0)
+const touchStartX = ref<number | null>(null)
+
+const activeFeature = computed(() => features[featureIndex.value])
+
+function goToFeature(index: number) {
+  const total = features.length
+  featureIndex.value = ((index % total) + total) % total
+}
+
+function nextFeature() {
+  goToFeature(featureIndex.value + 1)
+}
+
+function prevFeature() {
+  goToFeature(featureIndex.value - 1)
+}
+
+function onTouchStart(event: TouchEvent) {
+  touchStartX.value = event.changedTouches[0]?.clientX ?? null
+}
+
+function onTouchEnd(event: TouchEvent) {
+  if (touchStartX.value == null) return
+  const endX = event.changedTouches[0]?.clientX
+  if (endX == null) {
+    touchStartX.value = null
+    return
+  }
+
+  const delta = endX - touchStartX.value
+  touchStartX.value = null
+
+  if (Math.abs(delta) < 48) return
+  if (delta < 0) nextFeature()
+  else prevFeature()
+}
 </script>
 
 <template>
@@ -78,160 +144,241 @@ const previewHero =
           </p>
         </header>
 
-        <div class="landing__feature-stack">
-          <article class="landing__feature">
-            <div class="landing__feature-copy">
-              <p class="landing__feature-eyebrow">Plan</p>
-              <h3 class="landing__feature-name">Sketch every day before you go</h3>
-              <p class="landing__feature-desc">
-                Build a calm day-by-day timeline — places, times, notes, and tickets —
-                so the trip feels clear long before you land.
-              </p>
-            </div>
+        <div
+          class="landing__carousel"
+          @touchstart.passive="onTouchStart"
+          @touchend.passive="onTouchEnd"
+        >
+          <div
+            class="landing__carousel-tabs"
+            role="tablist"
+            aria-label="Features"
+          >
+            <button
+              v-for="(feature, index) in features"
+              :id="`feature-tab-${feature.id}`"
+              :key="feature.id"
+              type="button"
+              class="landing__carousel-tab"
+              role="tab"
+              :aria-selected="featureIndex === index"
+              :aria-controls="`feature-panel-${feature.id}`"
+              :tabindex="featureIndex === index ? 0 : -1"
+              :class="{ 'landing__carousel-tab--active': featureIndex === index }"
+              @click="goToFeature(index)"
+            >
+              {{ feature.name }}
+            </button>
+          </div>
 
-            <div class="landing__feature-stage" aria-hidden="true">
-              <div class="landing__preview landing__preview--plan">
-                <div class="landing__preview-glow" />
-                <div class="landing__preview-panel">
-                  <header class="landing__preview-head">
-                    <span class="landing__preview-kicker">Day 2</span>
-                    <h4 class="landing__preview-title">Arrival in Tokyo</h4>
-                    <p class="landing__preview-meta">22 Jul · Wednesday</p>
-                  </header>
-                  <ul class="landing__preview-timeline">
-                    <li class="landing__preview-stop">
-                      <span class="landing__preview-dot" />
-                      <time>11:00</time>
-                      <div>
-                        <p class="landing__preview-stop-title">Early check-in</p>
-                        <p class="landing__preview-stop-place">Shinjuku</p>
-                      </div>
-                      <span class="landing__preview-chip">Stay</span>
-                    </li>
-                    <li class="landing__preview-stop">
-                      <span class="landing__preview-dot" />
-                      <time>14:30</time>
-                      <div>
-                        <p class="landing__preview-stop-title">Shibuya Sky</p>
-                        <p class="landing__preview-stop-place">Shibuya</p>
-                      </div>
-                      <span class="landing__preview-chip">Sight</span>
-                    </li>
-                    <li class="landing__preview-stop landing__preview-stop--active">
-                      <span class="landing__preview-dot" />
-                      <time>18:00</time>
-                      <div>
-                        <p class="landing__preview-stop-title">teamLab Borderless</p>
-                        <p class="landing__preview-stop-place">Azabudai Hills</p>
-                      </div>
-                      <span class="landing__preview-chip">Booked</span>
-                    </li>
-                    <li class="landing__preview-stop">
-                      <span class="landing__preview-dot" />
-                      <time>21:00</time>
-                      <div>
-                        <p class="landing__preview-stop-title">Ramen near hotel</p>
-                        <p class="landing__preview-stop-place">Shinjuku</p>
-                      </div>
-                      <span class="landing__preview-chip">Food</span>
-                    </li>
-                  </ul>
+          <div class="landing__carousel-frame">
+            <div
+              class="landing__carousel-track"
+              :style="{ transform: `translateX(-${featureIndex * 100}%)` }"
+            >
+              <article
+                v-for="(feature, index) in features"
+                :id="`feature-panel-${feature.id}`"
+                :key="feature.id"
+                class="landing__feature"
+                role="tabpanel"
+                :aria-labelledby="`feature-tab-${feature.id}`"
+                :aria-hidden="featureIndex !== index"
+              >
+                <div class="landing__feature-copy">
+                  <p class="landing__feature-count">
+                    {{ String(index + 1).padStart(2, '0') }}
+                    <span aria-hidden="true">/</span>
+                    {{ String(features.length).padStart(2, '0') }}
+                  </p>
+                  <h3 class="landing__feature-name">{{ feature.name }}</h3>
+                  <p class="landing__feature-desc">{{ feature.lead }}</p>
+                  <p class="landing__feature-detail">{{ feature.detail }}</p>
                 </div>
-              </div>
-            </div>
-          </article>
 
-          <article class="landing__feature landing__feature--reverse">
-            <div class="landing__feature-copy">
-              <p class="landing__feature-eyebrow">Travel</p>
-              <h3 class="landing__feature-name">Stay with what’s next</h3>
-              <p class="landing__feature-desc">
-                On the road, Daymark keeps today in focus — the current stop, the
-                next one, and just enough detail to move without hunting.
-              </p>
-            </div>
+                <div class="landing__feature-stage" aria-hidden="true">
+                  <div
+                    v-if="feature.id === 'day-by-day'"
+                    class="landing__preview landing__preview--plan"
+                  >
+                    <div class="landing__preview-glow" />
+                    <div class="landing__preview-panel">
+                      <header class="landing__preview-head">
+                        <span class="landing__preview-kicker">Day 2</span>
+                        <h4 class="landing__preview-title">Arrival in Tokyo</h4>
+                        <p class="landing__preview-meta">22 Jul · Wednesday</p>
+                      </header>
+                      <ul class="landing__preview-timeline">
+                        <li class="landing__preview-stop">
+                          <span class="landing__preview-dot" />
+                          <time>11:00</time>
+                          <div>
+                            <p class="landing__preview-stop-title">Early check-in</p>
+                            <p class="landing__preview-stop-place">Shinjuku</p>
+                          </div>
+                          <span class="landing__preview-chip">Stay</span>
+                        </li>
+                        <li class="landing__preview-stop">
+                          <span class="landing__preview-dot" />
+                          <time>14:30</time>
+                          <div>
+                            <p class="landing__preview-stop-title">Shibuya Sky</p>
+                            <p class="landing__preview-stop-place">Shibuya</p>
+                          </div>
+                          <span class="landing__preview-chip">Sight</span>
+                        </li>
+                        <li class="landing__preview-stop landing__preview-stop--active">
+                          <span class="landing__preview-dot" />
+                          <time>18:00</time>
+                          <div>
+                            <p class="landing__preview-stop-title">teamLab Borderless</p>
+                            <p class="landing__preview-stop-place">Azabudai Hills</p>
+                          </div>
+                          <span class="landing__preview-chip">Booked</span>
+                        </li>
+                        <li class="landing__preview-stop">
+                          <span class="landing__preview-dot" />
+                          <time>21:00</time>
+                          <div>
+                            <p class="landing__preview-stop-title">Ramen near hotel</p>
+                            <p class="landing__preview-stop-place">Shinjuku</p>
+                          </div>
+                          <span class="landing__preview-chip">Food</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
 
-            <div class="landing__feature-stage" aria-hidden="true">
-              <div class="landing__preview landing__preview--pace">
-                <div class="landing__preview-glow landing__preview-glow--warm" />
-                <div class="landing__phone">
-                  <div class="landing__phone-notch" />
-                  <div class="landing__phone-screen">
-                    <p class="landing__phone-today">Today · Day 2</p>
-                    <h4 class="landing__phone-heading">What’s next</h4>
-                    <div class="landing__phone-now">
-                      <span class="landing__phone-pulse" />
-                      <div>
-                        <p class="landing__phone-now-label">Now</p>
-                        <p class="landing__phone-now-title">Shibuya Sky</p>
-                        <p class="landing__phone-now-meta">14:30 · tickets in Key links</p>
+                  <div
+                    v-else-if="feature.id === 'together'"
+                    class="landing__preview landing__preview--together"
+                  >
+                    <div class="landing__preview-glow landing__preview-glow--warm" />
+                    <div class="landing__preview-panel landing__together">
+                      <header class="landing__preview-head">
+                        <span class="landing__preview-kicker">With this stop</span>
+                        <h4 class="landing__preview-title">Shibuya Sky</h4>
+                        <p class="landing__preview-meta">14:30 · Shibuya</p>
+                      </header>
+                      <div class="landing__together-note">
+                        <p>Booked for sunset — arrive 15 min early for security.</p>
                       </div>
+                      <ul class="landing__together-list">
+                        <li class="landing__together-item">
+                          <span class="landing__together-kind">Link</span>
+                          <span class="landing__together-label">Ticket confirmation</span>
+                        </li>
+                        <li class="landing__together-item">
+                          <span class="landing__together-kind">PDF</span>
+                          <span class="landing__together-label">Shibuya Sky tickets.pdf</span>
+                        </li>
+                        <li class="landing__together-item">
+                          <span class="landing__together-kind">Link</span>
+                          <span class="landing__together-label">Maps · observation deck</span>
+                        </li>
+                      </ul>
                     </div>
-                    <div class="landing__phone-next">
-                      <time>18:00</time>
-                      <div>
-                        <p>teamLab Borderless</p>
-                        <span>Azabudai Hills · 25 min</span>
+                  </div>
+
+                  <div
+                    v-else-if="feature.id === 'share'"
+                    class="landing__preview landing__preview--share"
+                  >
+                    <div class="landing__preview-glow" />
+                    <div class="landing__share-card">
+                      <div class="landing__share-hero">
+                        <img
+                          :src="previewHero"
+                          alt=""
+                          width="800"
+                          height="420"
+                        />
+                        <div class="landing__share-veil" />
+                        <div class="landing__share-copy">
+                          <p class="landing__share-trip">Japan 2026</p>
+                          <p class="landing__share-range">21 – 31 July · Zac, Jess & Kat</p>
+                        </div>
                       </div>
+                      <div class="landing__share-bar">
+                        <span class="landing__share-url">daymark.app/japan-2026</span>
+                        <span class="landing__share-action">Copy link</span>
+                      </div>
+                      <p class="landing__share-note">No account needed to view</p>
                     </div>
-                    <div class="landing__phone-next landing__phone-next--muted">
-                      <time>21:00</time>
-                      <div>
-                        <p>Ramen near hotel</p>
-                        <span>Shinjuku</span>
+                  </div>
+
+                  <div
+                    v-else
+                    class="landing__preview landing__preview--memory"
+                  >
+                    <div class="landing__preview-glow" />
+                    <div class="landing__memory">
+                      <div class="landing__memory-photo">
+                        <img
+                          :src="previewHero"
+                          alt=""
+                          width="900"
+                          height="600"
+                        />
+                        <div class="landing__memory-veil" />
+                        <div class="landing__memory-caption">
+                          <p class="landing__memory-trip">Japan 2026</p>
+                          <p class="landing__memory-range">21 – 31 July</p>
+                        </div>
+                      </div>
+                      <div class="landing__memory-stats">
+                        <div>
+                          <span class="landing__memory-num">11</span>
+                          <span class="landing__memory-label">days</span>
+                        </div>
+                        <div>
+                          <span class="landing__memory-num">4</span>
+                          <span class="landing__memory-label">cities</span>
+                        </div>
+                        <div>
+                          <span class="landing__memory-num">38</span>
+                          <span class="landing__memory-label">stops</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
             </div>
-          </article>
+          </div>
 
-          <article class="landing__feature">
-            <div class="landing__feature-copy">
-              <p class="landing__feature-eyebrow">Remember</p>
-              <h3 class="landing__feature-name">Keep the shape of the trip</h3>
-              <p class="landing__feature-desc">
-                When you’re home, the days stay intact — where you went, what you
-                planned, and the quiet arc of the journey, not just a camera roll.
-              </p>
+          <div class="landing__carousel-controls">
+            <button
+              type="button"
+              class="landing__carousel-nav"
+              aria-label="Previous feature"
+              @click="prevFeature"
+            >
+              <ArrowLeft :size="18" :stroke-width="2.25" aria-hidden="true" />
+            </button>
+
+            <div class="landing__carousel-dots" aria-hidden="true">
+              <span
+                v-for="(feature, index) in features"
+                :key="feature.id"
+                class="landing__carousel-dot"
+                :class="{ 'landing__carousel-dot--active': featureIndex === index }"
+              />
             </div>
 
-            <div class="landing__feature-stage" aria-hidden="true">
-              <div class="landing__preview landing__preview--memory">
-                <div class="landing__preview-glow" />
-                <div class="landing__memory">
-                  <div class="landing__memory-photo">
-                    <img
-                      :src="previewHero"
-                      alt=""
-                      width="900"
-                      height="600"
-                    />
-                    <div class="landing__memory-veil" />
-                    <div class="landing__memory-caption">
-                      <p class="landing__memory-trip">Japan 2026</p>
-                      <p class="landing__memory-range">21 – 31 July</p>
-                    </div>
-                  </div>
-                  <div class="landing__memory-stats">
-                    <div>
-                      <span class="landing__memory-num">11</span>
-                      <span class="landing__memory-label">days</span>
-                    </div>
-                    <div>
-                      <span class="landing__memory-num">4</span>
-                      <span class="landing__memory-label">cities</span>
-                    </div>
-                    <div>
-                      <span class="landing__memory-num">38</span>
-                      <span class="landing__memory-label">stops</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+            <button
+              type="button"
+              class="landing__carousel-nav"
+              :aria-label="`Next feature: ${features[(featureIndex + 1) % features.length].name}`"
+              @click="nextFeature"
+            >
+              <ArrowRight :size="18" :stroke-width="2.25" aria-hidden="true" />
+            </button>
+          </div>
+
+          <p class="visually-hidden" aria-live="polite">
+            Showing {{ activeFeature.name }}
+          </p>
         </div>
       </div>
     </section>
