@@ -7,6 +7,9 @@ const emit = defineEmits<{
   start: []
   trips: []
 }>()
+
+const previewHero =
+  'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80'
 </script>
 
 <template>
@@ -75,29 +78,160 @@ const emit = defineEmits<{
           </p>
         </header>
 
-        <ul class="landing__features-list">
-          <li class="landing__features-item">
-            <h3 class="landing__features-name">Plan the days</h3>
-            <p class="landing__features-desc">
-              Sketch each day before you go — places, notes, and the things that matter.
-            </p>
-          </li>
-          <li class="landing__features-item">
-            <h3 class="landing__features-name">Keep pace</h3>
-            <p class="landing__features-desc">
-              Update as the trip unfolds so you’re always looking at what’s next.
-            </p>
-          </li>
-          <li class="landing__features-item">
-            <h3 class="landing__features-name">Look back</h3>
-            <p class="landing__features-desc">
-              Hold onto the shape of the trip when you’re home — not just the photos.
-            </p>
-          </li>
-        </ul>
+        <div class="landing__feature-stack">
+          <article class="landing__feature">
+            <div class="landing__feature-copy">
+              <p class="landing__feature-eyebrow">Plan</p>
+              <h3 class="landing__feature-name">Sketch every day before you go</h3>
+              <p class="landing__feature-desc">
+                Build a calm day-by-day timeline — places, times, notes, and tickets —
+                so the trip feels clear long before you land.
+              </p>
+            </div>
 
-        <div class="landing__features-placeholder" aria-hidden="true">
-          <span class="landing__features-placeholder-label">Preview coming soon</span>
+            <div class="landing__feature-stage" aria-hidden="true">
+              <div class="landing__preview landing__preview--plan">
+                <div class="landing__preview-glow" />
+                <div class="landing__preview-panel">
+                  <header class="landing__preview-head">
+                    <span class="landing__preview-kicker">Day 2</span>
+                    <h4 class="landing__preview-title">Arrival in Tokyo</h4>
+                    <p class="landing__preview-meta">22 Jul · Wednesday</p>
+                  </header>
+                  <ul class="landing__preview-timeline">
+                    <li class="landing__preview-stop">
+                      <span class="landing__preview-dot" />
+                      <time>11:00</time>
+                      <div>
+                        <p class="landing__preview-stop-title">Early check-in</p>
+                        <p class="landing__preview-stop-place">Shinjuku</p>
+                      </div>
+                      <span class="landing__preview-chip">Stay</span>
+                    </li>
+                    <li class="landing__preview-stop">
+                      <span class="landing__preview-dot" />
+                      <time>14:30</time>
+                      <div>
+                        <p class="landing__preview-stop-title">Shibuya Sky</p>
+                        <p class="landing__preview-stop-place">Shibuya</p>
+                      </div>
+                      <span class="landing__preview-chip">Sight</span>
+                    </li>
+                    <li class="landing__preview-stop landing__preview-stop--active">
+                      <span class="landing__preview-dot" />
+                      <time>18:00</time>
+                      <div>
+                        <p class="landing__preview-stop-title">teamLab Borderless</p>
+                        <p class="landing__preview-stop-place">Azabudai Hills</p>
+                      </div>
+                      <span class="landing__preview-chip">Booked</span>
+                    </li>
+                    <li class="landing__preview-stop">
+                      <span class="landing__preview-dot" />
+                      <time>21:00</time>
+                      <div>
+                        <p class="landing__preview-stop-title">Ramen near hotel</p>
+                        <p class="landing__preview-stop-place">Shinjuku</p>
+                      </div>
+                      <span class="landing__preview-chip">Food</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing__feature landing__feature--reverse">
+            <div class="landing__feature-copy">
+              <p class="landing__feature-eyebrow">Travel</p>
+              <h3 class="landing__feature-name">Stay with what’s next</h3>
+              <p class="landing__feature-desc">
+                On the road, Daymark keeps today in focus — the current stop, the
+                next one, and just enough detail to move without hunting.
+              </p>
+            </div>
+
+            <div class="landing__feature-stage" aria-hidden="true">
+              <div class="landing__preview landing__preview--pace">
+                <div class="landing__preview-glow landing__preview-glow--warm" />
+                <div class="landing__phone">
+                  <div class="landing__phone-notch" />
+                  <div class="landing__phone-screen">
+                    <p class="landing__phone-today">Today · Day 2</p>
+                    <h4 class="landing__phone-heading">What’s next</h4>
+                    <div class="landing__phone-now">
+                      <span class="landing__phone-pulse" />
+                      <div>
+                        <p class="landing__phone-now-label">Now</p>
+                        <p class="landing__phone-now-title">Shibuya Sky</p>
+                        <p class="landing__phone-now-meta">14:30 · tickets in Key links</p>
+                      </div>
+                    </div>
+                    <div class="landing__phone-next">
+                      <time>18:00</time>
+                      <div>
+                        <p>teamLab Borderless</p>
+                        <span>Azabudai Hills · 25 min</span>
+                      </div>
+                    </div>
+                    <div class="landing__phone-next landing__phone-next--muted">
+                      <time>21:00</time>
+                      <div>
+                        <p>Ramen near hotel</p>
+                        <span>Shinjuku</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing__feature">
+            <div class="landing__feature-copy">
+              <p class="landing__feature-eyebrow">Remember</p>
+              <h3 class="landing__feature-name">Keep the shape of the trip</h3>
+              <p class="landing__feature-desc">
+                When you’re home, the days stay intact — where you went, what you
+                planned, and the quiet arc of the journey, not just a camera roll.
+              </p>
+            </div>
+
+            <div class="landing__feature-stage" aria-hidden="true">
+              <div class="landing__preview landing__preview--memory">
+                <div class="landing__preview-glow" />
+                <div class="landing__memory">
+                  <div class="landing__memory-photo">
+                    <img
+                      :src="previewHero"
+                      alt=""
+                      width="900"
+                      height="600"
+                    />
+                    <div class="landing__memory-veil" />
+                    <div class="landing__memory-caption">
+                      <p class="landing__memory-trip">Japan 2026</p>
+                      <p class="landing__memory-range">21 – 31 July</p>
+                    </div>
+                  </div>
+                  <div class="landing__memory-stats">
+                    <div>
+                      <span class="landing__memory-num">11</span>
+                      <span class="landing__memory-label">days</span>
+                    </div>
+                    <div>
+                      <span class="landing__memory-num">4</span>
+                      <span class="landing__memory-label">cities</span>
+                    </div>
+                    <div>
+                      <span class="landing__memory-num">38</span>
+                      <span class="landing__memory-label">stops</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
