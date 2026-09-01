@@ -12,6 +12,8 @@ export type SessionTrip = {
   heroAlt: string
   /** Layout treatment for the trip hero */
   heroStyle?: HeroStyle
+  /** Accent colour palette for the trip view */
+  colorScheme?: ColorScheme
   groupPhoto?: string
   groupPhotoAlt?: string
   /** Who can open the trip · default private */
@@ -38,6 +40,62 @@ export const TRIP_PRIVACY: Record<
     label: 'Anyone with the link',
     blurb: 'View-only · you’re still the only editor',
   },
+}
+
+export type ColorScheme =
+  | 'terracotta'
+  | 'ocean'
+  | 'sakura'
+  | 'forest'
+  | 'indigo'
+
+export const COLOR_SCHEMES: {
+  id: ColorScheme
+  label: string
+  accent: string
+  accentDeep: string
+}[] = [
+  {
+    id: 'terracotta',
+    label: 'Terracotta',
+    accent: '#b5451b',
+    accentDeep: '#8f3412',
+  },
+  {
+    id: 'ocean',
+    label: 'Ocean',
+    accent: '#1a6b8a',
+    accentDeep: '#124d63',
+  },
+  {
+    id: 'sakura',
+    label: 'Sakura',
+    accent: '#c44d7a',
+    accentDeep: '#9a3a60',
+  },
+  {
+    id: 'forest',
+    label: 'Forest',
+    accent: '#2d6a4f',
+    accentDeep: '#1b4332',
+  },
+  {
+    id: 'indigo',
+    label: 'Indigo',
+    accent: '#4a4e9c',
+    accentDeep: '#363878',
+  },
+]
+
+export function colorSchemeStyle(
+  scheme: ColorScheme | undefined,
+): Record<string, string> {
+  const match =
+    COLOR_SCHEMES.find((item) => item.id === scheme) ?? COLOR_SCHEMES[0]
+  return {
+    '--accent': match.accent,
+    '--accent-deep': match.accentDeep,
+  }
 }
 
 export type HeroStyle = 'full' | 'compact' | 'poster' | 'banner' | 'minimal'
@@ -201,6 +259,7 @@ export function createTripFromInput(input: CreateTripInput): TripRecord {
     heroImage: DEFAULT_HERO,
     heroAlt: 'Travel destination',
     heroStyle: 'full',
+    colorScheme: 'terracotta',
     privacy: 'private',
   }
 

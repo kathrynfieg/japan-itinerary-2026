@@ -21,10 +21,13 @@ import {
   type TripLink,
 } from '../data/trip'
 import {
+  COLOR_SCHEMES,
   HERO_STYLES,
   addDays,
+  colorSchemeStyle,
   formatRangeLabel,
   weekdayLabel,
+  type ColorScheme,
   type HeroStyle,
   type SessionTrip,
 } from '../lib/createTrip'
@@ -132,6 +135,7 @@ const editTrip = ref({
   heroImage: props.trip.heroImage,
   heroAlt: props.trip.heroAlt,
   heroStyle: (props.trip.heroStyle ?? 'full') as HeroStyle,
+  colorScheme: (props.trip.colorScheme ?? 'terracotta') as ColorScheme,
   groupPhoto: props.trip.groupPhoto ?? '',
   groupPhotoAlt: props.trip.groupPhotoAlt ?? '',
 })
@@ -186,6 +190,10 @@ watch(imagesSheetOpen, (open) => {
 
 const selectedDay = computed(
   () => editDays.value.find((d) => d.id === selectedDayId.value) ?? null,
+)
+
+const schemeStyle = computed(() =>
+  colorSchemeStyle(editTrip.value.colorScheme),
 )
 
 const tripStrip = computed(() => {
@@ -387,6 +395,7 @@ function buildTrip(): SessionTrip {
     heroImage: editTrip.value.heroImage.trim() || props.trip.heroImage,
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
     heroStyle: editTrip.value.heroStyle,
+    colorScheme: editTrip.value.colorScheme,
     groupPhoto: groupPhoto || undefined,
     groupPhotoAlt: groupPhoto ? groupPhotoAlt || 'Group photo' : undefined,
   }
@@ -402,7 +411,7 @@ function finish() {
 </script>
 
 <template>
-  <div class="edit">
+  <div class="edit" :style="schemeStyle">
     <header class="edit__bar">
       <button
         type="button"
@@ -982,7 +991,44 @@ function finish() {
         </p>
 
         <section class="img-sheet__section">
-          <span class="edit__label">Cover image</span>
+          <div class="img-sheet__section-head">
+            <span class="edit__label">Colour scheme</span>
+            <p class="edit__hint">
+              Accent colour for links, buttons, and highlights.
+            </p>
+          </div>
+          <div
+            class="img-sheet__schemes"
+            role="radiogroup"
+            aria-label="Colour scheme"
+          >
+            <button
+              v-for="scheme in COLOR_SCHEMES"
+              :key="scheme.id"
+              type="button"
+              role="radio"
+              class="img-sheet__scheme"
+              :class="{
+                'img-sheet__scheme--on': editTrip.colorScheme === scheme.id,
+              }"
+              :aria-checked="editTrip.colorScheme === scheme.id"
+              :aria-label="scheme.label"
+              @click="editTrip.colorScheme = scheme.id"
+            >
+              <span
+                class="img-sheet__scheme-swatch"
+                :style="{ background: scheme.accent }"
+                aria-hidden="true"
+              />
+              <span class="img-sheet__scheme-label">{{ scheme.label }}</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="img-sheet__section">
+          <div class="img-sheet__section-head">
+            <span class="edit__label">Cover image</span>
+          </div>
           <div
             class="img-sheet__cover-preview"
             :style="{ '--cover-preview': `url(${editTrip.heroImage})` }"
@@ -1071,8 +1117,10 @@ function finish() {
         </section>
 
         <section class="img-sheet__section">
-          <span class="edit__label">Group photo</span>
-          <p class="edit__hint">Shows in the edit banner and trip hero.</p>
+          <div class="img-sheet__section-head">
+            <span class="edit__label">Group photo</span>
+            <p class="edit__hint">Shows in the edit banner and trip hero.</p>
+          </div>
           <div class="img-sheet__group-row">
             <div class="img-sheet__group-preview">
               <img

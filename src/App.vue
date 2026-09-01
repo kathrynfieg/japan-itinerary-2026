@@ -29,6 +29,7 @@ import {
 } from './data/trip'
 import {
   nextTripId,
+  colorSchemeStyle,
   type SessionTrip,
   type TripPrivacy,
   type TripRecord,
@@ -145,6 +146,7 @@ const activeRecord = computed(
   () => library.value.find((t) => t.id === activeId.value) ?? null,
 )
 const trip = computed(() => activeRecord.value?.trip ?? null)
+const pageSchemeStyle = computed(() => colorSchemeStyle(trip.value?.colorScheme))
 const days = computed(() => activeRecord.value?.days ?? [])
 const links = computed(() => activeRecord.value?.links ?? [])
 const hasLinks = computed(() => links.value.length > 0)
@@ -468,7 +470,7 @@ function onCreated(record: TripRecord) {
     @home="goHome"
   />
 
-  <div v-else-if="trip" class="page">
+  <div v-else-if="trip" class="page" :style="pageSchemeStyle">
     <DayNotice v-if="showDayNotice" @open-day="scrollToDay" />
 
     <header class="topbar" :class="{ 'topbar--solid': scrolled }">
