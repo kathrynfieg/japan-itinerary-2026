@@ -1,12 +1,12 @@
 import type { Day, TripLink } from './trip'
 
 export const europeTrip = {
-  name: 'Europe',
-  year: '2026',
-  start: '2026-06-01',
-  end: '2026-06-17',
+  name: 'London · Lucerne · Grindelwald · Munich · Salzburg · Vienna',
+  year: '2027',
+  start: '2027-06-01',
+  end: '2027-06-17',
   rangeLabel: '1 – 17 Jun',
-  travelers: ['Kat', 'Jess'] as const,
+  travelers: ['Kat', 'Zac'] as const,
   tagline:
     'Seventeen days from London to Vienna — trains through the Alps, Bavaria, and Austria.',
   heroImage:
@@ -37,8 +37,8 @@ export const europeKeyLinks: TripLink[] = [
 export const europeDays: Day[] = [
   {
     id: 'jun-01',
-    date: '2026-06-01',
-    weekday: 'Monday',
+    date: '2027-06-01',
+    weekday: 'Tuesday',
     title: 'Fly to London, United Kingdom',
     summary: 'Australia → London',
     activities: [
@@ -53,8 +53,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-02',
-    date: '2026-06-02',
-    weekday: 'Tuesday',
+    date: '2027-06-02',
+    weekday: 'Wednesday',
     title: 'Arrive in London, United Kingdom',
     summary: 'Markets, food and a West End evening',
     activities: [
@@ -82,8 +82,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-03',
-    date: '2026-06-03',
-    weekday: 'Wednesday',
+    date: '2027-06-03',
+    weekday: 'Thursday',
     title: 'Full Day in London, United Kingdom',
     summary: 'Harry Potter and London markets',
     activities: [
@@ -117,8 +117,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-04',
-    date: '2026-06-04',
-    weekday: 'Thursday',
+    date: '2027-06-04',
+    weekday: 'Friday',
     title: 'London, United Kingdom → Lucerne, Switzerland',
     summary: 'Fly to Zurich and continue to Lucerne',
     activities: [
@@ -147,8 +147,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-05',
-    date: '2026-06-05',
-    weekday: 'Friday',
+    date: '2027-06-05',
+    weekday: 'Saturday',
     title: 'Full Day in Lucerne, Switzerland',
     summary: 'Lake views, old town and the Swiss Alps',
     activities: [
@@ -176,8 +176,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-06',
-    date: '2026-06-06',
-    weekday: 'Saturday',
+    date: '2027-06-06',
+    weekday: 'Sunday',
     title: 'Lucerne → Lauterbrunnen, Switzerland',
     summary: 'Scenic train into the Swiss Alps',
     activities: [
@@ -206,8 +206,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-07',
-    date: '2026-06-07',
-    weekday: 'Sunday',
+    date: '2027-06-07',
+    weekday: 'Monday',
     title: 'Full Day in Lauterbrunnen, Switzerland',
     summary: 'A full day around Lauterbrunnen',
     activities: [
@@ -235,8 +235,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-08',
-    date: '2026-06-08',
-    weekday: 'Monday',
+    date: '2027-06-08',
+    weekday: 'Tuesday',
     title: 'Lauterbrunnen, Switzerland → Munich, Germany',
     summary: 'Travel from the Alps to Bavaria',
     activities: [
@@ -259,8 +259,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-09',
-    date: '2026-06-09',
-    weekday: 'Tuesday',
+    date: '2027-06-09',
+    weekday: 'Wednesday',
     title: 'Full Day in Munich, Germany',
     summary: 'Explore the heart of Bavaria',
     activities: [
@@ -288,8 +288,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-10',
-    date: '2026-06-10',
-    weekday: 'Wednesday',
+    date: '2027-06-10',
+    weekday: 'Thursday',
     title: 'Neuschwanstein Day Trip, Germany',
     summary: 'Day trip into the Bavarian Alps',
     activities: [
@@ -318,8 +318,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-11',
-    date: '2026-06-11',
-    weekday: 'Thursday',
+    date: '2027-06-11',
+    weekday: 'Friday',
     title: 'Munich, Germany → Salzburg, Austria',
     summary: 'Cross into Austria',
     activities: [
@@ -348,8 +348,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-12',
-    date: '2026-06-12',
-    weekday: 'Friday',
+    date: '2027-06-12',
+    weekday: 'Saturday',
     title: 'Full Day in Salzburg, Austria',
     summary: 'Historic Salzburg and mountain views',
     activities: [
@@ -377,8 +377,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-13',
-    date: '2026-06-13',
-    weekday: 'Saturday',
+    date: '2027-06-13',
+    weekday: 'Sunday',
     title: 'Salzburg → Vienna, Austria',
     summary: 'Travel east to Austria’s capital',
     activities: [
@@ -407,8 +407,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-14',
-    date: '2026-06-14',
-    weekday: 'Sunday',
+    date: '2027-06-14',
+    weekday: 'Monday',
     title: 'Full Day in Vienna, Austria',
     summary: 'Imperial Vienna',
     activities: [
@@ -436,8 +436,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-15',
-    date: '2026-06-15',
-    weekday: 'Monday',
+    date: '2027-06-15',
+    weekday: 'Tuesday',
     title: 'Full Day in Vienna, Austria',
     summary: 'Art, architecture and cafés',
     activities: [
@@ -466,8 +466,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-16',
-    date: '2026-06-16',
-    weekday: 'Tuesday',
+    date: '2027-06-16',
+    weekday: 'Wednesday',
     title: 'Vienna, Austria → Australia',
     summary: 'Vienna → Australia',
     activities: [
@@ -495,8 +495,8 @@ export const europeDays: Day[] = [
   },
   {
     id: 'jun-17',
-    date: '2026-06-17',
-    weekday: 'Wednesday',
+    date: '2027-06-17',
+    weekday: 'Thursday',
     title: 'Arrive Home in Australia',
     summary: 'Back in Australia',
     activities: [
