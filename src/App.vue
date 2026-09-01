@@ -16,6 +16,11 @@ import {
   africaTrip,
 } from './data/africaTrip'
 import {
+  europeDays,
+  europeKeyLinks,
+  europeTrip,
+} from './data/europeTrip'
+import {
   hawaiiDays,
   hawaiiKeyLinks,
   hawaiiTrip,
@@ -135,11 +140,35 @@ function makeHawaiiRecord(): TripRecord {
   }
 }
 
+function makeEuropeRecord(): TripRecord {
+  return {
+    id: nextTripId('europe'),
+    trip: {
+      name: europeTrip.name,
+      year: europeTrip.year,
+      start: europeTrip.start,
+      end: europeTrip.end,
+      rangeLabel: europeTrip.rangeLabel,
+      travelers: [...europeTrip.travelers],
+      tagline: europeTrip.tagline,
+      heroImage: europeTrip.heroImage,
+      heroAlt: europeTrip.heroAlt,
+      heroStyle: 'full',
+      privacy: 'private',
+      isDemo: true,
+      daysIntro: europeTrip.daysIntro,
+    },
+    days: cloneDays(europeDays),
+    links: europeKeyLinks.map((link) => ({ ...link })),
+  }
+}
+
 const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit'>('landing')
 const library = ref<TripRecord[]>([
   makeJapanRecord(),
   makeAfricaRecord(),
   makeHawaiiRecord(),
+  makeEuropeRecord(),
 ])
 const activeId = ref<string | null>(null)
 
