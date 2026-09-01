@@ -24,8 +24,8 @@ const emit = defineEmits<{
           <span>Daymark</span>
         </div>
         <nav class="landing__nav-links" aria-label="Product">
-          <button type="button" class="landing__nav-link">Pricing</button>
-          <button type="button" class="landing__nav-link">Features</button>
+          <a href="#pricing" class="landing__nav-link">Pricing</a>
+          <a href="#features" class="landing__nav-link">Features</a>
           <button type="button" class="landing__nav-link">How it works</button>
         </nav>
         <div class="landing__nav-actions">
@@ -98,6 +98,61 @@ const emit = defineEmits<{
 
         <div class="landing__features-placeholder" aria-hidden="true">
           <span class="landing__features-placeholder-label">Preview coming soon</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing__pricing" id="pricing">
+      <div class="landing__pricing-inner">
+        <header class="landing__pricing-header">
+          <h2 class="landing__pricing-title">Simple pricing.</h2>
+          <p class="landing__pricing-lede">
+            Free to start. Pro is billed once a year — no monthly plans.
+          </p>
+        </header>
+
+        <div class="landing__pricing-plans">
+          <article class="landing__plan">
+            <h3 class="landing__plan-name">Free</h3>
+            <p class="landing__plan-price">
+              <span class="landing__plan-amount">$0</span>
+              <span class="landing__plan-period">forever</span>
+            </p>
+            <p class="landing__plan-summary">
+              Enough to plan one trip, day by day.
+            </p>
+            <ul class="landing__plan-features">
+              <li>One active trip</li>
+              <li>Days, places and notes</li>
+              <li>Works on phone and desktop</li>
+            </ul>
+            <button
+              type="button"
+              class="landing__plan-cta"
+              @click="emit('start')"
+            >
+              Start free
+            </button>
+          </article>
+
+          <article class="landing__plan landing__plan--pro">
+            <h3 class="landing__plan-name">Pro</h3>
+            <p class="landing__plan-price">
+              <span class="landing__plan-amount">$48</span>
+              <span class="landing__plan-period">/ year</span>
+            </p>
+            <p class="landing__plan-summary">
+              For travellers who keep more than one trip going.
+            </p>
+            <ul class="landing__plan-features">
+              <li>Unlimited trips</li>
+              <li>Share with companions</li>
+              <li>Export and offline access</li>
+            </ul>
+            <button type="button" class="landing__plan-cta landing__plan-cta--pro">
+              Coming soon
+            </button>
+          </article>
         </div>
       </div>
     </section>
