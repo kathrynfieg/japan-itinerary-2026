@@ -150,13 +150,30 @@ onUnmounted(() => {
 })
 
 const featureIndex = ref(0)
+const skipTransition = ref(false)
 const touchStartX = ref<number | null>(null)
 
 const activeFeature = computed(() => features[featureIndex.value])
 
-function goToFeature(index: number) {
+async function goToFeature(index: number) {
   const total = features.length
-  featureIndex.value = ((index % total) + total) % total
+  const from = featureIndex.value
+  const next = ((index % total) + total) % total
+  // Adjacent nav that wraps (last→first / first→last) — skip the reverse slide
+  const wraps =
+    Math.abs(index - from) === 1 && Math.abs(next - from) !== 1
+
+  if (wraps) {
+    skipTransition.value = true
+    featureIndex.value = next
+    await nextTick()
+    // Force reflow so the jump applies before re-enabling transition
+    void document.body.offsetHeight
+    skipTransition.value = false
+    return
+  }
+
+  featureIndex.value = next
 }
 
 function nextFeature() {
@@ -294,6 +311,7 @@ function onTouchEnd(event: TouchEvent) {
           <div class="landing__carousel-frame">
             <div
               class="landing__carousel-track"
+              :class="{ 'landing__carousel-track--instant': skipTransition }"
               :style="{ transform: `translateX(-${featureIndex * 100}%)` }"
             >
               <article

@@ -4627,6 +4627,10 @@ body {
   will-change: transform;
 }
 
+.landing__carousel-track--instant {
+  transition: none;
+}
+
 .landing__feature {
   flex: 0 0 100%;
   display: grid;
@@ -5937,6 +5941,12 @@ body {
   font-size: 0.78rem;
   line-height: 1.45;
   color: var(--ink-soft);
+}
+
+@media (max-width: 899px) {
+  .landing__carousel-tabs {
+    display: none;
+  }
 }
 
 @media (max-width: 767px) {
