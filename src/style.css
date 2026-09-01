@@ -4299,7 +4299,7 @@ body {
 .landing__nav-actions {
   display: flex;
   align-items: center;
-  gap: 0.35rem 1rem;
+  gap: 0.55rem;
 }
 
 .landing__nav-text {

@@ -25,10 +25,10 @@ const emit = defineEmits<{
         </div>
         <div class="landing__nav-actions">
           <button type="button" class="landing__nav-text" @click="emit('trips')">
-            Your trips
+            Log in
           </button>
           <button type="button" class="landing__nav-cta" @click="emit('start')">
-            Start a trip
+            Start free
           </button>
         </div>
       </div>
