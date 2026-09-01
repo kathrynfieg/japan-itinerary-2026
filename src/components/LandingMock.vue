@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { ArrowLeft, ArrowRight, Check, Link2, Share2 } from '@lucide/vue'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  ExternalLink,
+  FileText,
+  Link2,
+  MapPin,
+  Share2,
+} from '@lucide/vue'
 import logo from '../assets/3.png'
 import appMockup from '../assets/app-mockup.png'
 
@@ -254,29 +263,74 @@ function onTouchEnd(event: TouchEvent) {
                     class="landing__preview landing__preview--together"
                   >
                     <div class="landing__preview-glow landing__preview-glow--warm" />
-                    <div class="landing__preview-panel landing__together">
-                      <header class="landing__preview-head">
-                        <span class="landing__preview-kicker">With this stop</span>
-                        <h4 class="landing__preview-title">Shibuya Sky</h4>
-                        <p class="landing__preview-meta">14:30 · Shibuya</p>
-                      </header>
-                      <div class="landing__together-note">
-                        <p>Booked for sunset — arrive 15 min early for security.</p>
+                    <div class="landing__together">
+                      <div class="landing__together-card">
+                        <div class="landing__together-stop">
+                          <div class="landing__together-time">
+                            <span class="landing__together-dot" />
+                            <time>14:30</time>
+                          </div>
+                          <div class="landing__together-body">
+                            <div class="landing__together-title-row">
+                              <h4 class="landing__together-title">Shibuya Sky</h4>
+                              <span class="landing__together-chip">Sight</span>
+                            </div>
+                            <p class="landing__together-place">
+                              <MapPin :size="13" :stroke-width="2.25" aria-hidden="true" />
+                              Shibuya Scramble Square
+                            </p>
+                            <ul class="landing__together-notes">
+                              <li>Booked for sunset — arrive 15 min early</li>
+                              <li>Tickets are under Jess’s name</li>
+                            </ul>
+                            <div class="landing__together-links">
+                              <span class="landing__together-link">
+                                Ticket confirmation
+                                <ExternalLink :size="12" :stroke-width="2.25" aria-hidden="true" />
+                              </span>
+                              <span class="landing__together-link">
+                                Maps
+                                <ExternalLink :size="12" :stroke-width="2.25" aria-hidden="true" />
+                              </span>
+                            </div>
+                            <div class="landing__together-files">
+                              <span class="landing__together-file">
+                                <span class="landing__together-file-icon">
+                                  <FileText :size="14" :stroke-width="2.25" aria-hidden="true" />
+                                </span>
+                                <span class="landing__together-file-copy">
+                                  <span class="landing__together-file-name">Tickets.pdf</span>
+                                  <span class="landing__together-file-meta">PDF · 240 KB</span>
+                                </span>
+                              </span>
+                              <span class="landing__together-file">
+                                <span class="landing__together-file-icon landing__together-file-icon--image">
+                                  <img
+                                    :src="previewHero"
+                                    alt=""
+                                    width="64"
+                                    height="64"
+                                  />
+                                </span>
+                                <span class="landing__together-file-copy">
+                                  <span class="landing__together-file-name">Booking.jpg</span>
+                                  <span class="landing__together-file-meta">Image</span>
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <ul class="landing__together-list">
-                        <li class="landing__together-item">
-                          <span class="landing__together-kind">Link</span>
-                          <span class="landing__together-label">Ticket confirmation</span>
-                        </li>
-                        <li class="landing__together-item">
-                          <span class="landing__together-kind">PDF</span>
-                          <span class="landing__together-label">Shibuya Sky tickets.pdf</span>
-                        </li>
-                        <li class="landing__together-item">
-                          <span class="landing__together-kind">Link</span>
-                          <span class="landing__together-label">Maps · observation deck</span>
-                        </li>
-                      </ul>
+
+                      <div class="landing__together-float">
+                        <span class="landing__together-float-icon">
+                          <FileText :size="14" :stroke-width="2.25" aria-hidden="true" />
+                        </span>
+                        <span>
+                          <strong>Boarding pass</strong>
+                          Ready on this stop
+                        </span>
+                      </div>
                     </div>
                   </div>
 
