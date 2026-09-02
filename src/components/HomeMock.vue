@@ -145,11 +145,6 @@ onUnmounted(() => {
                 role="img"
                 :aria-label="record.trip.heroAlt"
               >
-                <span
-                  v-if="record.trip.isDemo"
-                  class="dash-card__badge"
-                  >Demo</span
-                >
                 <span class="dash-card__year" aria-hidden="true">{{
                   record.trip.year
                 }}</span>

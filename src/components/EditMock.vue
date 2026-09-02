@@ -209,7 +209,6 @@ const tripStrip = computed(() => {
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
     photo: editTrip.value.groupPhoto.trim() || undefined,
     photoAlt: editTrip.value.groupPhotoAlt.trim() || 'Group photo',
-    isDemo: props.trip.isDemo,
   }
 })
 
@@ -430,18 +429,14 @@ function finish() {
             alt=""
           />
           <span v-else class="edit__trip-portrait-empty">
-            <UserRound :size="22" :stroke-width="1.75" />
+            <UserRound :size="20" :stroke-width="1.75" />
           </span>
         </div>
-        <div class="edit__trip-copy">
-          <p class="edit__trip-kicker">
-            Editing
-            <span v-if="tripStrip.isDemo" class="edit__trip-badge">Demo</span>
-          </p>
-          <p class="edit__trip-name">{{ tripStrip.name }}</p>
+        <div class="edit__trip-hero">
+          <h2 class="edit__trip-name">{{ tripStrip.name }}</h2>
           <p class="edit__trip-dates">
             {{ tripStrip.range }}
-            <span class="edit__trip-sep">·</span>
+            <span class="edit__trip-sep" aria-hidden="true">·</span>
             {{ tripStrip.days }} day{{ tripStrip.days === 1 ? '' : 's' }}
           </p>
         </div>
