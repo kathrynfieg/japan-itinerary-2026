@@ -533,21 +533,10 @@ function finish() {
 
       <section v-if="selectedDay" class="edit__panel">
         <header class="edit__day-head">
-          <div class="edit__day-date-row">
-            <p class="edit__day-date">
-              {{ dayNumber(selectedDay.date) }}
-              <span>{{ selectedDay.weekday }}</span>
-            </p>
-            <button
-              type="button"
-              class="edit__delete edit__delete--day"
-              :disabled="editDays.length <= 1"
-              @click="removeDay(selectedDay.id)"
-            >
-              <Trash2 :size="14" :stroke-width="2" aria-hidden="true" />
-              Remove day
-            </button>
-          </div>
+          <p class="edit__day-date">
+            {{ dayNumber(selectedDay.date) }}
+            <span>{{ selectedDay.weekday }}</span>
+          </p>
           <label class="edit__field">
             <span class="edit__label">Day title</span>
             <input
@@ -832,6 +821,15 @@ function finish() {
             Add
           </button>
         </form>
+
+        <button
+          type="button"
+          class="edit__day-remove"
+          :disabled="editDays.length <= 1"
+          @click="removeDay(selectedDay.id)"
+        >
+          Remove this day
+        </button>
       </section>
     </template>
 

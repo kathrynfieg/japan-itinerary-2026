@@ -2620,12 +2620,33 @@ body {
   color: var(--ink-soft);
 }
 
-.edit__day-date-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+.edit__day-remove {
+  display: block;
+  width: fit-content;
+  margin: 1.15rem auto 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: color 0.2s var(--ease);
+}
+
+@media (hover: hover) {
+  .edit__day-remove:hover:not(:disabled) {
+    color: var(--accent-deep);
+  }
+}
+
+.edit__day-remove:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  text-decoration: none;
 }
 
 .edit__dates {
@@ -2941,10 +2962,6 @@ body {
   cursor: pointer;
 }
 
-.edit__delete--day:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
 
 .edit__field {
   display: grid;
