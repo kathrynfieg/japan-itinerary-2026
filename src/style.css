@@ -1625,8 +1625,8 @@ body {
   box-sizing: border-box;
   width: 100%;
   max-width: 40rem;
-  margin: 1rem auto 0;
-  padding: 0 1rem 2rem;
+  margin: 0 auto;
+  padding: 1.15rem 1rem 2rem;
   min-width: 0;
 }
 
@@ -1717,7 +1717,6 @@ body {
 
 .edit__trip-strip {
   position: relative;
-  border-bottom: 1px solid rgb(21 32 24 / 0.25);
   background: var(--trip-cover) center / cover no-repeat;
   color: #f4f6f2;
 }
@@ -1734,17 +1733,31 @@ body {
   );
 }
 
+.edit__trip-strip::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 5.5rem;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(21 32 24 / 0.55) 55%,
+    rgb(21 32 24 / 0.82) 100%
+  );
+  pointer-events: none;
+}
+
 .edit__trip-strip-inner {
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: 1rem;
   width: min(100% - 2rem, 40rem);
   margin: 0 auto;
-  min-height: 7.5rem;
-  padding: 1.35rem 0 1.45rem;
+  min-height: 9.75rem;
+  padding: 1.5rem 0 5.75rem;
 }
 
 .edit__trip-copy {
@@ -2364,8 +2377,8 @@ body {
 
 @media (min-width: 640px) {
   .edit__trip-strip-inner {
-    min-height: 9rem;
-    padding: 1.75rem 0 1.85rem;
+    min-height: 11rem;
+    padding: 1.85rem 0 6rem;
     gap: 1.25rem;
   }
 
@@ -2392,8 +2405,11 @@ body {
 }
 
 .edit__tabs-shell {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 2;
   width: 100%;
-  border-bottom: 1px solid rgb(21 32 24 / 0.08);
 }
 
 .edit__tabs {
@@ -2416,13 +2432,13 @@ body {
   justify-content: center;
   gap: 0.28rem;
   position: relative;
-  margin: 0 0 -1px;
+  margin: 0;
   padding: 0.5rem 0.35rem 0.62rem;
   border: none;
   border-bottom: 2px solid transparent;
   border-radius: 10px 10px 0 0;
   background: transparent;
-  color: var(--ink-soft);
+  color: rgb(244 246 242 / 0.72);
   font: inherit;
   text-align: center;
   cursor: pointer;
@@ -2435,7 +2451,7 @@ body {
 .edit__tab-icon {
   display: block;
   flex-shrink: 0;
-  opacity: 0.65;
+  opacity: 0.8;
   transition:
     color 0.2s var(--ease),
     opacity 0.2s var(--ease);
@@ -2451,16 +2467,17 @@ body {
 
 @media (hover: hover) {
   .edit__tab:hover:not(.edit__tab--on) {
-    color: var(--ink);
+    color: #f4f6f2;
+    background: rgb(244 246 242 / 0.1);
   }
 
   .edit__tab:hover:not(.edit__tab--on) .edit__tab-icon {
-    opacity: 0.85;
+    opacity: 1;
   }
 }
 
 .edit__tab--on {
-  background: var(--mist);
+  background: var(--paper);
   color: var(--ink);
   border-bottom-color: var(--accent);
 }

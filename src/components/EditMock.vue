@@ -446,58 +446,58 @@ function finish() {
           </p>
         </div>
       </div>
-    </div>
 
-    <div class="edit__tabs-shell">
-      <div class="edit__tabs" role="tablist" aria-label="Edit sections">
-        <button
-          type="button"
-          role="tab"
-          class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'itinerary' }"
-          :aria-selected="tab === 'itinerary'"
-          @click="tab = 'itinerary'"
-        >
-          <CalendarDays
-            class="edit__tab-icon"
-            :size="15"
-            :stroke-width="2"
-            aria-hidden="true"
-          />
-          <span class="edit__tab-label">Itinerary</span>
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'details' }"
-          :aria-selected="tab === 'details'"
-          @click="tab = 'details'"
-        >
-          <FileText
-            class="edit__tab-icon"
-            :size="15"
-            :stroke-width="2"
-            aria-hidden="true"
-          />
-          <span class="edit__tab-label">Details</span>
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'vibe' }"
-          :aria-selected="tab === 'vibe'"
-          @click="tab = 'vibe'"
-        >
-          <Palette
-            class="edit__tab-icon"
-            :size="15"
-            :stroke-width="2"
-            aria-hidden="true"
-          />
-          <span class="edit__tab-label">Vibe</span>
-        </button>
+      <div class="edit__tabs-shell">
+        <div class="edit__tabs" role="tablist" aria-label="Edit sections">
+          <button
+            type="button"
+            role="tab"
+            class="edit__tab"
+            :class="{ 'edit__tab--on': tab === 'itinerary' }"
+            :aria-selected="tab === 'itinerary'"
+            @click="tab = 'itinerary'"
+          >
+            <CalendarDays
+              class="edit__tab-icon"
+              :size="15"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+            <span class="edit__tab-label">Itinerary</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            class="edit__tab"
+            :class="{ 'edit__tab--on': tab === 'details' }"
+            :aria-selected="tab === 'details'"
+            @click="tab = 'details'"
+          >
+            <FileText
+              class="edit__tab-icon"
+              :size="15"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+            <span class="edit__tab-label">Details</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            class="edit__tab"
+            :class="{ 'edit__tab--on': tab === 'vibe' }"
+            :aria-selected="tab === 'vibe'"
+            @click="tab = 'vibe'"
+          >
+            <Palette
+              class="edit__tab-icon"
+              :size="15"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+            <span class="edit__tab-label">Vibe</span>
+          </button>
+        </div>
       </div>
     </div>
 
