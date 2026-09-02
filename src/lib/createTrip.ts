@@ -1,4 +1,5 @@
 import type { Day } from '../data/trip'
+import type { FontComboId } from './fontCombos'
 
 export type SessionTrip = {
   name: string
@@ -16,6 +17,8 @@ export type SessionTrip = {
   daysLayout?: DaysLayout
   /** Accent colour palette for the trip view */
   colorScheme?: ColorScheme
+  /** Heading + body font pairing */
+  fontCombo?: FontComboId
   groupPhoto?: string
   groupPhotoAlt?: string
   /** Who can open the trip · default private */

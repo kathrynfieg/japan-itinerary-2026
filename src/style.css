@@ -16,7 +16,25 @@
   );
   --display: 'Archivo Black', ui-sans-serif, sans-serif;
   --sans: 'Instrument Sans', ui-sans-serif, sans-serif;
+  --display-stretch: normal;
+  --display-weight: inherit;
+  --display-transform: none;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero__title,
+.hero__brand,
+.days__heading,
+.day__title,
+.day__num,
+.edit__trip-name,
+.edit__bar-name,
+.edit__day-date,
+.topbar__mark,
+.links__heading {
+  font-weight: var(--display-weight, inherit);
+  font-stretch: var(--display-stretch, normal);
+  text-transform: var(--display-transform, none);
 }
 
 *,
@@ -2328,6 +2346,65 @@ body {
   font-size: 0.68rem;
   color: var(--ink-soft);
   line-height: 1.35;
+}
+
+.edit__vibe-fonts {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.edit__vibe-font {
+  display: grid;
+  gap: 0.18rem;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+
+@media (hover: hover) {
+  .edit__vibe-font:hover:not(.edit__vibe-font--on) {
+    border-color: var(--ink-soft);
+  }
+}
+
+.edit__vibe-font--on {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.edit__vibe-font-label {
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.edit__vibe-font-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.edit__vibe-font-sample {
+  margin-top: 0.15rem;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: var(--display-weight, 400);
+  font-stretch: var(--display-stretch, normal);
+  text-transform: var(--display-transform, none);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
 }
 
 .edit__vibe-group {

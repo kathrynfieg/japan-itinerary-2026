@@ -35,6 +35,12 @@ import {
   type SessionTrip,
 } from '../lib/createTrip'
 import {
+  DEFAULT_FONT_COMBO,
+  TRIP_FONT_COMBOS,
+  fontComboStyle,
+  type FontComboId,
+} from '../lib/fontCombos'
+import {
   hasUnsplashKey,
   searchUnsplash,
   type UnsplashPhoto,
@@ -135,6 +141,7 @@ const editTrip = ref({
   heroStyle: (props.trip.heroStyle ?? 'full') as HeroStyle,
   daysLayout: (props.trip.daysLayout ?? 'scroll') as DaysLayout,
   colorScheme: (props.trip.colorScheme ?? 'terracotta') as ColorScheme,
+  fontCombo: (props.trip.fontCombo ?? DEFAULT_FONT_COMBO) as FontComboId,
   groupPhoto: props.trip.groupPhoto ?? '',
   groupPhotoAlt: props.trip.groupPhotoAlt ?? '',
 })
@@ -188,9 +195,10 @@ const selectedDay = computed(
   () => editDays.value.find((d) => d.id === selectedDayId.value) ?? null,
 )
 
-const schemeStyle = computed(() =>
-  colorSchemeStyle(editTrip.value.colorScheme),
-)
+const tripStyle = computed(() => ({
+  ...colorSchemeStyle(editTrip.value.colorScheme),
+  ...fontComboStyle(editTrip.value.fontCombo),
+}))
 
 const selectedHeroStyle = computed(
   () =>
@@ -384,6 +392,7 @@ function buildTrip(): SessionTrip {
     heroStyle: editTrip.value.heroStyle,
     daysLayout: editTrip.value.daysLayout,
     colorScheme: editTrip.value.colorScheme,
+    fontCombo: editTrip.value.fontCombo,
     groupPhoto: groupPhoto || undefined,
     groupPhotoAlt: groupPhoto ? groupPhotoAlt || 'Group photo' : undefined,
   }
@@ -398,7 +407,7 @@ function finish() {
 </script>
 
 <template>
-  <div class="edit" :style="schemeStyle">
+  <div class="edit" :style="tripStyle">
     <header class="edit__bar">
       <button
         type="button"
@@ -1029,6 +1038,31 @@ function finish() {
               aria-hidden="true"
             />
             <span class="edit__vibe-color-label">{{ scheme.label }}</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="edit__vibe-block">
+        <header class="edit__vibe-head">
+          <h3 class="edit__vibe-title">Typography</h3>
+          <p class="edit__vibe-desc">Heading and body fonts on the trip view</p>
+        </header>
+
+        <div class="edit__vibe-fonts" role="radiogroup" aria-label="Font combo">
+          <button
+            v-for="combo in TRIP_FONT_COMBOS"
+            :key="combo.id"
+            type="button"
+            role="radio"
+            class="edit__vibe-font"
+            :class="{ 'edit__vibe-font--on': editTrip.fontCombo === combo.id }"
+            :aria-checked="editTrip.fontCombo === combo.id"
+            :style="fontComboStyle(combo.id)"
+            @click="editTrip.fontCombo = combo.id"
+          >
+            <span class="edit__vibe-font-label">{{ combo.label }}</span>
+            <span class="edit__vibe-font-name">{{ combo.name }}</span>
+            <span class="edit__vibe-font-sample">The Days</span>
           </button>
         </div>
       </article>

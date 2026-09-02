@@ -39,6 +39,7 @@ import {
   type TripPrivacy,
   type TripRecord,
 } from './lib/createTrip'
+import { fontComboStyle } from './lib/fontCombos'
 import DayNotice from './components/DayNotice.vue'
 import DaySection from './components/DaySection.vue'
 import EditMock from './components/EditMock.vue'
@@ -173,7 +174,10 @@ const activeRecord = computed(
   () => library.value.find((t) => t.id === activeId.value) ?? null,
 )
 const trip = computed(() => activeRecord.value?.trip ?? null)
-const pageSchemeStyle = computed(() => colorSchemeStyle(trip.value?.colorScheme))
+const pageSchemeStyle = computed(() => ({
+  ...colorSchemeStyle(trip.value?.colorScheme),
+  ...fontComboStyle(trip.value?.fontCombo),
+}))
 const days = computed(() => activeRecord.value?.days ?? [])
 const links = computed(() => collectKeyLinks(days.value))
 const hasLinks = computed(() => links.value.length > 0)
