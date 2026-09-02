@@ -127,10 +127,19 @@ onUnmounted(() => {
         <div class="dash__header-copy">
           <h1 class="dash__title">Your trips</h1>
           <p class="dash__lede">
-            Open a trip to view the timeline, or start a new one.
+            {{
+              trips.length
+                ? 'Open a trip to view the timeline, or start a new one.'
+                : 'A simple place to plan your days.'
+            }}
           </p>
         </div>
-        <button type="button" class="dash__create" @click="emit('create')">
+        <button
+          v-if="trips.length"
+          type="button"
+          class="dash__create"
+          @click="emit('create')"
+        >
           <Plus :size="16" :stroke-width="2.25" aria-hidden="true" />
           New trip
         </button>
@@ -283,13 +292,23 @@ onUnmounted(() => {
       </ul>
 
       <div v-else class="dash__empty">
-        <p class="dash__empty-title">No trips yet</p>
-        <p class="dash__empty-copy">
-          Create one and we’ll set up Day 1 through Day N for you.
-        </p>
-        <button type="button" class="dash__create" @click="emit('create')">
-          <Plus :size="16" :stroke-width="2.25" aria-hidden="true" />
-          New trip
+        <button type="button" class="dash-empty" @click="emit('create')">
+          <span class="dash-empty__frame" aria-hidden="true">
+            <span class="dash-empty__corner dash-empty__corner--tl"></span>
+            <span class="dash-empty__corner dash-empty__corner--tr"></span>
+            <span class="dash-empty__corner dash-empty__corner--bl"></span>
+            <span class="dash-empty__corner dash-empty__corner--br"></span>
+          </span>
+          <span class="dash-empty__plus" aria-hidden="true">
+            <Plus :size="24" :stroke-width="2" />
+          </span>
+          <span class="dash-empty__copy">
+            <span class="dash-empty__title">Create your first trip</span>
+            <span class="dash-empty__text">
+              Add your dates and we’ll lay out each day. Fill in plans, links
+              and notes whenever you’re ready.
+            </span>
+          </span>
         </button>
       </div>
 
