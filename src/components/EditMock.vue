@@ -44,7 +44,7 @@ type EditableDay = Omit<Day, 'activities'> & {
   activities: EditableActivity[]
 }
 
-type EditTab = 'days' | 'trip' | 'look'
+type EditTab = 'itinerary' | 'details' | 'vibe'
 
 const props = defineProps<{
   days: Day[]
@@ -120,7 +120,7 @@ function stripDayIds(days: EditableDay[]): Day[] {
   }))
 }
 
-const tab = ref<EditTab>('days')
+const tab = ref<EditTab>('itinerary')
 const editDays = ref<EditableDay[]>(cloneDays(props.days))
 const editTrip = ref({
   name: props.trip.name,
@@ -174,7 +174,7 @@ function applyCoverPhoto(photo: UnsplashPhoto) {
 }
 
 watch(tab, (next) => {
-  if (next !== 'look') return
+  if (next !== 'vibe') return
   if (!coverResults.value.length) {
     coverQuery.value =
       editTrip.value.name.trim() || props.trip.name || 'travel'
@@ -446,36 +446,36 @@ function finish() {
           type="button"
           role="tab"
           class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'days' }"
-          :aria-selected="tab === 'days'"
-          @click="tab = 'days'"
+          :class="{ 'edit__tab--on': tab === 'itinerary' }"
+          :aria-selected="tab === 'itinerary'"
+          @click="tab = 'itinerary'"
         >
-          Days
+          Itinerary
         </button>
         <button
           type="button"
           role="tab"
           class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'trip' }"
-          :aria-selected="tab === 'trip'"
-          @click="tab = 'trip'"
+          :class="{ 'edit__tab--on': tab === 'details' }"
+          :aria-selected="tab === 'details'"
+          @click="tab = 'details'"
         >
-          Trip
+          Details
         </button>
         <button
           type="button"
           role="tab"
           class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'look' }"
-          :aria-selected="tab === 'look'"
-          @click="tab = 'look'"
+          :class="{ 'edit__tab--on': tab === 'vibe' }"
+          :aria-selected="tab === 'vibe'"
+          @click="tab = 'vibe'"
         >
-          Look
+          Vibe
         </button>
       </div>
 
-    <!-- Days -->
-    <template v-if="tab === 'days'">
+    <!-- Itinerary -->
+    <template v-if="tab === 'itinerary'">
       <nav class="edit__days" aria-label="Choose day to edit">
         <button
           v-for="day in editDays"
@@ -806,8 +806,8 @@ function finish() {
       </section>
     </template>
 
-    <!-- Trip -->
-    <section v-else-if="tab === 'trip'" class="edit__panel">
+    <!-- Details -->
+    <section v-else-if="tab === 'details'" class="edit__panel">
       <label class="edit__field">
         <span class="edit__label">Trip name</span>
         <input v-model="editTrip.name" type="text" class="edit__input" />
@@ -848,14 +848,14 @@ function finish() {
       </p>
 
       <p class="edit__trip-look-link">
-        <button type="button" class="edit__text-btn" @click="tab = 'look'">
-          Customise colours, cover &amp; layout →
+        <button type="button" class="edit__text-btn" @click="tab = 'vibe'">
+          Colours, cover &amp; layout in Vibe →
         </button>
       </p>
     </section>
 
-    <!-- Look -->
-    <section v-else-if="tab === 'look'" class="edit__panel edit__look">
+    <!-- Vibe -->
+    <section v-else-if="tab === 'vibe'" class="edit__panel edit__look">
       <p class="edit__look-lede">
         Colours, cover, and layout for the trip view. The banner above updates
         as you go — hit Done to check the full page.
