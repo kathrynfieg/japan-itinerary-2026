@@ -206,7 +206,7 @@ onMounted(() => {
 
 .notice__title {
   margin: 0 0 0.85rem;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(2.1rem, 8vw, 2.75rem);
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -223,7 +223,7 @@ onMounted(() => {
 
 .notice__from {
   margin: 0 0 1.65rem;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 1.15rem;
   font-style: italic;
   color: var(--ink);

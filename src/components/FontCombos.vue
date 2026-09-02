@@ -7,6 +7,9 @@ const emit = defineEmits<{
 }>()
 
 const FAVORITES_KEY = 'daymark-font-lab-favorites'
+const FONT_LAB_LINK_ID = 'font-lab-google-fonts'
+const FONT_LAB_GOOGLE_URL =
+  'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400&family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Zalando+Sans:wdth,wght@125,400;125,600;125,700&display=swap'
 
 type FontCombo = {
   id: string
@@ -43,8 +46,7 @@ const combos: FontCombo[] = [
     name: 'Instrument',
     heading: "'Instrument Serif', Georgia, serif",
     body: "'Instrument Sans', ui-sans-serif, sans-serif",
-    note: 'Current Daymark pairing — editorial serif headlines with a clean, friendly sans.',
-    current: true,
+    note: 'Previous Daymark pairing — editorial serif headlines with a clean, friendly sans.',
   },
   {
     id: 'fraunces-outfit',
@@ -139,6 +141,14 @@ const combos: FontCombo[] = [
     note: 'Google’s reading-family serif — calm, literary, designed for sustained reading.',
   },
   {
+    id: 'archivo-instrument',
+    name: 'Archivo Black + Instrument Sans',
+    heading: "'Archivo Black', ui-sans-serif, sans-serif",
+    body: "'Instrument Sans', ui-sans-serif, sans-serif",
+    note: 'Current Daymark pairing — heavy grotesk display with the friendly Instrument body sans.',
+    current: true,
+  },
+  {
     id: 'archivo-source',
     name: 'Archivo Black + Source Sans',
     heading: "'Archivo Black', ui-sans-serif, sans-serif",
@@ -180,6 +190,14 @@ onMounted(() => {
     if (raw) favorites.value = new Set(JSON.parse(raw) as string[])
   } catch {
     favorites.value = new Set()
+  }
+
+  if (!document.getElementById(FONT_LAB_LINK_ID)) {
+    const link = document.createElement('link')
+    link.id = FONT_LAB_LINK_ID
+    link.rel = 'stylesheet'
+    link.href = FONT_LAB_GOOGLE_URL
+    document.head.appendChild(link)
   }
 })
 
@@ -224,9 +242,10 @@ const favoriteCount = computed(() => favorites.value.size)
     </header>
 
     <p class="font-lab__intro">
-      Header and body pairings using Daymark copy. The first card is what you have
-      today. Sans options lean humanist, old-style, or geometric — avoiding
-      neo-grotesk faces like Inter, DM Sans, and Plus Jakarta.
+      Header and body pairings using Daymark copy. Combo 15 is live in the app
+      today (Archivo Black + Instrument Sans). Other sans options lean humanist,
+      old-style, or geometric — avoiding neo-grotesk faces like Inter, DM Sans,
+      and Plus Jakarta.
     </p>
 
     <div class="font-lab__toolbar">
@@ -449,7 +468,7 @@ const favoriteCount = computed(() => favorites.value.size)
 
 .font-lab__title {
   margin: 0.2rem 0 0;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(1.75rem, 4vw, 2.35rem);
   font-weight: 400;
   letter-spacing: -0.025em;
