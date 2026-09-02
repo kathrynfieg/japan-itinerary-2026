@@ -10,6 +10,26 @@ type FontCombo = {
   body: string
   note: string
   current?: boolean
+  /** Variable-font width axis, e.g. 125% for Zalando Sans Expanded */
+  headingStretch?: string
+  headingWeight?: string | number
+  headingUppercase?: boolean
+}
+
+function previewStyle(combo: FontCombo) {
+  return {
+    '--preview-heading': combo.heading,
+    '--preview-body': combo.body,
+    ...(combo.headingStretch
+      ? { '--preview-heading-stretch': combo.headingStretch }
+      : {}),
+    ...(combo.headingWeight != null
+      ? { '--preview-heading-weight': String(combo.headingWeight) }
+      : {}),
+    ...(combo.headingUppercase
+      ? { '--preview-heading-transform': 'uppercase' }
+      : {}),
+  }
 }
 
 const combos: FontCombo[] = [
@@ -26,35 +46,123 @@ const combos: FontCombo[] = [
     name: 'Fraunces + Outfit',
     heading: "'Fraunces', Georgia, serif",
     body: "'Outfit', ui-sans-serif, sans-serif",
-    note: 'Soft optical serif with a geometric sans — warm but still modern.',
+    note: 'Soft optical serif with a geometric sans — warm headlines, crisp UI text.',
   },
   {
-    id: 'source-jakarta',
-    name: 'Source Serif + Jakarta',
-    heading: "'Source Serif 4', Georgia, serif",
-    body: "'Plus Jakarta Sans', ui-sans-serif, sans-serif",
-    note: 'Product-polished and readable — confident headlines, approachable UI text.',
+    id: 'zalando-source',
+    name: 'Zalando Sans Expanded + Source Sans',
+    heading: "'Zalando Sans', ui-sans-serif, sans-serif",
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    headingStretch: '125%',
+    note: 'Wide grotesk headlines — bold and distinctive. Humanist body keeps day lists easy to read.',
   },
   {
-    id: 'baskerville-inter',
-    name: 'Libre Baskerville + Inter',
+    id: 'eb-garamond-outfit',
+    name: 'EB Garamond + Outfit',
+    heading: "'EB Garamond', Georgia, serif",
+    body: "'Outfit', ui-sans-serif, sans-serif",
+    note: 'Old-style book serif with Outfit on body — classic travel journal, still tidy.',
+  },
+  {
+    id: 'newsreader-source',
+    name: 'Newsreader + Source Sans',
+    heading: "'Newsreader', Georgia, serif",
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    note: 'Contemporary news serif with Adobe’s humanist sans — editorial but readable.',
+  },
+  {
+    id: 'lora-nunito',
+    name: 'Lora + Nunito Sans',
+    heading: "'Lora', Georgia, serif",
+    body: "'Nunito Sans', ui-sans-serif, sans-serif",
+    note: 'Rounded, approachable pairing — soft and inviting without feeling corporate.',
+  },
+  {
+    id: 'cormorant-karla',
+    name: 'Cormorant + Karla',
+    heading: "'Cormorant Garamond', Georgia, serif",
+    body: "'Karla', ui-sans-serif, sans-serif",
+    note: 'Elegant high-contrast display with a humanist grotesk — airy and refined.',
+  },
+  {
+    id: 'spectral-atkinson',
+    name: 'Spectral + Atkinson',
+    heading: "'Spectral', Georgia, serif",
+    body: "'Atkinson Hyperlegible', ui-sans-serif, sans-serif",
+    note: 'Literary serif headlines with a purpose-built humanist sans — very clear on mobile.',
+  },
+  {
+    id: 'baskerville-source',
+    name: 'Libre Baskerville + Source Sans',
     heading: "'Libre Baskerville', Georgia, serif",
-    body: "'Inter', ui-sans-serif, sans-serif",
-    note: 'Classic editorial feel with a neutral workhorse sans — very legible at small sizes.',
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    note: 'Transitional serif with humanist sans — familiar, trustworthy, easy to scan.',
   },
   {
-    id: 'playfair-lato',
-    name: 'Playfair + Lato',
+    id: 'playfair-nunito',
+    name: 'Playfair + Nunito Sans',
     heading: "'Playfair Display', Georgia, serif",
-    body: "'Lato', ui-sans-serif, sans-serif",
-    note: 'High-contrast display serif — elegant for travel, a touch more dramatic.',
+    body: "'Nunito Sans', ui-sans-serif, sans-serif",
+    note: 'High-contrast display serif — dramatic hero type, gentle body copy.',
   },
   {
-    id: 'outfit-dm',
-    name: 'Outfit + DM Sans',
-    heading: "'Outfit', ui-sans-serif, sans-serif",
-    body: "'DM Sans', ui-sans-serif, sans-serif",
-    note: 'All-sans pairing — crisp, contemporary, and very app-like. Outfit carries the hero.',
+    id: 'merriweather-karla',
+    name: 'Merriweather + Karla',
+    heading: "'Merriweather', Georgia, serif",
+    body: "'Karla', ui-sans-serif, sans-serif",
+    note: 'Sturdy screen serif with open counters — grounded and friendly for long days lists.',
+  },
+  {
+    id: 'crimson-nunito',
+    name: 'Crimson Pro + Nunito Sans',
+    heading: "'Crimson Pro', Georgia, serif",
+    body: "'Nunito Sans', ui-sans-serif, sans-serif",
+    note: 'Bookish old-style serif — feels handwritten-in-a-notebook without losing structure.',
+  },
+  {
+    id: 'bitter-source',
+    name: 'Bitter + Source Sans',
+    heading: "'Bitter', Georgia, serif",
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    note: 'Slab serif headlines add character — distinct from typical travel apps.',
+  },
+  {
+    id: 'literata-source',
+    name: 'Literata + Source Sans',
+    heading: "'Literata', Georgia, serif",
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    note: 'Google’s reading-family serif — calm, literary, designed for sustained reading.',
+  },
+  {
+    id: 'archivo-source',
+    name: 'Archivo Black + Source Sans',
+    heading: "'Archivo Black', ui-sans-serif, sans-serif",
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    note: 'Heavy grotesk display — punchy and poster-like. Best kept to short headlines.',
+  },
+  {
+    id: 'cooper-nunito',
+    name: 'Cooper Hewitt + Nunito Sans',
+    heading: "'Cooper Hewitt', ui-sans-serif, sans-serif",
+    body: "'Nunito Sans', ui-sans-serif, sans-serif",
+    headingWeight: 700,
+    note: 'Museum grotesk with geometric warmth — design-forward without feeling techy.',
+  },
+  {
+    id: 'norwester-karla',
+    name: 'Norwester + Karla',
+    heading: "'Norwester', ui-sans-serif, sans-serif",
+    body: "'Karla', ui-sans-serif, sans-serif",
+    headingUppercase: true,
+    note: 'Condensed display sans — retro travel-poster energy. Works best on short titles.',
+  },
+  {
+    id: 'roboto-condensed-source',
+    name: 'Roboto Condensed + Source Sans',
+    heading: "'Roboto Condensed', ui-sans-serif, sans-serif",
+    body: "'Source Sans 3', ui-sans-serif, sans-serif",
+    headingWeight: 700,
+    note: 'Narrow grotesk headlines — efficient and bold. Familiar but more character than regular Roboto.',
   },
 ]
 </script>
@@ -76,18 +184,20 @@ const combos: FontCombo[] = [
 
     <p class="font-lab__intro">
       Header and body pairings using Daymark copy. The first card is what you have
-      today — the rest are options to compare side by side.
+      today. Sans options lean humanist, old-style, or geometric — avoiding
+      neo-grotesk faces like Inter, DM Sans, and Plus Jakarta.
     </p>
 
     <ul class="font-lab__grid">
       <li
-        v-for="combo in combos"
+        v-for="(combo, index) in combos"
         :key="combo.id"
         class="font-lab__card"
         :class="{ 'font-lab__card--current': combo.current }"
       >
         <div class="font-lab__card-head">
           <div>
+            <p class="font-lab__card-index">Combo {{ index + 1 }}</p>
             <h2 class="font-lab__card-name">{{ combo.name }}</h2>
             <p class="font-lab__card-meta">
               <span>Heading · {{ combo.heading.split(',')[0].replace(/'/g, '') }}</span>
@@ -101,10 +211,7 @@ const combos: FontCombo[] = [
 
         <div
           class="font-lab__preview"
-          :style="{
-            '--preview-heading': combo.heading,
-            '--preview-body': combo.body,
-          }"
+          :style="previewStyle(combo)"
         >
           <p class="font-lab__preview-brand">Daymark</p>
           <h3 class="font-lab__preview-hero">
@@ -251,12 +358,23 @@ const combos: FontCombo[] = [
   gap: 1rem;
 }
 
+.font-lab__card-index {
+  margin: 0 0 0.2rem;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
 .font-lab__card-name {
   margin: 0;
-  font-family: var(--serif);
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ink);
 }
 
 .font-lab__card-meta {
@@ -312,7 +430,9 @@ const combos: FontCombo[] = [
   max-width: 14rem;
   font-family: var(--preview-heading);
   font-size: clamp(1.65rem, 4vw, 2.15rem);
-  font-weight: 400;
+  font-weight: var(--preview-heading-weight, 400);
+  font-stretch: var(--preview-heading-stretch, normal);
+  text-transform: var(--preview-heading-transform, none);
   line-height: 1.08;
   letter-spacing: -0.03em;
 }
@@ -345,18 +465,21 @@ const combos: FontCombo[] = [
 .font-lab__preview-num {
   font-family: var(--preview-heading);
   font-size: 1.65rem;
-  font-weight: 400;
+  font-weight: var(--preview-heading-weight, 400);
+  font-stretch: var(--preview-heading-stretch, normal);
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--ink);
-  text-transform: none;
+  text-transform: var(--preview-heading-transform, none);
 }
 
 .font-lab__preview-day-title {
   margin: 0.45rem 0 0;
   font-family: var(--preview-heading);
   font-size: 1.35rem;
-  font-weight: 400;
+  font-weight: var(--preview-heading-weight, 400);
+  font-stretch: var(--preview-heading-stretch, normal);
+  text-transform: var(--preview-heading-transform, none);
   line-height: 1.12;
   letter-spacing: -0.02em;
 }
@@ -451,5 +574,25 @@ const combos: FontCombo[] = [
   .font-lab__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+</style>
+
+<style>
+@font-face {
+  font-family: 'Cooper Hewitt';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/cooper-hewitt@5.3.0/latin-700-normal.woff2)
+    format('woff2');
+}
+
+@font-face {
+  font-family: 'Norwester';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/norwester@5.3.0/latin-400-normal.woff2)
+    format('woff2');
 }
 </style>
