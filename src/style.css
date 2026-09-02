@@ -1625,7 +1625,7 @@ body {
   box-sizing: border-box;
   width: 100%;
   max-width: 40rem;
-  margin: 1rem auto 0;
+  margin: 1.25rem auto 0;
   padding: 0 1rem 2rem;
   min-width: 0;
 }
@@ -2142,31 +2142,39 @@ body {
   }
 }
 
+.edit__tabs-shell {
+  width: 100%;
+  border-bottom: 1px solid rgb(21 32 24 / 0.08);
+}
+
 .edit__tabs {
   display: flex;
   align-items: stretch;
   gap: 0.15rem;
-  margin: 0 0 1.25rem;
-  padding: 0;
-  border-bottom: 1px solid var(--line);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 1rem;
   background: transparent;
 }
 
 .edit__tab {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
   position: relative;
   margin: 0 0 -1px;
-  padding: 0.55rem 0.35rem 0.7rem;
+  padding: 0.5rem 0.25rem 0.62rem;
   border: none;
   border-bottom: 2px solid transparent;
   border-radius: 0;
   background: transparent;
   color: var(--ink-soft);
   font: inherit;
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   text-align: center;
   cursor: pointer;
   transition:
@@ -2174,9 +2182,30 @@ body {
     border-color 0.2s var(--ease);
 }
 
+.edit__tab-icon {
+  display: block;
+  flex-shrink: 0;
+  opacity: 0.65;
+  transition:
+    color 0.2s var(--ease),
+    opacity 0.2s var(--ease);
+}
+
+.edit__tab-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
 @media (hover: hover) {
   .edit__tab:hover:not(.edit__tab--on) {
     color: var(--ink);
+  }
+
+  .edit__tab:hover:not(.edit__tab--on) .edit__tab-icon {
+    opacity: 0.85;
   }
 }
 
@@ -2185,6 +2214,11 @@ body {
   color: var(--ink);
   border-bottom-color: var(--accent);
   box-shadow: none;
+}
+
+.edit__tab--on .edit__tab-icon {
+  color: var(--accent-deep);
+  opacity: 1;
 }
 
 .edit__days {

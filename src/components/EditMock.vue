@@ -2,10 +2,12 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import {
   ArrowLeft,
+  CalendarDays,
   FileText,
   GripVertical,
   Image as ImageIcon,
   ImagePlus,
+  Palette,
   Paperclip,
   Plus,
   Search,
@@ -440,7 +442,7 @@ function finish() {
       </div>
     </div>
 
-    <main class="edit__main">
+    <div class="edit__tabs-shell">
       <div class="edit__tabs" role="tablist" aria-label="Edit sections">
         <button
           type="button"
@@ -450,7 +452,13 @@ function finish() {
           :aria-selected="tab === 'itinerary'"
           @click="tab = 'itinerary'"
         >
-          Itinerary
+          <CalendarDays
+            class="edit__tab-icon"
+            :size="15"
+            :stroke-width="2"
+            aria-hidden="true"
+          />
+          <span class="edit__tab-label">Itinerary</span>
         </button>
         <button
           type="button"
@@ -460,7 +468,13 @@ function finish() {
           :aria-selected="tab === 'details'"
           @click="tab = 'details'"
         >
-          Details
+          <FileText
+            class="edit__tab-icon"
+            :size="15"
+            :stroke-width="2"
+            aria-hidden="true"
+          />
+          <span class="edit__tab-label">Details</span>
         </button>
         <button
           type="button"
@@ -470,9 +484,18 @@ function finish() {
           :aria-selected="tab === 'vibe'"
           @click="tab = 'vibe'"
         >
-          Vibe
+          <Palette
+            class="edit__tab-icon"
+            :size="15"
+            :stroke-width="2"
+            aria-hidden="true"
+          />
+          <span class="edit__tab-label">Vibe</span>
         </button>
       </div>
+    </div>
+
+    <main class="edit__main">
 
     <!-- Itinerary -->
     <template v-if="tab === 'itinerary'">
