@@ -44,7 +44,7 @@ type EditableDay = Omit<Day, 'activities'> & {
   activities: EditableActivity[]
 }
 
-type EditTab = 'days' | 'trip'
+type EditTab = 'days' | 'trip' | 'look'
 
 const props = defineProps<{
   days: Day[]
@@ -141,7 +141,6 @@ const selectedDayId = ref(editDays.value[0]?.id ?? '')
 const expandedId = ref<string | null>(null)
 const quickTitle = ref('')
 const moveTarget = ref('')
-const imagesSheetOpen = ref(false)
 const coverQuery = ref('')
 const coverResults = ref<UnsplashPhoto[]>([])
 const coverSearching = ref(false)
@@ -174,13 +173,11 @@ function applyCoverPhoto(photo: UnsplashPhoto) {
   editTrip.value.heroAlt = photo.alt
 }
 
-watch(imagesSheetOpen, (open) => {
-  if (!open) {
-    coverAbort?.abort()
-    return
-  }
+watch(tab, (next) => {
+  if (next !== 'look') return
   if (!coverResults.value.length) {
-    coverQuery.value = props.trip.name || 'travel'
+    coverQuery.value =
+      editTrip.value.name.trim() || props.trip.name || 'travel'
     void runCoverSearch(coverQuery.value)
   }
 })
@@ -418,22 +415,16 @@ function finish() {
       aria-label="Trip being edited"
     >
       <div class="edit__trip-strip-inner">
-        <button
-          type="button"
-          class="edit__trip-portrait edit__trip-portrait--btn"
-          aria-label="Edit trip photos"
-          @click="imagesSheetOpen = true"
-        >
+        <div class="edit__trip-portrait" aria-hidden="true">
           <img
             v-if="tripStrip.photo"
             :src="tripStrip.photo"
-            :alt="tripStrip.photoAlt"
+            alt=""
           />
-          <span v-else class="edit__trip-portrait-empty" aria-hidden="true">
-            <ImagePlus :size="18" :stroke-width="2" />
+          <span v-else class="edit__trip-portrait-empty">
+            <UserRound :size="22" :stroke-width="1.75" />
           </span>
-          <span class="edit__trip-portrait-hint">Edit</span>
-        </button>
+        </div>
         <div class="edit__trip-copy">
           <p class="edit__trip-kicker">
             Editing
@@ -470,6 +461,16 @@ function finish() {
           @click="tab = 'trip'"
         >
           Trip
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="edit__tab"
+          :class="{ 'edit__tab--on': tab === 'look' }"
+          :aria-selected="tab === 'look'"
+          @click="tab = 'look'"
+        >
+          Look
         </button>
       </div>
 
@@ -846,12 +847,62 @@ function finish() {
         unless you add/remove days.
       </p>
 
-      <div class="edit__styles">
-        <span class="edit__label">Hero style</span>
-        <p class="edit__hint">
-          Layout of the trip cover — try a few, hit Done, then check the view.
-          Tap the photo in the banner to change cover or group photo.
-        </p>
+      <p class="edit__trip-look-link">
+        <button type="button" class="edit__text-btn" @click="tab = 'look'">
+          Customise colours, cover &amp; layout →
+        </button>
+      </p>
+    </section>
+
+    <!-- Look -->
+    <section v-else-if="tab === 'look'" class="edit__panel edit__look">
+      <p class="edit__look-lede">
+        Colours, cover, and layout for the trip view. The banner above updates
+        as you go — hit Done to check the full page.
+      </p>
+
+      <section class="edit__look-section">
+        <div class="edit__look-section-head">
+          <span class="edit__label">Colour</span>
+          <p class="edit__hint">
+            Accent colour for links, buttons, and highlights.
+          </p>
+        </div>
+        <div
+          class="edit__look-schemes"
+          role="radiogroup"
+          aria-label="Colour scheme"
+        >
+          <button
+            v-for="scheme in COLOR_SCHEMES"
+            :key="scheme.id"
+            type="button"
+            role="radio"
+            class="edit__look-scheme"
+            :class="{
+              'edit__look-scheme--on': editTrip.colorScheme === scheme.id,
+            }"
+            :aria-checked="editTrip.colorScheme === scheme.id"
+            :aria-label="scheme.label"
+            @click="editTrip.colorScheme = scheme.id"
+          >
+            <span
+              class="edit__look-scheme-swatch"
+              :style="{ background: scheme.accent }"
+              aria-hidden="true"
+            />
+            <span class="edit__look-scheme-label">{{ scheme.label }}</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="edit__look-section">
+        <div class="edit__look-section-head">
+          <span class="edit__label">Cover</span>
+          <p class="edit__hint">
+            Banner layout and background image on the trip view.
+          </p>
+        </div>
         <div class="edit__style-grid" role="radiogroup" aria-label="Hero style">
           <button
             v-for="style in HERO_STYLES"
@@ -875,249 +926,175 @@ function finish() {
             </span>
           </button>
         </div>
-      </div>
+        <div
+          class="edit__look-cover-preview"
+          :style="{ '--cover-preview': `url(${editTrip.heroImage})` }"
+          role="img"
+          :aria-label="editTrip.heroAlt || 'Cover preview'"
+        />
+        <label class="edit__field">
+          <span class="edit__label">Image URL</span>
+          <input
+            v-model="editTrip.heroImage"
+            type="url"
+            class="edit__input"
+            placeholder="Paste an image URL"
+          />
+        </label>
+        <form
+          class="edit__look-search"
+          @submit.prevent="runCoverSearch(coverQuery)"
+        >
+          <span class="edit__label">Search Unsplash</span>
+          <div class="edit__look-search-row">
+            <Search
+              class="edit__look-search-icon"
+              :size="16"
+              :stroke-width="2"
+              aria-hidden="true"
+            />
+            <input
+              v-model="coverQuery"
+              type="search"
+              class="edit__input edit__look-search-input"
+              placeholder="Tokyo, beach, mountains…"
+              aria-label="Search Unsplash photos"
+            />
+            <button
+              type="submit"
+              class="edit__look-search-btn"
+              :disabled="coverSearching"
+            >
+              {{ coverSearching ? '…' : 'Search' }}
+            </button>
+          </div>
+          <p class="edit__hint">
+            <template v-if="hasUnsplashKey()">
+              Free photos from Unsplash.
+            </template>
+            <template v-else>
+              Demo catalog — add
+              <code>VITE_UNSPLASH_ACCESS_KEY</code> for live Unsplash search.
+            </template>
+          </p>
+        </form>
+        <p v-if="coverError" class="edit__look-error">{{ coverError }}</p>
+        <p
+          v-else-if="!coverSearching && !coverResults.length"
+          class="edit__hint"
+        >
+          No photos found. Try another place or vibe.
+        </p>
+        <div
+          v-else
+          class="edit__look-results"
+          :class="{ 'edit__look-results--loading': coverSearching }"
+          role="listbox"
+          aria-label="Cover photo results"
+        >
+          <button
+            v-for="photo in coverResults"
+            :key="photo.id"
+            type="button"
+            role="option"
+            class="edit__look-result"
+            :class="{
+              'edit__look-result--on': editTrip.heroImage === photo.url,
+            }"
+            :style="{ '--result-image': `url(${photo.thumb})` }"
+            :aria-label="`Use photo by ${photo.photographer}`"
+            :aria-selected="editTrip.heroImage === photo.url"
+            @click="applyCoverPhoto(photo)"
+          >
+            <span class="edit__look-result-credit">{{
+              photo.photographer
+            }}</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="edit__look-section">
+        <div class="edit__look-section-head">
+          <span class="edit__label">Days layout</span>
+          <p class="edit__hint">
+            Scroll the full itinerary or switch days one at a time on the trip
+            view.
+          </p>
+        </div>
+        <div
+          class="edit__style-grid"
+          role="radiogroup"
+          aria-label="Days layout"
+        >
+          <button
+            v-for="layout in DAYS_LAYOUTS"
+            :key="layout.id"
+            type="button"
+            role="radio"
+            class="edit__style"
+            :class="{ 'edit__style--on': editTrip.daysLayout === layout.id }"
+            :aria-checked="editTrip.daysLayout === layout.id"
+            @click="editTrip.daysLayout = layout.id"
+          >
+            <span
+              class="edit__style-thumb"
+              :class="`edit__style-thumb--layout-${layout.id}`"
+              aria-hidden="true"
+            />
+            <span class="edit__style-copy">
+              <span class="edit__style-label">{{ layout.label }}</span>
+              <span class="edit__style-blurb">{{ layout.blurb }}</span>
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <section class="edit__look-section">
+        <div class="edit__look-section-head">
+          <span class="edit__label">Group photo</span>
+          <p class="edit__hint">
+            Optional portrait in the edit banner and trip hero.
+          </p>
+        </div>
+        <div class="edit__look-group-row">
+          <div class="edit__look-group-preview">
+            <img
+              v-if="editTrip.groupPhoto"
+              :src="editTrip.groupPhoto"
+              :alt="editTrip.groupPhotoAlt || 'Group photo preview'"
+            />
+            <span v-else class="edit__look-group-empty" aria-hidden="true">
+              <UserRound :size="22" :stroke-width="1.75" />
+            </span>
+          </div>
+          <div class="edit__look-group-actions">
+            <button
+              type="button"
+              class="edit__add-file"
+              disabled
+              aria-disabled="true"
+            >
+              <ImagePlus :size="14" :stroke-width="2" aria-hidden="true" />
+              Upload photo
+            </button>
+            <button
+              v-if="editTrip.groupPhoto"
+              type="button"
+              class="edit__delete"
+              @click="clearGroupPhoto"
+            >
+              Remove
+            </button>
+            <p class="edit__hint">Upload coming soon</p>
+          </div>
+        </div>
+      </section>
     </section>
 
     <button type="button" class="edit__close-fab" @click="finish">
       <X :size="18" :stroke-width="2" aria-hidden="true" />
       Back to view
     </button>
-
-    <div
-      v-if="imagesSheetOpen"
-      class="img-sheet"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="img-sheet-title"
-    >
-      <button
-        type="button"
-        class="img-sheet__backdrop"
-        aria-label="Close"
-        @click="imagesSheetOpen = false"
-      />
-      <div class="img-sheet__panel">
-        <header class="img-sheet__header">
-          <div>
-            <p class="img-sheet__eyebrow">Personalise</p>
-            <h2 id="img-sheet-title" class="img-sheet__title">Trip photos</h2>
-          </div>
-          <button
-            type="button"
-            class="img-sheet__close"
-            aria-label="Close"
-            @click="imagesSheetOpen = false"
-          >
-            <X :size="16" :stroke-width="2" aria-hidden="true" />
-          </button>
-        </header>
-
-        <p class="img-sheet__lede">
-          Cover shows in the banner and trip view. Group photo is optional.
-        </p>
-
-        <section class="img-sheet__section">
-          <div class="img-sheet__section-head">
-            <span class="edit__label">Colour scheme</span>
-            <p class="edit__hint">
-              Accent colour for links, buttons, and highlights.
-            </p>
-          </div>
-          <div
-            class="img-sheet__schemes"
-            role="radiogroup"
-            aria-label="Colour scheme"
-          >
-            <button
-              v-for="scheme in COLOR_SCHEMES"
-              :key="scheme.id"
-              type="button"
-              role="radio"
-              class="img-sheet__scheme"
-              :class="{
-                'img-sheet__scheme--on': editTrip.colorScheme === scheme.id,
-              }"
-              :aria-checked="editTrip.colorScheme === scheme.id"
-              :aria-label="scheme.label"
-              @click="editTrip.colorScheme = scheme.id"
-            >
-              <span
-                class="img-sheet__scheme-swatch"
-                :style="{ background: scheme.accent }"
-                aria-hidden="true"
-              />
-              <span class="img-sheet__scheme-label">{{ scheme.label }}</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="img-sheet__section">
-          <div class="img-sheet__section-head">
-            <span class="edit__label">Days layout</span>
-            <p class="edit__hint">
-              Scroll the full itinerary or switch days one at a time on the trip
-              view.
-            </p>
-          </div>
-          <div
-            class="edit__style-grid"
-            role="radiogroup"
-            aria-label="Days layout"
-          >
-            <button
-              v-for="layout in DAYS_LAYOUTS"
-              :key="layout.id"
-              type="button"
-              role="radio"
-              class="edit__style"
-              :class="{ 'edit__style--on': editTrip.daysLayout === layout.id }"
-              :aria-checked="editTrip.daysLayout === layout.id"
-              @click="editTrip.daysLayout = layout.id"
-            >
-              <span
-                class="edit__style-thumb"
-                :class="`edit__style-thumb--layout-${layout.id}`"
-                aria-hidden="true"
-              />
-              <span class="edit__style-copy">
-                <span class="edit__style-label">{{ layout.label }}</span>
-                <span class="edit__style-blurb">{{ layout.blurb }}</span>
-              </span>
-            </button>
-          </div>
-        </section>
-
-        <section class="img-sheet__section">
-          <div class="img-sheet__section-head">
-            <span class="edit__label">Cover image</span>
-          </div>
-          <div
-            class="img-sheet__cover-preview"
-            :style="{ '--cover-preview': `url(${editTrip.heroImage})` }"
-            role="img"
-            :aria-label="editTrip.heroAlt || 'Cover preview'"
-          />
-          <label class="edit__field">
-            <span class="edit__label">Image URL</span>
-            <input
-              v-model="editTrip.heroImage"
-              type="url"
-              class="edit__input"
-              placeholder="Paste an image URL"
-            />
-          </label>
-          <form
-            class="img-sheet__search"
-            @submit.prevent="runCoverSearch(coverQuery)"
-          >
-            <span class="edit__label">Search Unsplash</span>
-            <div class="img-sheet__search-row">
-              <Search
-                class="img-sheet__search-icon"
-                :size="16"
-                :stroke-width="2"
-                aria-hidden="true"
-              />
-              <input
-                v-model="coverQuery"
-                type="search"
-                class="edit__input img-sheet__search-input"
-                placeholder="Tokyo, beach, mountains…"
-                aria-label="Search Unsplash photos"
-              />
-              <button
-                type="submit"
-                class="img-sheet__search-btn"
-                :disabled="coverSearching"
-              >
-                {{ coverSearching ? '…' : 'Search' }}
-              </button>
-            </div>
-            <p class="edit__hint">
-              <template v-if="hasUnsplashKey()">
-                Free photos from Unsplash.
-              </template>
-              <template v-else>
-                Demo catalog — add
-                <code>VITE_UNSPLASH_ACCESS_KEY</code> for live Unsplash search.
-              </template>
-            </p>
-          </form>
-          <p v-if="coverError" class="img-sheet__error">{{ coverError }}</p>
-          <p
-            v-else-if="!coverSearching && !coverResults.length"
-            class="edit__hint"
-          >
-            No photos found. Try another place or vibe.
-          </p>
-          <div
-            v-else
-            class="img-sheet__results"
-            :class="{ 'img-sheet__results--loading': coverSearching }"
-            role="listbox"
-            aria-label="Cover photo results"
-          >
-            <button
-              v-for="photo in coverResults"
-              :key="photo.id"
-              type="button"
-              role="option"
-              class="img-sheet__result"
-              :class="{
-                'img-sheet__result--on': editTrip.heroImage === photo.url,
-              }"
-              :style="{ '--result-image': `url(${photo.thumb})` }"
-              :aria-label="`Use photo by ${photo.photographer}`"
-              :aria-selected="editTrip.heroImage === photo.url"
-              @click="applyCoverPhoto(photo)"
-            >
-              <span class="img-sheet__result-credit">{{
-                photo.photographer
-              }}</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="img-sheet__section">
-          <div class="img-sheet__section-head">
-            <span class="edit__label">Group photo</span>
-            <p class="edit__hint">Shows in the edit banner and trip hero.</p>
-          </div>
-          <div class="img-sheet__group-row">
-            <div class="img-sheet__group-preview">
-              <img
-                v-if="editTrip.groupPhoto"
-                :src="editTrip.groupPhoto"
-                :alt="editTrip.groupPhotoAlt || 'Group photo preview'"
-              />
-              <span v-else class="img-sheet__group-empty" aria-hidden="true">
-                <UserRound :size="22" :stroke-width="1.75" />
-              </span>
-            </div>
-            <div class="img-sheet__group-actions">
-              <button
-                type="button"
-                class="edit__add-file"
-                disabled
-                aria-disabled="true"
-              >
-                <ImagePlus :size="14" :stroke-width="2" aria-hidden="true" />
-                Upload photo
-              </button>
-              <button
-                v-if="editTrip.groupPhoto"
-                type="button"
-                class="edit__delete"
-                @click="clearGroupPhoto"
-              >
-                Remove
-              </button>
-              <p class="edit__hint">Upload coming soon</p>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
     </main>
   </div>
 </template>
