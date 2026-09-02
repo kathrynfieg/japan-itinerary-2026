@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { Heart } from '@lucide/vue'
+
 const emit = defineEmits<{
   back: []
 }>()
+
+const FAVORITES_KEY = 'daymark-font-lab-favorites'
 
 type FontCombo = {
   id: string
@@ -165,6 +170,42 @@ const combos: FontCombo[] = [
     note: 'Narrow grotesk headlines — efficient and bold. Familiar but more character than regular Roboto.',
   },
 ]
+
+const favorites = ref<Set<string>>(new Set())
+const favoritesOnly = ref(false)
+
+onMounted(() => {
+  try {
+    const raw = localStorage.getItem(FAVORITES_KEY)
+    if (raw) favorites.value = new Set(JSON.parse(raw) as string[])
+  } catch {
+    favorites.value = new Set()
+  }
+})
+
+function comboNumber(id: string) {
+  return combos.findIndex((combo) => combo.id === id) + 1
+}
+
+function isFavorite(id: string) {
+  return favorites.value.has(id)
+}
+
+function toggleFavorite(id: string) {
+  const next = new Set(favorites.value)
+  if (next.has(id)) next.delete(id)
+  else next.add(id)
+  favorites.value = next
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...next]))
+}
+
+const visibleCombos = computed(() =>
+  favoritesOnly.value
+    ? combos.filter((combo) => favorites.value.has(combo.id))
+    : combos,
+)
+
+const favoriteCount = computed(() => favorites.value.size)
 </script>
 
 <template>
@@ -188,23 +229,63 @@ const combos: FontCombo[] = [
       neo-grotesk faces like Inter, DM Sans, and Plus Jakarta.
     </p>
 
-    <ul class="font-lab__grid">
+    <div class="font-lab__toolbar">
+      <button
+        type="button"
+        class="font-lab__filter"
+        :class="{ 'font-lab__filter--on': favoritesOnly }"
+        :aria-pressed="favoritesOnly"
+        @click="favoritesOnly = !favoritesOnly"
+      >
+        <Heart
+          :size="14"
+          :stroke-width="2.25"
+          :fill="favoritesOnly ? 'currentColor' : 'none'"
+          aria-hidden="true"
+        />
+        Favourites
+        <span v-if="favoriteCount" class="font-lab__filter-count">{{ favoriteCount }}</span>
+      </button>
+    </div>
+
+    <p v-if="favoritesOnly && !visibleCombos.length" class="font-lab__empty">
+      No favourites yet — tap the heart on a combo to save it here.
+    </p>
+
+    <ul v-else class="font-lab__grid">
       <li
-        v-for="(combo, index) in combos"
+        v-for="combo in visibleCombos"
         :key="combo.id"
         class="font-lab__card"
         :class="{ 'font-lab__card--current': combo.current }"
       >
         <div class="font-lab__card-head">
           <div>
-            <p class="font-lab__card-index">Combo {{ index + 1 }}</p>
+            <p class="font-lab__card-index">Combo {{ comboNumber(combo.id) }}</p>
             <h2 class="font-lab__card-name">{{ combo.name }}</h2>
             <p class="font-lab__card-meta">
               <span>Heading · {{ combo.heading.split(',')[0].replace(/'/g, '') }}</span>
               <span>Body · {{ combo.body.split(',')[0].replace(/'/g, '') }}</span>
             </p>
           </div>
-          <span v-if="combo.current" class="font-lab__badge">Current</span>
+          <div class="font-lab__card-actions">
+            <button
+              type="button"
+              class="font-lab__fav"
+              :class="{ 'font-lab__fav--on': isFavorite(combo.id) }"
+              :aria-label="isFavorite(combo.id) ? 'Remove from favourites' : 'Add to favourites'"
+              :aria-pressed="isFavorite(combo.id)"
+              @click="toggleFavorite(combo.id)"
+            >
+              <Heart
+                :size="16"
+                :stroke-width="2.25"
+                :fill="isFavorite(combo.id) ? 'currentColor' : 'none'"
+                aria-hidden="true"
+              />
+            </button>
+            <span v-if="combo.current" class="font-lab__badge">Current</span>
+          </div>
         </div>
 
         <p class="font-lab__card-note">{{ combo.note }}</p>
@@ -265,9 +346,73 @@ const combos: FontCombo[] = [
 
 <style scoped>
 .font-lab {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 1.5rem 1.25rem 4rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 1.5rem 1rem 4rem;
+}
+
+.font-lab__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.font-lab__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgb(21 32 24 / 0.12);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.font-lab__filter:hover {
+  color: var(--ink);
+  border-color: rgb(21 32 24 / 0.2);
+}
+
+.font-lab__filter--on {
+  color: var(--accent-deep);
+  background: rgb(181 69 27 / 0.08);
+  border-color: rgb(181 69 27 / 0.22);
+}
+
+.font-lab__filter-count {
+  display: grid;
+  place-items: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: rgb(21 32 24 / 0.08);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.font-lab__filter--on .font-lab__filter-count {
+  background: rgb(181 69 27 / 0.14);
+}
+
+.font-lab__empty {
+  margin: 0;
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
 }
 
 .font-lab__bar {
@@ -336,7 +481,8 @@ const combos: FontCombo[] = [
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
 }
 
 .font-lab__card {
@@ -356,6 +502,42 @@ const combos: FontCombo[] = [
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.font-lab__card-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.font-lab__fav {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgb(21 32 24 / 0.1);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+
+.font-lab__fav:hover {
+  color: var(--accent-deep);
+  border-color: rgb(181 69 27 / 0.25);
+}
+
+.font-lab__fav--on {
+  color: var(--accent-deep);
+  background: rgb(181 69 27 / 0.08);
+  border-color: rgb(181 69 27 / 0.22);
 }
 
 .font-lab__card-index {
@@ -569,10 +751,6 @@ const combos: FontCombo[] = [
   .font-lab__bar {
     grid-template-columns: auto 1fr auto;
     align-items: end;
-  }
-
-  .font-lab__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>
