@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import {
   Copy,
   Link2,
@@ -13,6 +13,7 @@ import {
   Trash2,
 } from '@lucide/vue'
 import { TRIP_PRIVACY, type TripRecord } from '../lib/createTrip'
+import { dashResources } from '../data/dashResources'
 import logo from '../assets/3.png'
 
 defineProps<{
@@ -29,6 +30,14 @@ const emit = defineEmits<{
 }>()
 
 const menuId = ref<string | null>(null)
+
+const exampleResources = computed(() =>
+  dashResources.filter((resource) => resource.kind === 'example'),
+)
+
+const guideResources = computed(() =>
+  dashResources.filter((resource) => resource.kind === 'guide'),
+)
 
 function dayCount(record: TripRecord) {
   return record.days.length
@@ -283,6 +292,57 @@ onUnmounted(() => {
           New trip
         </button>
       </div>
+
+      <section class="dash__resources" aria-label="Resources">
+        <div class="dash__resources-block">
+          <div class="dash__resources-intro">
+            <h2 class="dash__resources-label">Explore examples</h2>
+            <p class="dash__resources-lede">
+              Need some inspiration? See how Daymark can work for different
+              kinds of trips.
+            </p>
+          </div>
+          <div class="dash__resources-track">
+            <article
+              v-for="resource in exampleResources"
+              :key="resource.id"
+              class="dash-sample"
+            >
+              <button type="button" class="dash-sample__btn">
+                <div
+                  class="dash-sample__media"
+                  :style="{ '--card-image': `url(${resource.image})` }"
+                  role="img"
+                  :aria-label="resource.imageAlt"
+                >
+                  <div class="dash-sample__caption">
+                    <h3 class="dash-sample__title">{{ resource.title }}</h3>
+                    <p class="dash-sample__meta">{{ resource.meta }}</p>
+                  </div>
+                </div>
+              </button>
+            </article>
+          </div>
+        </div>
+
+        <div class="dash__resources-block">
+          <h2 class="dash__resources-label dash__resources-label--solo">
+            Quick tips
+          </h2>
+          <div class="dash__resources-track dash__resources-track--tips">
+            <article
+              v-for="resource in guideResources"
+              :key="resource.id"
+              class="dash-tip"
+            >
+              <button type="button" class="dash-tip__btn">
+                <span class="dash-tip__title">{{ resource.title }}</span>
+                <span class="dash-tip__text">{{ resource.description }}</span>
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="dash__footer">
