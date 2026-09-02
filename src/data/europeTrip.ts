@@ -1,4 +1,4 @@
-import type { Day, TripLink } from './trip'
+import type { Day } from './trip'
 
 export const europeTrip = {
   name: 'London · Lucerne · Grindelwald · Munich · Salzburg · Vienna',
@@ -15,24 +15,6 @@ export const europeTrip = {
   daysIntro:
     'Seventeen days across London, Switzerland, Bavaria, and Austria. Dates are still flexible — here’s the outline so far.',
 }
-
-export const europeKeyLinks: TripLink[] = [
-  {
-    label: 'Flights',
-    href: '#',
-    note: 'Australia ↔ London & Vienna · TBC',
-  },
-  {
-    label: 'Swiss Travel Pass',
-    href: '#',
-    note: 'Trains in Switzerland · research options',
-  },
-  {
-    label: 'Neuschwanstein tickets',
-    href: '#',
-    note: 'Day 10 · book timed entry',
-  },
-]
 
 export const europeDays: Day[] = [
   {
@@ -306,7 +288,7 @@ export const europeDays: Day[] = [
         place: 'Schwangau',
         maps: 'https://www.google.com/maps/search/?api=1&query=Neuschwanstein+Castle',
         type: 'sight',
-        links: [{ label: 'Castle tickets', href: '#' }],
+        links: [{ label: 'Castle tickets', href: '#', key: true }],
       },
       {
         time: 'Evening',

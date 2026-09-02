@@ -12,26 +12,26 @@ import {
 } from '@lucide/vue'
 import {
   africaDays,
-  africaKeyLinks,
   africaTrip,
 } from './data/africaTrip'
 import {
   europeDays,
-  europeKeyLinks,
   europeTrip,
 } from './data/europeTrip'
 import {
   hawaiiDays,
-  hawaiiKeyLinks,
   hawaiiTrip,
 } from './data/hawaiiTrip'
 import {
   days as japanDays,
-  keyLinks as japanKeyLinks,
   trip as japanTrip,
   type Day,
-  type TripLink,
 } from './data/trip'
+import {
+  applyKeyLinkFlags,
+  collectKeyLinks,
+  japanLegacyKeyLinks,
+} from './lib/keyLinks'
 import {
   nextTripId,
   colorSchemeStyle,
@@ -88,8 +88,7 @@ function makeJapanRecord(): TripRecord {
       daysIntro:
         'Eleven days across Japan! Here’s everything we’ve planned so far, including our confirmed bookings and flexible ideas for each day.',
     },
-    days: cloneDays(japanDays),
-    links: japanKeyLinks.map((link) => ({ ...link })),
+    days: applyKeyLinkFlags(cloneDays(japanDays), japanLegacyKeyLinks),
   }
 }
 
@@ -112,7 +111,6 @@ function makeAfricaRecord(): TripRecord {
       daysIntro: africaTrip.daysIntro,
     },
     days: cloneDays(africaDays),
-    links: africaKeyLinks.map((link) => ({ ...link })),
   }
 }
 
@@ -137,7 +135,6 @@ function makeHawaiiRecord(): TripRecord {
       daysIntro: hawaiiTrip.daysIntro,
     },
     days: cloneDays(hawaiiDays),
-    links: hawaiiKeyLinks.map((link) => ({ ...link })),
   }
 }
 
@@ -160,7 +157,6 @@ function makeEuropeRecord(): TripRecord {
       daysIntro: europeTrip.daysIntro,
     },
     days: cloneDays(europeDays),
-    links: europeKeyLinks.map((link) => ({ ...link })),
   }
 }
 
@@ -179,7 +175,7 @@ const activeRecord = computed(
 const trip = computed(() => activeRecord.value?.trip ?? null)
 const pageSchemeStyle = computed(() => colorSchemeStyle(trip.value?.colorScheme))
 const days = computed(() => activeRecord.value?.days ?? [])
-const links = computed(() => activeRecord.value?.links ?? [])
+const links = computed(() => collectKeyLinks(days.value))
 const hasLinks = computed(() => links.value.length > 0)
 
 const scrolled = ref(false)
@@ -396,7 +392,6 @@ function duplicateTrip(id: string) {
           : undefined,
       })),
     })),
-    links: source.links.map((link) => ({ ...link })),
   }
 
   const index = library.value.findIndex((t) => t.id === id)
@@ -448,11 +443,7 @@ function closeShare() {
   if (mode.value === 'home') activeId.value = null
 }
 
-function closeEdit(payload: {
-  trip: SessionTrip
-  days: Day[]
-  links: TripLink[]
-}) {
+function closeEdit(payload: { trip: SessionTrip; days: Day[] }) {
   const id = activeId.value
   if (!id) {
     mode.value = 'view'
@@ -464,7 +455,6 @@ function closeEdit(payload: {
           ...record,
           trip: payload.trip,
           days: payload.days,
-          links: payload.links,
         }
       : record,
   )
@@ -508,7 +498,6 @@ function onCreated(record: TripRecord) {
     v-else-if="mode === 'edit' && trip"
     :days="days"
     :trip="trip"
-    :links="links"
     @done="closeEdit"
     @home="goHome"
   />

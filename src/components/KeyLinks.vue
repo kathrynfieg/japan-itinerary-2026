@@ -17,7 +17,8 @@ defineProps<{
     <header class="links__header">
       <h2 id="links-heading" class="links__heading">Key links</h2>
       <p class="links__sub">
-        Tickets, bookings, and a few links worth having in one place.
+        Pinned from your itinerary — tickets, bookings, and attachments in one
+        place.
       </p>
     </header>
 

@@ -18,7 +18,6 @@ import {
   type Activity,
   type ActivityType,
   type Day,
-  type TripLink,
 } from '../data/trip'
 import {
   COLOR_SCHEMES,
@@ -43,18 +42,15 @@ type EditableDay = Omit<Day, 'activities'> & {
   activities: EditableActivity[]
 }
 
-type EditableLink = TripLink & { _id: string }
-
-type EditTab = 'days' | 'trip' | 'links'
+type EditTab = 'days' | 'trip'
 
 const props = defineProps<{
   days: Day[]
   trip: SessionTrip
-  links: TripLink[]
 }>()
 
 const emit = defineEmits<{
-  done: [payload: { trip: SessionTrip; days: Day[]; links: TripLink[] }]
+  done: [payload: { trip: SessionTrip; days: Day[] }]
   home: []
 }>()
 
@@ -90,10 +86,6 @@ function cloneDays(source: Day[]): EditableDay[] {
   }))
 }
 
-function cloneLinks(source: TripLink[]): EditableLink[] {
-  return source.map((link) => ({ ...link, _id: nextId('l') }))
-}
-
 function stripDayIds(days: EditableDay[]): Day[] {
   return days.map(({ activities, ...day }) => ({
     ...day,
@@ -105,27 +97,29 @@ function stripDayIds(days: EditableDay[]): Day[] {
         ?.map((link) => ({
           label: link.label.trim(),
           href: link.href.trim(),
+          ...(link.key ? { key: true } : {}),
         }))
         .filter((link) => link.label && link.href)
+
+      const files = activity.files
+        ?.map((file) => ({
+          ...file,
+          ...(file.key ? { key: true } : {}),
+        }))
+        .filter((file) => file.name.trim() && file.url.trim())
 
       return {
         ...activity,
         notes: notes?.length ? notes : undefined,
         links: links?.length ? links : undefined,
+        files: files?.length ? files : undefined,
       }
     }),
   }))
 }
 
-function stripLinkIds(links: EditableLink[]): TripLink[] {
-  return links
-    .map(({ _id: _unused, ...link }) => link)
-    .filter((link) => link.label.trim() && link.href.trim())
-}
-
 const tab = ref<EditTab>('days')
 const editDays = ref<EditableDay[]>(cloneDays(props.days))
-const editLinks = ref<EditableLink[]>(cloneLinks(props.links))
 const editTrip = ref({
   name: props.trip.name,
   tagline: props.trip.tagline,
@@ -354,20 +348,6 @@ function removeDay(id: string) {
   if (last) editTrip.value.end = last.date
 }
 
-function addLink() {
-  const link: EditableLink = {
-    _id: nextId('l'),
-    label: '',
-    href: '',
-    note: '',
-  }
-  editLinks.value.push(link)
-}
-
-function removeLink(id: string) {
-  editLinks.value = editLinks.value.filter((l) => l._id !== id)
-}
-
 function clearGroupPhoto() {
   editTrip.value.groupPhoto = ''
   editTrip.value.groupPhotoAlt = ''
@@ -405,7 +385,6 @@ function finish() {
   emit('done', {
     trip: buildTrip(),
     days: stripDayIds(editDays.value),
-    links: stripLinkIds(editLinks.value),
   })
 }
 </script>
@@ -487,16 +466,6 @@ function finish() {
           @click="tab = 'trip'"
         >
           Trip
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="edit__tab"
-          :class="{ 'edit__tab--on': tab === 'links' }"
-          :aria-selected="tab === 'links'"
-          @click="tab = 'links'"
-        >
-          Links
         </button>
       </div>
 
@@ -689,6 +658,10 @@ function finish() {
                       placeholder="https://"
                       aria-label="Link URL"
                     />
+                    <label class="edit__key-toggle">
+                      <input v-model="item.key" type="checkbox" />
+                      <span>Key link</span>
+                    </label>
                     <button
                       type="button"
                       class="edit__icon-btn"
@@ -735,6 +708,10 @@ function finish() {
                       <ImageIcon v-else :size="16" :stroke-width="2" />
                     </span>
                     <span class="edit__file-name">{{ file.name }}</span>
+                    <label class="edit__key-toggle edit__key-toggle--file">
+                      <input v-model="file.key" type="checkbox" />
+                      <span>Key link</span>
+                    </label>
                     <button
                       type="button"
                       class="edit__icon-btn"
@@ -895,61 +872,6 @@ function finish() {
           </button>
         </div>
       </div>
-    </section>
-
-    <!-- Links -->
-    <section v-else class="edit__panel">
-      <p class="edit__hint">
-        Tickets, bookings, and Drive folders — same idea as the Key links
-        section on view.
-      </p>
-
-      <ul class="edit__link-list">
-        <li v-for="link in editLinks" :key="link._id" class="edit__link-card">
-          <label class="edit__field">
-            <span class="edit__label">Label</span>
-            <input
-              v-model="link.label"
-              type="text"
-              class="edit__input"
-              placeholder="Shibuya Sky tickets"
-            />
-          </label>
-          <label class="edit__field">
-            <span class="edit__label">URL</span>
-            <input
-              v-model="link.href"
-              type="url"
-              class="edit__input"
-              placeholder="https://…"
-            />
-          </label>
-          <label class="edit__field">
-            <span class="edit__label">Note</span>
-            <input
-              v-model="link.note"
-              type="text"
-              class="edit__input"
-              placeholder="22 July · Drive folder"
-            />
-          </label>
-          <button
-            type="button"
-            class="edit__delete"
-            @click="removeLink(link._id)"
-          >
-            <Trash2 :size="14" :stroke-width="2" aria-hidden="true" />
-            Delete link
-          </button>
-        </li>
-      </ul>
-
-      <p v-if="!editLinks.length" class="edit__empty">No key links yet.</p>
-
-      <button type="button" class="edit__add-link" @click="addLink">
-        <Plus :size="16" :stroke-width="2.25" aria-hidden="true" />
-        Add link
-      </button>
     </section>
 
     <button type="button" class="edit__close-fab" @click="finish">

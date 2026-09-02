@@ -35,12 +35,16 @@ export type ActivityFile = {
   url: string;
   /** Optional thumbnail for images */
   thumb?: string;
+  /** Show in the trip’s Key links section */
+  key?: boolean;
 };
 
 /** Labeled URL on a stop — tickets, menu, booking, etc. */
 export type ActivityLink = {
   label: string;
   href: string;
+  /** Show in the trip’s Key links section */
+  key?: boolean;
 };
 
 export type Activity = {
@@ -78,7 +82,7 @@ export type Day = {
 export type TripLink = {
   label: string;
   href: string;
-  /** Short context — date, what it is, etc. */
+  /** Short context — usually the day date */
   note?: string;
 };
 
@@ -97,60 +101,6 @@ export const trip = {
   groupPhoto,
   groupPhotoAlt: 'Zac, Jess, and Kat',
 };
-
-/** Tickets, bookings, and other links worth finding quickly */
-export const keyLinks: TripLink[] = [
-  {
-    label: 'Flight Itinerary',
-    href: 'https://drive.google.com/drive/folders/1VLt48SDJMKYr186S3uiFrx4am0OLfLRd?usp=drive_link',
-    note: '21 & 31 July · Drive folder',
-  },
-  {
-    label: 'Tokyo accommodation',
-    href: 'https://drive.google.com/drive/folders/1c8aMCdnIIhdH_d_AGqAQDU-tL12qTQSY?usp=drive_link',
-    note: '22 July · Early check-in from 11:00 AM · Drive folder',
-  },
-  {
-    label: 'Shibuya Sky tickets',
-    href: 'https://drive.google.com/drive/folders/17GL2m8-GQiWk6sNjHfDUljYv5BP9597G?usp=drive_link',
-    note: '22 July · Drive folder',
-  },
-  {
-    label: 'teamLab Borderless tickets',
-    href: 'https://drive.google.com/drive/folders/1oI5JJRNF8hnhqwVSJO8piNBphGoEIBhT?usp=drive_link',
-    note: '23 July · Drive folder',
-  },
-  {
-    label: 'Private Mt Fuji & Hakone tour',
-    href: 'https://drive.google.com/drive/folders/1IPnKFy5tydO5V_Ib3UDQLCUGPWGopvyR?usp=drive_link',
-    note: '25 July · 9:00 AM pickup · Drive folder',
-  },
-  {
-    label: 'Hakone accommodation',
-    href: 'https://drive.google.com/drive/folders/1kQaHNVfK0b99pizOgL59WprJm7W4CyeJ?usp=drive_link',
-    note: '25 July · Check-in from 3:00 PM · Early check-in possible on request · Drive folder',
-  },
-  {
-    label: 'Kyoto accommodation',
-    href: 'https://drive.google.com/drive/folders/1K8RI5p9EKy_tkFTGLrWT9K28EaGprvNY?usp=drive_link',
-    note: '26 July · Drive folder',
-  },
-  {
-    label: 'Kyoto ghost tour',
-    href: 'https://drive.google.com/drive/folders/1IJG17in0tftnb79nvIt-y5KHgce0VJiu?usp=drive_link',
-    note: '26 July · 7:30 PM · Free cancellation until 25 July',
-  },
-  {
-    label: 'Osaka accommodation',
-    href: 'https://drive.google.com/drive/folders/1lLXQALDkWclZIcDAyqPr4yGV23LFm4lZ?usp=drive_link',
-    note: '29 July · Drive folder',
-  },
-  {
-    label: 'Daruma painting experience',
-    href: 'https://drive.google.com/drive/folders/1rlxskWuPg-PgZKyx54rMJl18X-xbnaRf',
-    note: '29 July · 10:00 AM · DARUMA CLUB, Nipponbashi · Free cancellation until 28 July',
-  },
-];
 
 export const days: Day[] = [
   {

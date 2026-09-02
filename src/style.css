@@ -2705,6 +2705,30 @@ body {
   align-items: center;
 }
 
+.edit__key-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+
+.edit__key-toggle input {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.edit__key-toggle--file {
+  grid-column: auto;
+  justify-self: start;
+}
+
 .edit__act-link-label,
 .edit__act-link-url {
   padding: 0.55rem 0.65rem;

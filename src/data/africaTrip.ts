@@ -1,4 +1,4 @@
-import type { Day, TripLink } from './trip'
+import type { Day } from './trip'
 
 export const africaTrip = {
   name: 'African Safari',
@@ -15,24 +15,6 @@ export const africaTrip = {
   daysIntro:
     'Five days across Nairobi and the Maasai Mara. Here’s what’s locked in so far, plus a few flexible ideas.',
 }
-
-export const africaKeyLinks: TripLink[] = [
-  {
-    label: 'Flights',
-    href: '#',
-    note: '12 & 16 Sep · booking',
-  },
-  {
-    label: 'Safari lodge',
-    href: '#',
-    note: '13–15 Sep · Maasai Mara',
-  },
-  {
-    label: 'Park fees & transfers',
-    href: '#',
-    note: 'Included with the lodge package',
-  },
-]
 
 export const africaDays: Day[] = [
   {
@@ -57,7 +39,7 @@ export const africaDays: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Nairobi+hotel',
         type: 'stay',
         notes: ['Drop bags, shower, short rest before dinner'],
-        links: [{ label: 'Stay details', href: '#' }],
+        links: [{ label: 'Stay details', href: '#', key: true }],
       },
       {
         time: '6:30 PM',
@@ -97,7 +79,7 @@ export const africaDays: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Maasai+Mara+National+Reserve',
         type: 'stay',
         notes: ['Welcome drink · tent briefing · lunch'],
-        links: [{ label: 'Lodge details', href: '#' }],
+        links: [{ label: 'Lodge details', href: '#', key: true }],
       },
       {
         time: '4:00 PM',
@@ -232,7 +214,7 @@ export const africaDays: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Jomo+Kenyatta+International+Airport',
         type: 'flight',
         notes: ['Arrive ~3 hours before international departure'],
-        links: [{ label: 'Flight itinerary', href: '#' }],
+        links: [{ label: 'Flight itinerary', href: '#', key: true }],
       },
     ],
   },

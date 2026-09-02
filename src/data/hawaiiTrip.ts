@@ -1,4 +1,4 @@
-import type { Day, TripLink } from './trip'
+import type { Day } from './trip'
 
 export const hawaiiTrip = {
   name: 'Hawaii',
@@ -17,19 +17,6 @@ export const hawaiiTrip = {
   daysIntro:
     'Four days on Oahu. Flights and the Waikiki stay are booked — the rest is easy to fill in as you go.',
 }
-
-export const hawaiiKeyLinks: TripLink[] = [
-  {
-    label: 'Flights',
-    href: '#',
-    note: '14 & 18 Mar · HNL',
-  },
-  {
-    label: 'Waikiki hotel',
-    href: '#',
-    note: '14–17 Mar · 3 nights',
-  },
-]
 
 export const hawaiiDays: Day[] = [
   {
@@ -54,7 +41,7 @@ export const hawaiiDays: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Waikiki+Honolulu',
         type: 'stay',
         notes: ['Drop bags · change · short rest'],
-        links: [{ label: 'Stay details', href: '#' }],
+        links: [{ label: 'Stay details', href: '#', key: true }],
       },
       {
         time: '5:00 PM',
@@ -184,7 +171,7 @@ export const hawaiiDays: Day[] = [
         maps: 'https://www.google.com/maps/search/?api=1&query=Daniel+K+Inouye+International+Airport',
         type: 'flight',
         notes: ['Arrive ~2.5 hours before departure for domestic connections'],
-        links: [{ label: 'Flight itinerary', href: '#' }],
+        links: [{ label: 'Flight itinerary', href: '#', key: true }],
       },
     ],
   },

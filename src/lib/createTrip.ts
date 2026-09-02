@@ -1,4 +1,4 @@
-import type { Day, TripLink } from '../data/trip'
+import type { Day } from '../data/trip'
 
 export type SessionTrip = {
   name: string
@@ -136,7 +136,6 @@ export type TripRecord = {
   id: string
   trip: SessionTrip
   days: Day[]
-  links: TripLink[]
 }
 
 let tripIdCounter = 0
@@ -263,5 +262,5 @@ export function createTripFromInput(input: CreateTripInput): TripRecord {
     privacy: 'private',
   }
 
-  return { id: nextTripId(), trip, days, links: [] }
+  return { id: nextTripId(), trip, days }
 }
