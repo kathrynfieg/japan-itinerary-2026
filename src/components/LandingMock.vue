@@ -59,6 +59,13 @@ const faqs = [
     ],
   },
   {
+    question: 'What makes Daymark different from other travel planners?',
+    answer: [
+      'Daymark is made for people who already have a rough idea of what they want to do and just need a simple place to organise it.',
+      'It does not try to book things for you, build your whole trip, or fill your itinerary with suggestions. It just helps you keep your plans clear and easy to access while you are away.',
+    ],
+  },
+  {
     question: 'Who is Daymark for?',
     answer: [
       'Anyone who wants a simple way to organise a trip without using a full travel planner.',
