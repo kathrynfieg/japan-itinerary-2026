@@ -3695,6 +3695,8 @@ body {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .dash__top {
@@ -3798,6 +3800,8 @@ body {
 .dash__main {
   flex: 1;
   width: min(100% - 2.5rem, 64rem);
+  min-width: 0;
+  max-width: 100%;
   margin: 1.75rem auto 0;
 }
 
@@ -4407,6 +4411,13 @@ body {
   margin-top: 2.25rem;
   padding-top: 2rem;
   border-top: 1px solid rgb(21 32 24 / 0.08);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.dash__resources-block {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .dash__resources-label {
@@ -4441,11 +4452,16 @@ body {
 .dash__resources-track {
   display: flex;
   gap: 0.85rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 0.2rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .dash__resources-track::-webkit-scrollbar {
@@ -4539,6 +4555,7 @@ body {
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .dash-sample__meta {
@@ -4546,6 +4563,7 @@ body {
   font-size: 0.68rem;
   line-height: 1.35;
   color: rgb(244 246 242 / 0.82);
+  overflow-wrap: anywhere;
 }
 
 .dash-tip {
@@ -4737,6 +4755,34 @@ body {
     grid-template-rows: auto auto;
     align-items: center;
     gap: 0.45rem 0.75rem;
+  }
+
+  .dash__main {
+    width: min(100% - 2rem, 64rem);
+  }
+
+  .dash__resources-track {
+    width: auto;
+    max-width: none;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+  }
+
+  .dash-sample {
+    width: 10.5rem;
+  }
+
+  .dash-tip {
+    width: 12.25rem;
+  }
+
+  .dash-sample__title {
+    font-size: 0.84rem;
+  }
+
+  .dash-sample__meta {
+    font-size: 0.64rem;
   }
 
   .dash__header-copy {
