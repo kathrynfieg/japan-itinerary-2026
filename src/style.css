@@ -1625,7 +1625,7 @@ body {
   box-sizing: border-box;
   width: 100%;
   max-width: 40rem;
-  margin: 1.25rem auto 0;
+  margin: 1rem auto 0;
   padding: 0 1rem 2rem;
   min-width: 0;
 }
@@ -2168,10 +2168,10 @@ body {
   gap: 0.28rem;
   position: relative;
   margin: 0 0 -1px;
-  padding: 0.5rem 0.25rem 0.62rem;
+  padding: 0.5rem 0.35rem 0.62rem;
   border: none;
   border-bottom: 2px solid transparent;
-  border-radius: 0;
+  border-radius: 10px 10px 0 0;
   background: transparent;
   color: var(--ink-soft);
   font: inherit;
@@ -2179,6 +2179,7 @@ body {
   cursor: pointer;
   transition:
     color 0.2s var(--ease),
+    background 0.2s var(--ease),
     border-color 0.2s var(--ease);
 }
 
@@ -2210,10 +2211,9 @@ body {
 }
 
 .edit__tab--on {
-  background: transparent;
+  background: var(--mist);
   color: var(--ink);
   border-bottom-color: var(--accent);
-  box-shadow: none;
 }
 
 .edit__tab--on .edit__tab-icon {
