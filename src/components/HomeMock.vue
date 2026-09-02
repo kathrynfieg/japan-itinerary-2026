@@ -283,5 +283,56 @@ onUnmounted(() => {
         </button>
       </div>
     </main>
+
+    <footer class="dash__footer">
+      <div class="dash__footer-inner">
+        <div class="dash__footer-top">
+          <div class="dash__footer-brand-block">
+            <div class="dash__footer-brand">
+              <img
+                class="dash__footer-mark"
+                :src="logo"
+                alt=""
+                width="30"
+                height="30"
+              />
+              <span>Daymark</span>
+            </div>
+            <p class="dash__footer-tagline">Plan · travel · remember</p>
+          </div>
+
+          <nav class="dash__footer-nav" aria-label="Footer">
+            <div class="dash__footer-col">
+              <p class="dash__footer-col-label">Product</p>
+              <ul class="dash__footer-links">
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Changelog</a></li>
+              </ul>
+            </div>
+            <div class="dash__footer-col">
+              <p class="dash__footer-col-label">Support</p>
+              <ul class="dash__footer-links">
+                <li><a href="#">Help centre</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
+            <div class="dash__footer-col">
+              <p class="dash__footer-col-label">Legal</p>
+              <ul class="dash__footer-links">
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Cookies</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <div class="dash__footer-bottom">
+          <p class="dash__footer-copy">© 2026 Daymark. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>

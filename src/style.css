@@ -3693,7 +3693,8 @@ body {
 /* —— Home dashboard mock —— */
 .dash {
   min-height: 100svh;
-  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .dash__top {
@@ -3795,6 +3796,7 @@ body {
 }
 
 .dash__main {
+  flex: 1;
   width: min(100% - 2.5rem, 64rem);
   margin: 1.75rem auto 0;
 }
@@ -4276,6 +4278,115 @@ body {
   color: var(--ink-soft);
   font-size: 0.92rem;
   max-width: 24rem;
+}
+
+.dash__footer {
+  margin-top: 3.5rem;
+  padding: 2.5rem clamp(1.15rem, 3vw, 1.75rem)
+    calc(2rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid rgb(21 32 24 / 0.08);
+  background: rgb(244 246 242 / 0.55);
+}
+
+.dash__footer-inner {
+  width: min(100%, 64rem);
+  margin: 0 auto;
+}
+
+.dash__footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgb(21 32 24 / 0.06);
+}
+
+.dash__footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.dash__footer-mark {
+  display: block;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.dash__footer-tagline {
+  margin: 0.55rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.dash__footer-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(5.5rem, 1fr));
+  gap: 1.5rem 2.5rem;
+}
+
+.dash__footer-col-label {
+  margin: 0 0 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.dash__footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.dash__footer-links a {
+  font-size: 0.88rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+
+.dash__footer-links a:hover {
+  color: var(--accent);
+}
+
+.dash__footer-bottom {
+  padding-top: 1.35rem;
+}
+
+.dash__footer-copy {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 720px) {
+  .dash__footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .dash__footer-nav {
+    gap: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash__footer-nav {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 640px) {
