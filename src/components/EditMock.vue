@@ -192,6 +192,12 @@ const schemeStyle = computed(() =>
   colorSchemeStyle(editTrip.value.colorScheme),
 )
 
+const selectedHeroStyle = computed(
+  () =>
+    HERO_STYLES.find((style) => style.id === editTrip.value.heroStyle) ??
+    HERO_STYLES[0],
+)
+
 const tripStrip = computed(() => {
   const start = editTrip.value.start || props.trip.start
   const end = editTrip.value.end || start
@@ -878,100 +884,27 @@ function finish() {
     </section>
 
     <!-- Vibe -->
-    <section v-else-if="tab === 'vibe'" class="edit__panel edit__look">
-      <p class="edit__look-lede">
-        Colours, cover, and layout for the trip view. The banner above updates
-        as you go — hit Done to check the full page.
-      </p>
+    <section v-else-if="tab === 'vibe'" class="edit__panel edit__vibe">
+      <article class="edit__vibe-block">
+        <header class="edit__vibe-head">
+          <h3 class="edit__vibe-title">Cover image</h3>
+          <p class="edit__vibe-desc">Photo for the trip banner</p>
+        </header>
 
-      <section class="edit__look-section">
-        <div class="edit__look-section-head">
-          <span class="edit__label">Colour</span>
-          <p class="edit__hint">
-            Accent colour for links, buttons, and highlights.
-          </p>
-        </div>
         <div
-          class="edit__look-schemes"
-          role="radiogroup"
-          aria-label="Colour scheme"
-        >
-          <button
-            v-for="scheme in COLOR_SCHEMES"
-            :key="scheme.id"
-            type="button"
-            role="radio"
-            class="edit__look-scheme"
-            :class="{
-              'edit__look-scheme--on': editTrip.colorScheme === scheme.id,
-            }"
-            :aria-checked="editTrip.colorScheme === scheme.id"
-            :aria-label="scheme.label"
-            @click="editTrip.colorScheme = scheme.id"
-          >
-            <span
-              class="edit__look-scheme-swatch"
-              :style="{ background: scheme.accent }"
-              aria-hidden="true"
-            />
-            <span class="edit__look-scheme-label">{{ scheme.label }}</span>
-          </button>
-        </div>
-      </section>
-
-      <section class="edit__look-section">
-        <div class="edit__look-section-head">
-          <span class="edit__label">Cover</span>
-          <p class="edit__hint">
-            Banner layout and background image on the trip view.
-          </p>
-        </div>
-        <div class="edit__style-grid" role="radiogroup" aria-label="Hero style">
-          <button
-            v-for="style in HERO_STYLES"
-            :key="style.id"
-            type="button"
-            role="radio"
-            class="edit__style"
-            :class="{ 'edit__style--on': editTrip.heroStyle === style.id }"
-            :aria-checked="editTrip.heroStyle === style.id"
-            @click="editTrip.heroStyle = style.id"
-          >
-            <span
-              class="edit__style-thumb"
-              :class="`edit__style-thumb--${style.id}`"
-              :style="{ '--style-thumb': `url(${editTrip.heroImage})` }"
-              aria-hidden="true"
-            />
-            <span class="edit__style-copy">
-              <span class="edit__style-label">{{ style.label }}</span>
-              <span class="edit__style-blurb">{{ style.blurb }}</span>
-            </span>
-          </button>
-        </div>
-        <div
-          class="edit__look-cover-preview"
+          class="edit__vibe-cover"
           :style="{ '--cover-preview': `url(${editTrip.heroImage})` }"
           role="img"
           :aria-label="editTrip.heroAlt || 'Cover preview'"
         />
-        <label class="edit__field">
-          <span class="edit__label">Image URL</span>
-          <input
-            v-model="editTrip.heroImage"
-            type="url"
-            class="edit__input"
-            placeholder="Paste an image URL"
-          />
-        </label>
+
         <form
-          class="edit__look-search"
+          class="edit__vibe-search"
           @submit.prevent="runCoverSearch(coverQuery)"
         >
-          <span class="edit__label">Search Unsplash</span>
-          <div class="edit__look-search-row">
+          <div class="edit__vibe-search-row">
             <Search
-              class="edit__look-search-icon"
+              class="edit__vibe-search-icon"
               :size="16"
               :stroke-width="2"
               aria-hidden="true"
@@ -979,39 +912,32 @@ function finish() {
             <input
               v-model="coverQuery"
               type="search"
-              class="edit__input edit__look-search-input"
-              placeholder="Tokyo, beach, mountains…"
+              class="edit__input edit__vibe-search-input"
+              placeholder="Search Unsplash — Tokyo, beach…"
               aria-label="Search Unsplash photos"
             />
             <button
               type="submit"
-              class="edit__look-search-btn"
+              class="edit__vibe-search-btn"
               :disabled="coverSearching"
             >
               {{ coverSearching ? '…' : 'Search' }}
             </button>
           </div>
-          <p class="edit__hint">
-            <template v-if="hasUnsplashKey()">
-              Free photos from Unsplash.
-            </template>
+          <p class="edit__vibe-footnote">
+            <template v-if="hasUnsplashKey()">Free photos from Unsplash.</template>
             <template v-else>
-              Demo catalog — add
-              <code>VITE_UNSPLASH_ACCESS_KEY</code> for live Unsplash search.
+              Demo catalog — add <code>VITE_UNSPLASH_ACCESS_KEY</code> for live
+              search.
             </template>
           </p>
         </form>
-        <p v-if="coverError" class="edit__look-error">{{ coverError }}</p>
-        <p
-          v-else-if="!coverSearching && !coverResults.length"
-          class="edit__hint"
-        >
-          No photos found. Try another place or vibe.
-        </p>
+
+        <p v-if="coverError" class="edit__vibe-error">{{ coverError }}</p>
         <div
-          v-else
-          class="edit__look-results"
-          :class="{ 'edit__look-results--loading': coverSearching }"
+          v-else-if="coverResults.length"
+          class="edit__vibe-results"
+          :class="{ 'edit__vibe-results--loading': coverSearching }"
           role="listbox"
           aria-label="Cover photo results"
         >
@@ -1020,77 +946,155 @@ function finish() {
             :key="photo.id"
             type="button"
             role="option"
-            class="edit__look-result"
+            class="edit__vibe-result"
             :class="{
-              'edit__look-result--on': editTrip.heroImage === photo.url,
+              'edit__vibe-result--on': editTrip.heroImage === photo.url,
             }"
             :style="{ '--result-image': `url(${photo.thumb})` }"
             :aria-label="`Use photo by ${photo.photographer}`"
             :aria-selected="editTrip.heroImage === photo.url"
             @click="applyCoverPhoto(photo)"
           >
-            <span class="edit__look-result-credit">{{
+            <span class="edit__vibe-result-credit">{{
               photo.photographer
             }}</span>
           </button>
         </div>
-      </section>
 
-      <section class="edit__look-section">
-        <div class="edit__look-section-head">
-          <span class="edit__label">Days layout</span>
-          <p class="edit__hint">
-            Scroll the full itinerary or switch days one at a time on the trip
-            view.
+        <label class="edit__vibe-url">
+          <span class="edit__vibe-url-label">Or paste image URL</span>
+          <input
+            v-model="editTrip.heroImage"
+            type="url"
+            class="edit__input"
+            placeholder="https://"
+          />
+        </label>
+      </article>
+
+      <article class="edit__vibe-block">
+        <header class="edit__vibe-head">
+          <h3 class="edit__vibe-title">Banner style</h3>
+          <p class="edit__vibe-desc">
+            {{ selectedHeroStyle?.blurb }}
           </p>
-        </div>
+        </header>
+
         <div
-          class="edit__style-grid"
+          class="edit__vibe-scroll"
           role="radiogroup"
-          aria-label="Days layout"
+          aria-label="Banner style"
+        >
+          <button
+            v-for="style in HERO_STYLES"
+            :key="style.id"
+            type="button"
+            role="radio"
+            class="edit__vibe-pill"
+            :class="{ 'edit__vibe-pill--on': editTrip.heroStyle === style.id }"
+            :aria-checked="editTrip.heroStyle === style.id"
+            @click="editTrip.heroStyle = style.id"
+          >
+            <span
+              class="edit__vibe-pill-thumb"
+              :class="`edit__vibe-pill-thumb--${style.id}`"
+              :style="{ '--style-thumb': `url(${editTrip.heroImage})` }"
+              aria-hidden="true"
+            />
+            <span class="edit__vibe-pill-label">{{ style.label }}</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="edit__vibe-block">
+        <header class="edit__vibe-head">
+          <h3 class="edit__vibe-title">Accent colour</h3>
+          <p class="edit__vibe-desc">Links, buttons, and highlights</p>
+        </header>
+
+        <div
+          class="edit__vibe-scroll edit__vibe-scroll--colors"
+          role="radiogroup"
+          aria-label="Accent colour"
+        >
+          <button
+            v-for="scheme in COLOR_SCHEMES"
+            :key="scheme.id"
+            type="button"
+            role="radio"
+            class="edit__vibe-color"
+            :class="{
+              'edit__vibe-color--on': editTrip.colorScheme === scheme.id,
+            }"
+            :aria-checked="editTrip.colorScheme === scheme.id"
+            :aria-label="scheme.label"
+            @click="editTrip.colorScheme = scheme.id"
+          >
+            <span
+              class="edit__vibe-color-swatch"
+              :style="{ background: scheme.accent }"
+              aria-hidden="true"
+            />
+            <span class="edit__vibe-color-label">{{ scheme.label }}</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="edit__vibe-block">
+        <header class="edit__vibe-head">
+          <h3 class="edit__vibe-title">Itinerary view</h3>
+          <p class="edit__vibe-desc">How days read on the trip page</p>
+        </header>
+
+        <div
+          class="edit__vibe-split"
+          role="radiogroup"
+          aria-label="Itinerary view"
         >
           <button
             v-for="layout in DAYS_LAYOUTS"
             :key="layout.id"
             type="button"
             role="radio"
-            class="edit__style"
-            :class="{ 'edit__style--on': editTrip.daysLayout === layout.id }"
+            class="edit__vibe-split-btn"
+            :class="{
+              'edit__vibe-split-btn--on': editTrip.daysLayout === layout.id,
+            }"
             :aria-checked="editTrip.daysLayout === layout.id"
             @click="editTrip.daysLayout = layout.id"
           >
             <span
-              class="edit__style-thumb"
-              :class="`edit__style-thumb--layout-${layout.id}`"
+              class="edit__vibe-split-thumb"
+              :class="`edit__vibe-split-thumb--${layout.id}`"
               aria-hidden="true"
             />
-            <span class="edit__style-copy">
-              <span class="edit__style-label">{{ layout.label }}</span>
-              <span class="edit__style-blurb">{{ layout.blurb }}</span>
-            </span>
+            <span class="edit__vibe-split-label">{{ layout.label }}</span>
+            <span class="edit__vibe-split-desc">{{ layout.blurb }}</span>
           </button>
         </div>
-      </section>
+      </article>
 
-      <section class="edit__look-section">
-        <div class="edit__look-section-head">
-          <span class="edit__label">Group photo</span>
-          <p class="edit__hint">
-            Optional portrait in the edit banner and trip hero.
-          </p>
-        </div>
-        <div class="edit__look-group-row">
-          <div class="edit__look-group-preview">
+      <article class="edit__vibe-block edit__vibe-block--optional">
+        <header class="edit__vibe-head edit__vibe-head--row">
+          <div>
+            <h3 class="edit__vibe-title">Group photo</h3>
+            <p class="edit__vibe-desc">Optional portrait in the banner</p>
+          </div>
+          <span class="edit__vibe-tag">Coming soon</span>
+        </header>
+
+        <div class="edit__vibe-group">
+          <div class="edit__vibe-group-preview">
             <img
               v-if="editTrip.groupPhoto"
               :src="editTrip.groupPhoto"
               :alt="editTrip.groupPhotoAlt || 'Group photo preview'"
             />
-            <span v-else class="edit__look-group-empty" aria-hidden="true">
-              <UserRound :size="22" :stroke-width="1.75" />
+            <span v-else class="edit__vibe-group-empty" aria-hidden="true">
+              <UserRound :size="20" :stroke-width="1.75" />
             </span>
           </div>
-          <div class="edit__look-group-actions">
+          <div class="edit__vibe-group-actions">
             <button
               type="button"
               class="edit__add-file"
@@ -1108,10 +1112,9 @@ function finish() {
             >
               Remove
             </button>
-            <p class="edit__hint">Upload coming soon</p>
           </div>
         </div>
-      </section>
+      </article>
     </section>
 
     <button type="button" class="edit__close-fab" @click="finish">
