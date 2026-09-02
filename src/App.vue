@@ -177,6 +177,35 @@ const pageSchemeStyle = computed(() => colorSchemeStyle(trip.value?.colorScheme)
 const days = computed(() => activeRecord.value?.days ?? [])
 const links = computed(() => collectKeyLinks(days.value))
 const hasLinks = computed(() => links.value.length > 0)
+const daysLayout = computed(() => trip.value?.daysLayout ?? 'scroll')
+const selectedViewDayId = ref('')
+
+const visibleDays = computed(() => {
+  const list = days.value
+  if (daysLayout.value === 'scroll') return list
+  const id = selectedViewDayId.value || list[0]?.id
+  const day = list.find((item) => item.id === id)
+  return day ? [day] : list
+})
+
+function syncSelectedViewDay() {
+  const list = days.value
+  if (!list.length) {
+    selectedViewDayId.value = ''
+    return
+  }
+  if (
+    !selectedViewDayId.value ||
+    !list.some((day) => day.id === selectedViewDayId.value)
+  ) {
+    selectedViewDayId.value = todayDayId.value || list[0]?.id || ''
+  }
+}
+
+function selectViewDay(id: string) {
+  selectedViewDayId.value = id
+  activeDay.value = id
+}
 
 const scrolled = ref(false)
 const showTop = ref(false)
@@ -216,6 +245,8 @@ const showDayNotice = computed(
 function onScroll() {
   scrolled.value = window.scrollY > 40
   showTop.value = window.scrollY > window.innerHeight * 0.6
+
+  if (daysLayout.value === 'tabs') return
 
   const list = days.value
   const marker = window.innerHeight * 0.35
@@ -275,11 +306,21 @@ watch(mode, (next) => {
   if (next === 'view') {
     requestAnimationFrame(() => {
       window.scrollTo(0, 0)
+      syncSelectedViewDay()
       bindScroll()
-      activeDay.value = days.value[0]?.id ?? ''
+      activeDay.value = selectedViewDayId.value || (days.value[0]?.id ?? '')
     })
   } else {
     window.scrollTo(0, 0)
+  }
+})
+
+watch([daysLayout, days], () => {
+  if (mode.value === 'view') {
+    syncSelectedViewDay()
+    if (daysLayout.value === 'tabs') {
+      activeDay.value = selectedViewDayId.value
+    }
   }
 })
 
@@ -294,10 +335,20 @@ function scrollToId(id: string) {
 }
 
 function scrollToToday() {
+  if (daysLayout.value === 'tabs') {
+    selectViewDay(todayDayId.value)
+    scrollToId('days')
+    return
+  }
   scrollToId(todayDayId.value)
 }
 
 function scrollToDay(id: string) {
+  if (daysLayout.value === 'tabs') {
+    selectViewDay(id)
+    scrollToId('days')
+    return
+  }
   scrollToId(id)
 }
 
@@ -311,6 +362,12 @@ function scrollToTop() {
 
 function dayNumber(date: string) {
   return new Date(date + 'T12:00:00').getDate()
+}
+
+function monthLabel(date: string) {
+  return new Date(date + 'T12:00:00').toLocaleDateString('en-GB', {
+    month: 'short',
+  })
 }
 
 function goHome() {
@@ -522,30 +579,59 @@ function onCreated(record: TripRecord) {
       </button>
       <div class="topbar__end">
         <nav class="topbar__nav" aria-label="Day jump">
-          <a
-            v-for="day in days"
-            :key="day.id"
-            :href="`#${day.id}`"
-            class="topbar__day"
-            :class="{
-              'topbar__day--active': activeDay === day.id,
-              'topbar__day--birthday': day.theme === 'birthday',
-            }"
-            :aria-label="
-              day.theme === 'birthday'
-                ? `${dayNumber(day.date)} July · Zac’s 30th birthday`
-                : undefined
-            "
-          >
-            <span>{{ dayNumber(day.date) }}</span>
-            <Cake
-              v-if="day.theme === 'birthday'"
-              class="topbar__day-cake"
-              :size="10"
-              :stroke-width="2.25"
-              aria-hidden="true"
-            />
-          </a>
+          <template v-if="daysLayout === 'tabs'">
+            <button
+              v-for="day in days"
+              :key="day.id"
+              type="button"
+              class="topbar__day"
+              :class="{
+                'topbar__day--active': activeDay === day.id,
+                'topbar__day--birthday': day.theme === 'birthday',
+              }"
+              :aria-label="
+                day.theme === 'birthday'
+                  ? `${dayNumber(day.date)} July · Zac’s 30th birthday`
+                  : undefined
+              "
+              @click="selectViewDay(day.id)"
+            >
+              <span>{{ dayNumber(day.date) }}</span>
+              <Cake
+                v-if="day.theme === 'birthday'"
+                class="topbar__day-cake"
+                :size="10"
+                :stroke-width="2.25"
+                aria-hidden="true"
+              />
+            </button>
+          </template>
+          <template v-else>
+            <a
+              v-for="day in days"
+              :key="day.id"
+              :href="`#${day.id}`"
+              class="topbar__day"
+              :class="{
+                'topbar__day--active': activeDay === day.id,
+                'topbar__day--birthday': day.theme === 'birthday',
+              }"
+              :aria-label="
+                day.theme === 'birthday'
+                  ? `${dayNumber(day.date)} July · Zac’s 30th birthday`
+                  : undefined
+              "
+            >
+              <span>{{ dayNumber(day.date) }}</span>
+              <Cake
+                v-if="day.theme === 'birthday'"
+                class="topbar__day-cake"
+                :size="10"
+                :stroke-width="2.25"
+                aria-hidden="true"
+              />
+            </a>
+          </template>
         </nav>
         <div class="topbar__menu">
           <button
@@ -652,8 +738,30 @@ function onCreated(record: TripRecord) {
         <p class="days__sub">{{ daysIntro }}</p>
       </header>
 
+      <nav
+        v-if="daysLayout === 'tabs'"
+        class="days__chips"
+        aria-label="Choose day"
+      >
+        <button
+          v-for="day in days"
+          :key="day.id"
+          type="button"
+          class="days__chip"
+          :class="{
+            'days__chip--active': selectedViewDayId === day.id,
+            'days__chip--birthday': day.theme === 'birthday',
+          }"
+          :aria-label="`${day.weekday} ${dayNumber(day.date)} ${monthLabel(day.date)}`"
+          @click="selectViewDay(day.id)"
+        >
+          <span class="days__chip-month">{{ monthLabel(day.date) }}</span>
+          <span class="days__chip-num">{{ dayNumber(day.date) }}</span>
+        </button>
+      </nav>
+
       <DaySection
-        v-for="(day, index) in days"
+        v-for="(day, index) in visibleDays"
         :key="day.id"
         :day="day"
         :index="index"

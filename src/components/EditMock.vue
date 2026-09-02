@@ -21,12 +21,14 @@ import {
 } from '../data/trip'
 import {
   COLOR_SCHEMES,
+  DAYS_LAYOUTS,
   HERO_STYLES,
   addDays,
   colorSchemeStyle,
   formatRangeLabel,
   weekdayLabel,
   type ColorScheme,
+  type DaysLayout,
   type HeroStyle,
   type SessionTrip,
 } from '../lib/createTrip'
@@ -129,6 +131,7 @@ const editTrip = ref({
   heroImage: props.trip.heroImage,
   heroAlt: props.trip.heroAlt,
   heroStyle: (props.trip.heroStyle ?? 'full') as HeroStyle,
+  daysLayout: (props.trip.daysLayout ?? 'scroll') as DaysLayout,
   colorScheme: (props.trip.colorScheme ?? 'terracotta') as ColorScheme,
   groupPhoto: props.trip.groupPhoto ?? '',
   groupPhotoAlt: props.trip.groupPhotoAlt ?? '',
@@ -375,6 +378,7 @@ function buildTrip(): SessionTrip {
     heroImage: editTrip.value.heroImage.trim() || props.trip.heroImage,
     heroAlt: editTrip.value.heroAlt.trim() || props.trip.heroAlt,
     heroStyle: editTrip.value.heroStyle,
+    daysLayout: editTrip.value.daysLayout,
     colorScheme: editTrip.value.colorScheme,
     groupPhoto: groupPhoto || undefined,
     groupPhotoAlt: groupPhoto ? groupPhotoAlt || 'Group photo' : undefined,
@@ -943,6 +947,42 @@ function finish() {
                 aria-hidden="true"
               />
               <span class="img-sheet__scheme-label">{{ scheme.label }}</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="img-sheet__section">
+          <div class="img-sheet__section-head">
+            <span class="edit__label">Days layout</span>
+            <p class="edit__hint">
+              Scroll the full itinerary or switch days one at a time on the trip
+              view.
+            </p>
+          </div>
+          <div
+            class="edit__style-grid"
+            role="radiogroup"
+            aria-label="Days layout"
+          >
+            <button
+              v-for="layout in DAYS_LAYOUTS"
+              :key="layout.id"
+              type="button"
+              role="radio"
+              class="edit__style"
+              :class="{ 'edit__style--on': editTrip.daysLayout === layout.id }"
+              :aria-checked="editTrip.daysLayout === layout.id"
+              @click="editTrip.daysLayout = layout.id"
+            >
+              <span
+                class="edit__style-thumb"
+                :class="`edit__style-thumb--layout-${layout.id}`"
+                aria-hidden="true"
+              />
+              <span class="edit__style-copy">
+                <span class="edit__style-label">{{ layout.label }}</span>
+                <span class="edit__style-blurb">{{ layout.blurb }}</span>
+              </span>
             </button>
           </div>
         </section>

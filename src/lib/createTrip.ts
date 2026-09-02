@@ -12,6 +12,8 @@ export type SessionTrip = {
   heroAlt: string
   /** Layout treatment for the trip hero */
   heroStyle?: HeroStyle
+  /** How days read on the trip view */
+  daysLayout?: DaysLayout
   /** Accent colour palette for the trip view */
   colorScheme?: ColorScheme
   groupPhoto?: string
@@ -99,6 +101,25 @@ export function colorSchemeStyle(
 }
 
 export type HeroStyle = 'full' | 'compact' | 'poster' | 'banner' | 'minimal'
+
+export type DaysLayout = 'scroll' | 'tabs'
+
+export const DAYS_LAYOUTS: {
+  id: DaysLayout
+  label: string
+  blurb: string
+}[] = [
+  {
+    id: 'scroll',
+    label: 'Scroll all',
+    blurb: 'Every day on one page — scroll through the full trip',
+  },
+  {
+    id: 'tabs',
+    label: 'Day by day',
+    blurb: 'Pick a day under The Days — less scrolling on long trips',
+  },
+]
 
 export const HERO_STYLES: {
   id: HeroStyle
