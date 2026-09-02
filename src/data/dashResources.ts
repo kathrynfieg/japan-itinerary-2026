@@ -19,40 +19,49 @@ export type DashResource =
 
 export const dashResources: DashResource[] = [
   {
+    id: 'example-tokyo-food',
+    kind: 'example',
+    title: 'Food tour in Tokyo',
+    meta: '1 day · Markets & ramen',
+    image:
+      'https://images.unsplash.com/photo-1502364271109-0a9a75a2a9df?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Chef preparing food in Tokyo',
+  },
+  {
+    id: 'example-south-island',
+    kind: 'example',
+    title: 'Our South Island road trip',
+    meta: '7 days · Road trip',
+    image:
+      'https://images.unsplash.com/photo-1585933654851-820691b3740f?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Person sitting in a car on a South Island road trip',
+  },
+  {
+    id: 'example-paris',
+    kind: 'example',
+    title: 'Surprise weekend in Paris',
+    meta: '3 days · City break',
+    image:
+      'https://images.unsplash.com/photo-1662466819118-fc1d1629b78b?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Couple overlooking the Paris skyline',
+  },
+  {
     id: 'example-japan',
     kind: 'example',
-    title: 'Japan',
-    meta: '11 days · Tokyo, Kyoto & Osaka',
+    title: 'Japan 2026',
+    meta: '14 days · Tokyo | Osaka | Kyoto',
     image:
       'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=400&q=80',
     imageAlt: 'Traditional street in Kyoto at dusk',
   },
   {
-    id: 'example-europe',
+    id: 'example-budapest',
     kind: 'example',
-    title: 'Europe by train',
-    meta: '17 days · London to Vienna',
+    title: 'Budapest getaway',
+    meta: '3 days · City break',
     image:
-      'https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Swiss Alps with a lake and mountain village',
-  },
-  {
-    id: 'example-hawaii',
-    kind: 'example',
-    title: 'Hawaii',
-    meta: '5 days · Oahu long weekend',
-    image:
-      'https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Green coastline with mountains and reef in Hawaii',
-  },
-  {
-    id: 'example-safari',
-    kind: 'example',
-    title: 'African safari',
-    meta: '5 days · Nairobi & Maasai Mara',
-    image:
-      'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Safari landscape at golden hour',
+      'https://images.unsplash.com/photo-1523650092835-8ff285f4fc04?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Dome building and bridge along the Danube in Budapest',
   },
   {
     id: 'guide-homescreen',
