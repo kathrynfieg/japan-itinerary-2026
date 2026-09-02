@@ -161,13 +161,26 @@ function makeEuropeRecord(): TripRecord {
   }
 }
 
-const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit' | 'fonts'>('landing')
-const library = ref<TripRecord[]>([
-  makeJapanRecord(),
-  makeAfricaRecord(),
-  makeHawaiiRecord(),
-  makeEuropeRecord(),
-])
+const bootParams = new URLSearchParams(window.location.search)
+const bootEmpty = bootParams.has('empty')
+
+const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit' | 'fonts'>(
+  bootParams.has('fonts')
+    ? 'fonts'
+    : bootEmpty
+      ? 'home'
+      : 'landing',
+)
+const library = ref<TripRecord[]>(
+  bootEmpty
+    ? []
+    : [
+        makeJapanRecord(),
+        makeAfricaRecord(),
+        makeHawaiiRecord(),
+        makeEuropeRecord(),
+      ],
+)
 const activeId = ref<string | null>(null)
 
 const activeRecord = computed(
