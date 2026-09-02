@@ -42,6 +42,7 @@ import {
 import DayNotice from './components/DayNotice.vue'
 import DaySection from './components/DaySection.vue'
 import EditMock from './components/EditMock.vue'
+import FontCombos from './components/FontCombos.vue'
 import HomeMock from './components/HomeMock.vue'
 import KeyLinks from './components/KeyLinks.vue'
 import LandingMock from './components/LandingMock.vue'
@@ -163,7 +164,7 @@ function makeEuropeRecord(): TripRecord {
   }
 }
 
-const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit'>('landing')
+const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit' | 'fonts'>('landing')
 const library = ref<TripRecord[]>([
   makeJapanRecord(),
   makeAfricaRecord(),
@@ -252,6 +253,10 @@ function onKeydown(event: KeyboardEvent) {
 onMounted(() => {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'
+  }
+
+  if (new URLSearchParams(window.location.search).has('fonts')) {
+    mode.value = 'fonts'
   }
 
   if (window.location.hash) {
@@ -479,6 +484,8 @@ function onCreated(record: TripRecord) {
     @start="startCreate"
     @trips="goHome"
   />
+
+  <FontCombos v-else-if="mode === 'fonts'" @back="mode = 'landing'" />
 
   <HomeMock
     v-else-if="mode === 'home'"
