@@ -9,6 +9,7 @@ import {
   Plus,
   Settings,
   Share2,
+  Smartphone,
   Trash2,
 } from '@lucide/vue'
 import { TRIP_PRIVACY, type TripRecord } from '../lib/createTrip'
@@ -331,6 +332,10 @@ onUnmounted(() => {
 
         <div class="dash__footer-bottom">
           <p class="dash__footer-copy">© 2026 Daymark. All rights reserved.</p>
+          <button type="button" class="dash__footer-save">
+            <Smartphone :size="14" :stroke-width="2" aria-hidden="true" />
+            Save to home screen
+          </button>
         </div>
       </div>
     </footer>
