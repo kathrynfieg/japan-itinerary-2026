@@ -6,6 +6,7 @@ import {
   type CreateTripInput,
   type TripRecord,
 } from '../lib/createTrip'
+import googleMark from '../assets/google.png'
 
 const emit = defineEmits<{
   created: [payload: TripRecord]
@@ -41,6 +42,7 @@ const previewCount = computed(() => {
 function next() {
   if (step.value === 1 && canContinueStep1.value) step.value = 2
   else if (step.value === 2 && canContinueStep2.value) step.value = 3
+  else if (step.value === 3) step.value = 4
 }
 
 function back() {
@@ -86,6 +88,10 @@ function create() {
         <span
           class="onboard__dot"
           :class="{ 'onboard__dot--on': step >= 3 }"
+        />
+        <span
+          class="onboard__dot"
+          :class="{ 'onboard__dot--on': step >= 4 }"
         />
       </div>
 
@@ -163,7 +169,7 @@ function create() {
         </p>
       </section>
 
-      <section v-else class="onboard__step">
+      <section v-else-if="step === 3" class="onboard__step">
         <h1 class="onboard__title">Who’s going?</h1>
         <p class="onboard__lede">Optional — skip if you want.</p>
         <label class="onboard__field">
@@ -174,10 +180,55 @@ function create() {
             class="onboard__input onboard__input--lg"
             placeholder="Zac, Jess, Kat"
             autocomplete="off"
-            @keydown.enter.prevent="create"
+            @keydown.enter.prevent="next"
           />
         </label>
         <p class="onboard__hint">Separate names with commas.</p>
+      </section>
+
+      <section v-else class="onboard__step">
+        <h1 class="onboard__title">Sign up</h1>
+        <p class="onboard__lede">
+          Save this trip to your Daymark. You can skip this for now.
+        </p>
+        <label class="onboard__field">
+          <span class="onboard__label">Email</span>
+          <input
+            type="email"
+            class="onboard__input"
+            placeholder="you@email.com"
+            autocomplete="email"
+          />
+        </label>
+        <label class="onboard__field">
+          <span class="onboard__label">Password</span>
+          <input
+            type="password"
+            class="onboard__input"
+            placeholder="At least 8 characters"
+            autocomplete="new-password"
+          />
+        </label>
+        <label class="onboard__field">
+          <span class="onboard__label">Confirm password</span>
+          <input
+            type="password"
+            class="onboard__input"
+            placeholder="Re-enter password"
+            autocomplete="new-password"
+          />
+        </label>
+        <div class="onboard__split" aria-hidden="true"><span>or</span></div>
+        <button type="button" class="onboard__google" @click="create">
+          <img
+            class="onboard__google-mark"
+            :src="googleMark"
+            alt=""
+            width="18"
+            height="18"
+          />
+          Continue with Google
+        </button>
       </section>
 
       <div class="onboard__actions">
@@ -191,10 +242,12 @@ function create() {
         </button>
 
         <button
-          v-if="step < 3"
+          v-if="step < 4"
           type="button"
           class="onboard__next"
-          :disabled="step === 1 ? !canContinueStep1 : !canContinueStep2"
+          :disabled="
+            step === 1 ? !canContinueStep1 : step === 2 ? !canContinueStep2 : false
+          "
           @click="next"
         >
           Continue
