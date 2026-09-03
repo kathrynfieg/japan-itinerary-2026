@@ -19,13 +19,13 @@ export type DashResource =
 
 export const dashResources: DashResource[] = [
   {
-    id: 'example-tokyo-food',
+    id: 'example-japan',
     kind: 'example',
-    title: 'Food tour in Tokyo',
-    meta: '1 day · Markets & ramen',
+    title: 'Japan 2026',
+    meta: '14 days · Tokyo | Osaka | Kyoto',
     image:
-      'https://images.unsplash.com/photo-1502364271109-0a9a75a2a9df?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Chef preparing food in Tokyo',
+      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Traditional street in Kyoto at dusk',
   },
   {
     id: 'example-south-island',
@@ -37,6 +37,15 @@ export const dashResources: DashResource[] = [
     imageAlt: 'Person sitting in a car on a South Island road trip',
   },
   {
+    id: 'example-europe-christmas',
+    kind: 'example',
+    title: 'Europe for Christmas',
+    meta: 'Winter · Markets & cities',
+    image:
+      'https://images.unsplash.com/photo-1735303821653-9a565356f378?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Christmas carnival at night with a crowd',
+  },
+  {
     id: 'example-paris',
     kind: 'example',
     title: 'Surprise weekend in Paris',
@@ -46,22 +55,13 @@ export const dashResources: DashResource[] = [
     imageAlt: 'Couple overlooking the Paris skyline',
   },
   {
-    id: 'example-japan',
+    id: 'example-tokyo-food',
     kind: 'example',
-    title: 'Japan 2026',
-    meta: '14 days · Tokyo | Osaka | Kyoto',
+    title: 'Food tour in Tokyo',
+    meta: '1 day · Markets & ramen',
     image:
-      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Traditional street in Kyoto at dusk',
-  },
-  {
-    id: 'example-europe-christmas',
-    kind: 'example',
-    title: 'Europe for Christmas',
-    meta: 'Winter · Markets & cities',
-    image:
-      'https://images.unsplash.com/photo-1735303821653-9a565356f378?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Christmas carnival at night with a crowd',
+      'https://images.unsplash.com/photo-1502364271109-0a9a75a2a9df?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Chef preparing food in Tokyo',
   },
   {
     id: 'guide-homescreen',
