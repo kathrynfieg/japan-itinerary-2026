@@ -19,6 +19,8 @@ import appMockup from '../assets/app-mockup.png'
 const emit = defineEmits<{
   start: []
   trips: []
+  signup: []
+  login: []
 }>()
 
 const previewHero =
@@ -232,10 +234,10 @@ function onTouchEnd(event: TouchEvent) {
           <a href="#faq" class="landing__nav-link">FAQ</a>
         </nav>
         <div class="landing__nav-actions">
-          <button type="button" class="landing__nav-text" @click="emit('trips')">
+          <button type="button" class="landing__nav-text" @click="emit('login')">
             Log in
           </button>
-          <button type="button" class="landing__nav-cta" @click="emit('start')">
+          <button type="button" class="landing__nav-cta" @click="emit('signup')">
             Start free
           </button>
         </div>
@@ -630,7 +632,7 @@ function onTouchEnd(event: TouchEvent) {
             <button
               type="button"
               class="landing__plan-cta"
-              @click="emit('start')"
+              @click="emit('signup')"
             >
               Start free
             </button>

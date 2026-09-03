@@ -49,6 +49,7 @@ import KeyLinks from './components/KeyLinks.vue'
 import LandingMock from './components/LandingMock.vue'
 import OnboardingMock from './components/OnboardingMock.vue'
 import ShareSheet from './components/ShareSheet.vue'
+import SignupMock from './components/SignupMock.vue'
 import logo from './assets/3.png'
 import logoWhite from './assets/3-white.png'
 
@@ -163,14 +164,21 @@ function makeEuropeRecord(): TripRecord {
 
 const bootParams = new URLSearchParams(window.location.search)
 const bootEmpty = bootParams.has('empty')
+const bootSignup = bootParams.has('signup')
+const bootLogin = bootParams.has('login')
 
-const mode = ref<'landing' | 'home' | 'onboarding' | 'view' | 'edit' | 'fonts'>(
+const mode = ref<
+  'landing' | 'home' | 'onboarding' | 'view' | 'edit' | 'fonts' | 'signup'
+>(
   bootParams.has('fonts')
     ? 'fonts'
-    : bootEmpty
-      ? 'home'
-      : 'landing',
+    : bootSignup || bootLogin
+      ? 'signup'
+      : bootEmpty
+        ? 'home'
+        : 'landing',
 )
+const authPanel = ref<'signup' | 'login'>(bootLogin ? 'login' : 'signup')
 const library = ref<TripRecord[]>(
   bootEmpty
     ? []
@@ -392,6 +400,11 @@ function goHome() {
   mode.value = 'home'
 }
 
+function openSignup(panel: 'signup' | 'login' = 'signup') {
+  authPanel.value = panel
+  mode.value = 'signup'
+}
+
 function startCreate() {
   mode.value = 'onboarding'
 }
@@ -547,9 +560,18 @@ function onCreated(record: TripRecord) {
     v-if="mode === 'landing'"
     @start="startCreate"
     @trips="goHome"
+    @signup="openSignup('signup')"
+    @login="openSignup('login')"
   />
 
   <FontCombos v-else-if="mode === 'fonts'" @back="mode = 'landing'" />
+
+  <SignupMock
+    v-else-if="mode === 'signup'"
+    :initial-panel="authPanel"
+    @done="goHome"
+    @back="mode = 'landing'"
+  />
 
   <HomeMock
     v-else-if="mode === 'home'"
