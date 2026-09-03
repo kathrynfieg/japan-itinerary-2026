@@ -19,6 +19,7 @@ const emit = defineEmits<{
 const panel = ref<'signup' | 'login'>(props.initialPanel)
 const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
 const showPassword = ref(false)
 const submitted = ref(false)
 
@@ -130,6 +131,20 @@ function submit() {
                 />
                 <Eye v-else :size="16" :stroke-width="2" aria-hidden="true" />
               </button>
+            </span>
+          </label>
+
+          <label v-if="isSignup" class="signup__field">
+            <span class="signup__label">Confirm password</span>
+            <span class="signup__password">
+              <input
+                v-model="confirmPassword"
+                class="signup__input"
+                :type="showPassword ? 'text' : 'password'"
+                name="confirm-password"
+                autocomplete="new-password"
+                placeholder="Re-enter password"
+              />
             </span>
           </label>
 
