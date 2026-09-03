@@ -55,13 +55,13 @@ export const dashResources: DashResource[] = [
     imageAlt: 'Traditional street in Kyoto at dusk',
   },
   {
-    id: 'example-budapest',
+    id: 'example-europe-christmas',
     kind: 'example',
-    title: 'Budapest getaway',
-    meta: '3 days · City break',
+    title: 'Europe for Christmas',
+    meta: 'Winter · Markets & cities',
     image:
-      'https://images.unsplash.com/photo-1523650092835-8ff285f4fc04?auto=format&fit=crop&w=400&q=80',
-    imageAlt: 'Dome building and bridge along the Danube in Budapest',
+      'https://images.unsplash.com/photo-1735303821653-9a565356f378?auto=format&fit=crop&w=400&q=80',
+    imageAlt: 'Christmas carnival at night with a crowd',
   },
   {
     id: 'guide-homescreen',
