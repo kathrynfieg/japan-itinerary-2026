@@ -3943,14 +3943,9 @@ body {
     opacity 0.2s var(--ease);
 }
 
-.signup__submit:hover:not(:disabled) {
+.signup__submit:hover {
   background: var(--accent-deep);
   transform: translateY(-1px);
-}
-
-.signup__submit:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 
 .signup__split {

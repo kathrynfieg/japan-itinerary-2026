@@ -32,19 +32,13 @@ watch(
 
 const isSignup = computed(() => panel.value === 'signup')
 
-const canSubmit = computed(() => {
-  const hasEmail = email.value.includes('@') && email.value.includes('.')
-  const hasPassword = password.value.length >= 8
-  return hasEmail && hasPassword
-})
-
 function switchPanel(next: 'signup' | 'login') {
   panel.value = next
   submitted.value = false
 }
 
 function submit() {
-  if (!canSubmit.value) return
+  if (submitted.value) return
   submitted.value = true
   window.setTimeout(() => emit('done'), 900)
 }
@@ -139,11 +133,7 @@ function submit() {
             </span>
           </label>
 
-          <button
-            type="submit"
-            class="signup__submit"
-            :disabled="!canSubmit || submitted"
-          >
+          <button type="submit" class="signup__submit">
             {{
               submitted
                 ? isSignup
